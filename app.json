@@ -1,0 +1,47 @@
+{
+
+  "id": "1b1f1ff9-fc0c-4b3b-a8a6-4c439ede0801",
+  "name": "B2B Quality Control",
+  "publisher": "B2B Software Technologies Limited",
+  "version": "1.0.0.3",
+  "brief": "Solution for Quality Control Activities",
+  "description": "It delivers a quality system in support for manufacturing and distribution units looking to implement any quality system",
+  "privacyStatement": "https://b2bsoftech.com/contactus.html",
+  "EULA": "https://b2bsoftech.com/contactus.html",
+  "help": "https://b2bsoftech.com/QChelp.html",
+  "url": "https://b2bsoftech.com/contactus.html",
+  "logo": "Logo/Logo.jpg",
+  "dependencies": [
+    {
+      "id": "63ca2fa4-4f03-4f2b-a480-172fef340d3f",
+      "publisher": "Microsoft",
+      "name": "System Application",
+      "version": "20.0.0.0"
+    },
+    {
+      "id": "437dbf0e-84ff-417a-965d-ed2bb9650972",
+      "publisher": "Microsoft",
+      "name": "Base Application",
+      "version": "20.0.0.0"
+    }
+  ],
+  "screenshots": [],
+  "platform": "1.0.0.0",
+  "application": "20.0.0.0",
+  
+  "idRanges": [
+    {
+      "from": 33000250,
+      "to": 33000320
+    }
+  ],
+  "contextSensitiveHelpUrl": "https://b2bsoftech.com/contactus.html",
+ 
+  "runtime": "9.0",
+  "resourceExposurePolicy": {
+    "allowDebugging": true,
+    "allowDownloadingSource": false,
+    "includeSourceInSymbolFile": false
+  },
+  "features": ["TranslationFile"]
+}

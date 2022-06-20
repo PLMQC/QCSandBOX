@@ -1,0 +1,17 @@
+{
+    "name": "B2B ruleset",
+    "description": "B2B QC Code",
+    "includedRuleSets": [
+        {
+            "action": "Default",
+            "path": "./SDApp.ruleset.json"
+        }
+    ],
+    "rules": [
+        {
+            "id": "AS0054",
+            "action": "None",
+            "justification": "Ignored"
+        }
+    ]
+}
