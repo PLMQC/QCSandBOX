@@ -14,168 +14,168 @@ table 33000264 "Posted Ins Datasheet Line B2B"
 
     fields
     {
-        field(1;"Document No.";Code[20])
+        field(1; "Document No."; Code[20])
         {
             Caption = 'Document No.';
             NotBlank = true;
             TableRelation = "Posted Ins DatasheetHeader B2B";
             DataClassification = CustomerContent;
         }
-        field(2;"Line No.";Integer)
+        field(2; "Line No."; Integer)
         {
             Caption = 'Line No.';
             DataClassification = CustomerContent;
         }
-        field(3;"Character Code";Code[20])
+        field(3; "Character Code"; Code[20])
         {
             Caption = 'Character Code';
             TableRelation = "Characteristic B2B".Code;
             DataClassification = CustomerContent;
         }
-        field(4;Description;Text[50])
+        field(4; Description; Text[50])
         {
             Caption = 'Description';
             DataClassification = CustomerContent;
         }
-        field(5;"Sampling Plan Code";Code[20])
+        field(5; "Sampling Plan Code"; Code[20])
         {
             Caption = 'Sampling Plan Code';
             TableRelation = "Sampling Plan Header B2B".Code;
             DataClassification = CustomerContent;
         }
-        field(6;"Normal Value (Num)";Decimal)
+        field(6; "Normal Value (Num)"; Decimal)
         {
             BlankZero = true;
             Caption = 'Normal Value (Num)';
-            DecimalPlaces = 0:5;
+            DecimalPlaces = 0 : 5;
             DataClassification = CustomerContent;
         }
-        field(7;"Min. Value (Num)";Decimal)
+        field(7; "Min. Value (Num)"; Decimal)
         {
             BlankZero = true;
             Caption = 'Min. Value (Num)';
-            DecimalPlaces = 0:5;
+            DecimalPlaces = 0 : 5;
             DataClassification = CustomerContent;
         }
-        field(8;"Max. Value (Num)";Decimal)
+        field(8; "Max. Value (Num)"; Decimal)
         {
             BlankZero = true;
             Caption = 'Max. Value (Num)';
-            DecimalPlaces = 0:5;
+            DecimalPlaces = 0 : 5;
             DataClassification = CustomerContent;
         }
-        field(9;"Actual Value (Num)";Decimal)
+        field(9; "Actual Value (Num)"; Decimal)
         {
             BlankZero = false;
             Caption = 'Actual Value (Num)';
-            DecimalPlaces = 0:5;
+            DecimalPlaces = 0 : 5;
             DataClassification = CustomerContent;
         }
-        field(10;"Normal Value (Text)";Code[20])
+        field(10; "Normal Value (Text)"; Code[20])
         {
             Caption = 'Normal Value (Text)';
             DataClassification = CustomerContent;
         }
-        field(11;"Min. Value (Text)";Code[20])
+        field(11; "Min. Value (Text)"; Code[20])
         {
             Caption = 'Min. Value (Text)';
             DataClassification = CustomerContent;
         }
-        field(12;"Max. Value (Text)";Code[20])
+        field(12; "Max. Value (Text)"; Code[20])
         {
             Caption = 'Max. Value (Text)';
             DataClassification = CustomerContent;
         }
-        field(13;"Actual  Value (Text)";Code[20])
+        field(13; "Actual  Value (Text)"; Code[20])
         {
             Caption = 'Actual  Value (Text)';
             DataClassification = CustomerContent;
         }
-        field(14;"Unit of Measure Code";Code[20])
+        field(14; "Unit of Measure Code"; Code[20])
         {
             Caption = 'Unit of Measure Code';
             TableRelation = "Unit of Measure";
             DataClassification = CustomerContent;
         }
-        field(15;"Character Group No.";Integer)
+        field(15; "Character Group No."; Integer)
         {
             Caption = 'Character Group No.';
             DataClassification = CustomerContent;
         }
-        field(16;Accept;Boolean)
+        field(16; Accept; Boolean)
         {
             Caption = 'Accept';
             DataClassification = CustomerContent;
         }
-        field(17;"Lot Size - Min";Decimal)
+        field(17; "Lot Size - Min"; Decimal)
         {
             BlankZero = true;
             Caption = 'Lot Size - Min';
-            DecimalPlaces = 0:0;
+            DecimalPlaces = 0 : 0;
             MinValue = 0;
             DataClassification = CustomerContent;
         }
-        field(18;"Lot Size - Max";Decimal)
+        field(18; "Lot Size - Max"; Decimal)
         {
             BlankZero = true;
             Caption = 'Lot Size - Max';
-            DecimalPlaces = 0:0;
+            DecimalPlaces = 0 : 0;
             MinValue = 0;
             DataClassification = CustomerContent;
         }
-        field(19;"Sampling Size";Decimal)
+        field(19; "Sampling Size"; Decimal)
         {
             BlankZero = true;
             Caption = 'Sampling Size';
-            DecimalPlaces = 0:0;
+            DecimalPlaces = 0 : 0;
             MinValue = 0;
             DataClassification = CustomerContent;
         }
-        field(20;"Allowable Defects - Min";Decimal)
+        field(20; "Allowable Defects - Min"; Decimal)
         {
             BlankZero = true;
             Caption = 'Allowable Defects - Min';
-            DecimalPlaces = 0:0;
+            DecimalPlaces = 0 : 0;
             MinValue = 0;
             DataClassification = CustomerContent;
         }
-        field(21;"Allowable Defects - Max";Decimal)
+        field(21; "Allowable Defects - Max"; Decimal)
         {
             BlankZero = true;
             Caption = 'Allowable Defects - Max';
-            DecimalPlaces = 0:0;
+            DecimalPlaces = 0 : 0;
             MinValue = 0;
             DataClassification = CustomerContent;
         }
-        field(29;"Reason Code";Code[20])
+        field(29; "Reason Code"; Code[20])
         {
             Caption = 'Reason Code';
             TableRelation = "Quality Reason Code B2B";
             DataClassification = CustomerContent;
         }
-        field(30;Remarks;Text[50])
+        field(30; Remarks; Text[50])
         {
             Caption = 'Remarks';
             DataClassification = CustomerContent;
         }
-        field(31;"Inspection Persons";Text[100])
+        field(31; "Inspection Persons"; Text[100])
         {
             Caption = 'Inspection Persons';
             DataClassification = CustomerContent;
         }
-        field(35;"Character Type";Option)
+        field(35; "Character Type"; Option)
         {
             Caption = 'Character Type';
             OptionCaption = 'Standard,Heading,Begin,End';
             OptionMembers = Standard,Heading,"Begin","End";
             DataClassification = CustomerContent;
         }
-        field(36;Indentation;Integer)
+        field(36; Indentation; Integer)
         {
             Caption = 'Indentation';
             DataClassification = CustomerContent;
         }
-        field(37;Qualitative;Boolean)
+        field(37; Qualitative; Boolean)
         {
             Caption = 'Qualitative';
             DataClassification = CustomerContent;
@@ -184,13 +184,13 @@ table 33000264 "Posted Ins Datasheet Line B2B"
 
     keys
     {
-        key(Key1;"Document No.","Line No.")
+        key(Key1; "Document No.", "Line No.")
         {
         }
-        key(Key2;"Character Code","Character Group No.")
+        key(Key2; "Character Code", "Character Group No.")
         {
         }
-        key(Key3;"Document No.","Character Code","Character Group No.",Accept)
+        key(Key3; "Document No.", "Character Code", "Character Group No.", Accept)
         {
             SumIndexFields = "Min. Value (Num)";
         }

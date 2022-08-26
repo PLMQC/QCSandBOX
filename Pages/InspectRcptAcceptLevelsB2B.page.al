@@ -39,27 +39,27 @@ page 33000283 "Inspect.Rcpt.Accept Levels B2B"
             }
             repeater(Control1000000000)
             {
-                field("Acceptance Code"; "Acceptance Code")
+                field("Acceptance Code"; Rec."Acceptance Code")
                 {
                     ApplicationArea = all;
                     ToolTip = 'Quality can be expressed through Acceptance Codes';
                 }
-                field("Reason Code"; "Reason Code")
+                field("Reason Code"; Rec."Reason Code")
                 {
                     ApplicationArea = all;
                     tooltip = 'which define the levels of acceptance, rejections/reworks at the time of Inspection Receipts';
                 }
-                field("Serial No."; "Serial No.")
+                field("Serial No."; Rec."Serial No.")
                 {
                     ApplicationArea = all;
                     tooltip = 'setting the setup of rhe number series';
                     trigger OnLookup(var Text: Text): Boolean
                     var
-                       
+
                     begin
                         QualityItemLedgEntry.RESET();
                         InspectionReceipt.RESET();
-                        InspectionReceipt.SETRANGE("No.", "Inspection Receipt No.");
+                        InspectionReceipt.SETRANGE("No.", Rec."Inspection Receipt No.");
                         IF InspectionReceipt.FIND('-') THEN BEGIN
                             ItemEntryRelation.SETCURRENTKEY("Source ID", "Source Type");
                             ItemEntryRelation.SETRANGE("Source Type", DATABASE::"Purch. Rcpt. Line");
@@ -74,14 +74,14 @@ page 33000283 "Inspect.Rcpt.Accept Levels B2B"
                                     REPEAT
                                         IF QualityItemLedgEntry.GET(ItemEntryRelation."Item Entry No.") THEN
                                             IF QualityItemLedgEntry."Inspection Status" = QualityItemLedgEntry."Inspection Status"::"Under Inspection" THEN
-                                                CASE "Quality Type" OF
-                                                    "Quality Type"::Accepted:
+                                                CASE Rec."Quality Type" OF
+                                                    Rec."Quality Type"::Accepted:
                                                         IF QualityItemLedgEntry.Accept THEN
                                                             QualityItemLedgEntry.MARK(TRUE);
-                                                    "Quality Type"::Rework:
+                                                    Rec."Quality Type"::Rework:
                                                         IF QualityItemLedgEntry.Rework THEN
                                                             QualityItemLedgEntry.MARK(TRUE);
-                                                    "Quality Type"::Rejected:
+                                                    Rec."Quality Type"::Rejected:
                                                         IF QualityItemLedgEntry.Reject THEN
                                                             QualityItemLedgEntry.MARK(TRUE);
                                                 END;
@@ -89,17 +89,17 @@ page 33000283 "Inspect.Rcpt.Accept Levels B2B"
                                     UNTIL ItemEntryRelation.NEXT() = 0;
                                 IF QualityItemLedgEntry.MARKEDONLY(TRUE) THEN
                                     IF PAGE.RUNMODAL(PAGE::"Qty Item Ledger Entries B2B", QualityItemLedgEntry) = ACTION::LookupOK THEN BEGIN
-                                        "Serial No." := QualityItemLedgEntry."Serial No.";
-                                        "ILE No." := QualityItemLedgEntry."Entry No.";
-                                        Quantity := 1;
-                                        CASE "Quality Type" OF
-                                            "Quality Type"::Accepted:
+                                        Rec."Serial No." := QualityItemLedgEntry."Serial No.";
+                                        Rec."ILE No." := QualityItemLedgEntry."Entry No.";
+                                        Rec.Quantity := 1;
+                                        CASE Rec."Quality Type" OF
+                                            Rec."Quality Type"::Accepted:
                                                 QualityItemLedgEntry."Temp Accept" := TRUE;
-                                            "Quality Type"::"Accepted Under Deviation":
+                                            Rec."Quality Type"::"Accepted Under Deviation":
                                                 QualityItemLedgEntry."Accept Under Deviation" := TRUE;
-                                            "Quality Type"::Rejected:
+                                            Rec."Quality Type"::Rejected:
                                                 QualityItemLedgEntry.Reject := TRUE;
-                                            "Quality Type"::Rework:
+                                            Rec."Quality Type"::Rework:
                                                 QualityItemLedgEntry.Rework := TRUE;
                                         end;
                                         QualityItemLedgEntry.MODIFY();
@@ -110,7 +110,7 @@ page 33000283 "Inspect.Rcpt.Accept Levels B2B"
 
                         QualityItemLedgEntry.RESET();
                         InspectionReceipt.RESET();
-                        InspectionReceipt.SETRANGE("No.", "Inspection Receipt No.");
+                        InspectionReceipt.SETRANGE("No.", Rec."Inspection Receipt No.");
                         IF InspectionReceipt.FIND('-') THEN BEGIN
                             ItemEntryRelation.SETCURRENTKEY("Source ID", "Source Type");
                             ItemEntryRelation.SETRANGE("Source Type", DATABASE::"Return Receipt Line");
@@ -132,17 +132,17 @@ page 33000283 "Inspect.Rcpt.Accept Levels B2B"
                                     UNTIL ItemEntryRelation.NEXT() = 0;
                             IF QualityItemLedgEntry.MARKEDONLY(TRUE) THEN
                                 IF PAGE.RUNMODAL(PAGE::"Qty Item Ledger Entries B2B", QualityItemLedgEntry) = ACTION::LookupOK THEN BEGIN
-                                    "Serial No." := QualityItemLedgEntry."Serial No.";
-                                    "ILE No." := QualityItemLedgEntry."Entry No.";
-                                    Quantity := 1;
-                                    CASE "Quality Type" OF
-                                        "Quality Type"::Accepted:
+                                    Rec."Serial No." := QualityItemLedgEntry."Serial No.";
+                                    Rec."ILE No." := QualityItemLedgEntry."Entry No.";
+                                    Rec.Quantity := 1;
+                                    CASE Rec."Quality Type" OF
+                                        Rec."Quality Type"::Accepted:
                                             QualityItemLedgEntry."Temp Accept" := TRUE;
-                                        "Quality Type"::"Accepted Under Deviation":
+                                        Rec."Quality Type"::"Accepted Under Deviation":
                                             QualityItemLedgEntry."Accept Under Deviation" := TRUE;
-                                        "Quality Type"::Rejected:
+                                        Rec."Quality Type"::Rejected:
                                             QualityItemLedgEntry.Reject := TRUE;
-                                        "Quality Type"::Rework:
+                                        Rec."Quality Type"::Rework:
                                             QualityItemLedgEntry.Rework := TRUE;
                                     end;
                                     QualityItemLedgEntry.MODIFY();
@@ -150,7 +150,7 @@ page 33000283 "Inspect.Rcpt.Accept Levels B2B"
                         END;
                     end;
                 }
-                field(Quantity; Quantity)
+                field(Quantity; Rec.Quantity)
                 {
                     ApplicationArea = all;
                     tooltip = 'This is the total number of items being ordered';
@@ -175,8 +175,8 @@ page 33000283 "Inspect.Rcpt.Accept Levels B2B"
 
     trigger OnOpenPage();
     begin
-        SETRANGE("Inspection Receipt No.", "InspectionReceiptNo.");
-        SETRANGE("Quality Type", IRQuantityType);
+        Rec.SETRANGE("Inspection Receipt No.", "InspectionReceiptNo.");
+        Rec.SETRANGE("Quality Type", IRQuantityType);
 
         UpdateQtyBalance();
     end;
@@ -190,7 +190,7 @@ page 33000283 "Inspect.Rcpt.Accept Levels B2B"
 
     procedure UpdateQtyBalance();
     var
-        
+
     begin
         ReceiptQty := IRQuantity;
         InpectRcptAcptLevels.reset();
@@ -214,9 +214,10 @@ page 33000283 "Inspect.Rcpt.Accept Levels B2B"
         IRQuantityType := QtyType;
     end;
 
-    var InpectRcptAcptLevels: Record "IR Acceptance Levels B2B";
-     QualityItemLedgEntry: Record "Quality Item Ledger Entry B2B";
-                        ItemEntryRelation: record "Item Entry Relation";
-                        InspectionReceipt: Record "Inspection Receipt Header B2B";
+    var
+        InpectRcptAcptLevels: Record "IR Acceptance Levels B2B";
+        QualityItemLedgEntry: Record "Quality Item Ledger Entry B2B";
+        ItemEntryRelation: record "Item Entry Relation";
+        InspectionReceipt: Record "Inspection Receipt Header B2B";
 }
 

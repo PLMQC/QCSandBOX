@@ -232,7 +232,7 @@ table 33000263 "Posted Ins DatasheetHeader B2B"
         }
         field(40; Comment; Boolean)
         {
-            CalcFormula = Exist ("Quality Comment Line B2B" WHERE(Type = CONST("Posted Inspection Data Sheets"),
+            CalcFormula = Exist("Quality Comment Line B2B" WHERE(Type = CONST("Posted Inspection Data Sheets"),
                                                               "No." = FIELD("No.")));
             Caption = 'Comment';
             FieldClass = FlowField;
@@ -341,7 +341,11 @@ table 33000263 "Posted Ins DatasheetHeader B2B"
         field(101; "Document Type"; Option)
         {
             Caption = 'Document Type';
-            OptionMembers = Receipt,Production,Transfer,"Item Inspection","Return Order",Rework,"Sample Lot";
+            //QC1.4>>
+            //OptionMembers = Receipt,Production,Transfer,"Item Inspection","Return Order",Rework,"Sample Lot";
+            OptionMembers = Receipt,Production,Transfer,"Item Inspection","Return Order",Rework,"Sample Lot","Sales Order","Sample QC";
+            OptionCaption = 'Receipt,Production,Transfer,Item Inspection,Return Order,Rework,Sample Lot,Sales Order,Sample QC';
+            //QC1.4<<
             DataClassification = CustomerContent;
         }
         field(102; "Dimension Set ID"; Integer)
@@ -358,8 +362,8 @@ table 33000263 "Posted Ins DatasheetHeader B2B"
         field(103; "Shortcut Dimension 1 Code"; Code[20])
         {
             CaptionClass = '1,2,1';
-            Caption =  'Shortcut Dimension 1 Code';
-                        
+            Caption = 'Shortcut Dimension 1 Code';
+
             TableRelation = "Dimension Value".Code WHERE("Global Dimension No." = CONST(1));
             DataClassification = CustomerContent;
         }
@@ -367,7 +371,7 @@ table 33000263 "Posted Ins DatasheetHeader B2B"
         {
             CaptionClass = '1,2,2';
             Caption = 'Shortcut Dimension 2 Code';
-                       
+
             TableRelation = "Dimension Value".Code WHERE("Global Dimension No." = CONST(2));
             DataClassification = CustomerContent;
         }

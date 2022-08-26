@@ -23,7 +23,7 @@ pageextension 33000319 "PurchReturnOrderExt B2B" extends "Purchase Return Order"
                     trigger OnAction();
                     begin
                         // Start  B2BQC1.00.00 - 01
-                        CopyQRItemstoReturnOrder();
+                        Rec.CopyQRItemstoReturnOrder();
                         // Stop   B2BQC1.00.00 - 01
                     end;
                 }

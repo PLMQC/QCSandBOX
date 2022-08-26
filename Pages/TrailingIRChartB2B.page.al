@@ -189,7 +189,7 @@ page 33000302 "Trailing IR Chart B2B"
                         Caption = 'Stacked Area';
                         Enabled = StackedAreaEnabled;
                         ApplicationArea = all;
-                        ToolTip = 'Displays the Evolution of the value of several groups' ;
+                        ToolTip = 'Displays the Evolution of the value of several groups';
                         Image = StaleCheck;
                         trigger OnAction();
                         begin
@@ -202,7 +202,7 @@ page 33000302 "Trailing IR Chart B2B"
                         Caption = 'Stacked Area (%)';
                         Enabled = StackedAreaPctEnabled;
                         ApplicationArea = all;
-                        ToolTip = 'Displays the Evolution of the value of several groups Percentage' ;
+                        ToolTip = 'Displays the Evolution of the value of several groups Percentage';
                         Image = StaleCheck;
                         trigger OnAction();
                         begin
@@ -215,7 +215,7 @@ page 33000302 "Trailing IR Chart B2B"
                         Caption = 'Stacked Column';
                         Enabled = StackedColumnEnabled;
                         ApplicationArea = all;
-                        ToolTip = 'Defines to allow part-to-whole comparisons over time' ;
+                        ToolTip = 'Defines to allow part-to-whole comparisons over time';
                         Image = StaleCheck;
                         trigger OnAction();
                         begin
@@ -228,7 +228,7 @@ page 33000302 "Trailing IR Chart B2B"
                         Caption = 'Stacked Column (%)';
                         Enabled = StackedColumnPctEnabled;
                         ApplicationArea = all;
-                        ToolTip = 'Defines to allow part-to-whole comparisons over time Percentage' ;
+                        ToolTip = 'Defines to allow part-to-whole comparisons over time Percentage';
                         Image = StaleCheck;
                         trigger OnAction();
                         begin
@@ -246,7 +246,7 @@ page 33000302 "Trailing IR Chart B2B"
                 Caption = 'Refresh';
                 Image = Refresh;
                 ApplicationArea = all;
-                ToolTip = 'Defines to Refrish the Charts' ;
+                ToolTip = 'Defines to Refrish the Charts';
                 trigger OnAction();
                 begin
                     NeedsUpdate := true;
@@ -261,7 +261,7 @@ page 33000302 "Trailing IR Chart B2B"
                 Caption = 'Setup';
                 Image = Setup;
                 ApplicationArea = all;
-                ToolTip = 'Defines to Setup the page' ;
+                ToolTip = 'Defines to Setup the page';
                 trigger OnAction();
                 begin
                     RunSetup();

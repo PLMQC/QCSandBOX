@@ -4,50 +4,50 @@ pageextension 33000307 ProdRoutLinesPageExtB2B extends "Prod. Order Routing"
     {
         addlast("Control1")
         {
-            field("Quantity B2B"; "Quantity B2B")
+            field("Quantity B2B"; Rec."Quantity B2B")
             {
                 ApplicationArea = All;
                 Caption = 'Quantity';
                 ToolTip = 'the amount or number of something, especially that can be measured ';
             }
-            field("Sub Assembly B2B"; "Sub Assembly B2B")
+            field("Sub Assembly B2B"; Rec."Sub Assembly B2B")
             {
                 ApplicationArea = All;
                 Caption = 'Sub Assembly';
                 ToolTip = 'sub Assembly is assigned to a production item for performing Quality inspection at a particular step in the manufacturing, referred to as Routing line';
             }
-            field("Spec ID B2B"; "Spec ID B2B")
+            field("Spec ID B2B"; Rec."Spec ID B2B")
             {
                 ApplicationArea = All;
                 Caption = 'Spec ID';
                 ToolTip = 'Specification is a group of characteristics to be inspected of an item';
             }
-            field("QC Enabled B2B"; "QC Enabled B2B")
+            field("QC Enabled B2B"; Rec."QC Enabled B2B")
             {
                 ApplicationArea = All;
                 Caption = 'QC Enabled';
                 tooltip = 'In bound Inspection Data Sheets are created only if the item is QC Enabled';
             }
-            field("Quantity Sent to Quality B2B"; "Quantity Sent to Quality B2B")
+            field("Quantity Sent to Quality B2B"; Rec."Quantity Sent to Quality B2B")
             {
                 ApplicationArea = All;
                 Caption = 'Quantity Sent to Quality';
                 tooltip = 'how much quantity sent to quality';
             }
-            field("Quantity Accepted B2B"; "Quantity Accepted B2B")
+            field("Quantity Accepted B2B"; Rec."Quantity Accepted B2B")
             {
                 ApplicationArea = All;
                 Caption = 'Quantity Accepted';
                 ToolTip = 'the inspection data sheet is quantity characteristic  approval is the accepted quantity';
             }
-            field("Quantity Rejected B2B"; "Quantity Rejected B2B")
+            field("Quantity Rejected B2B"; Rec."Quantity Rejected B2B")
             {
                 ApplicationArea = All;
                 Caption = 'Quantity Rejected';
                 ToolTip = 'the inspection data sheet is quantity characteristic is not approval the rejected quantity';
 
             }
-            field("Quantity Rework B2B"; "Quantity Rework B2B")
+            field("Quantity Rework B2B"; Rec."Quantity Rework B2B")
             {
                 ApplicationArea = All;
                 Caption = 'Quantity Rework';

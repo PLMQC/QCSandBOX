@@ -24,37 +24,37 @@ page 33000285 "Sub Assembly List B2B"
         {
             repeater(Control1000000000)
             {
-                field("No."; "No.")
+                field("No."; Rec."No.")
                 {
                     ApplicationArea = all;
                     tooltip = 'automatic numbering using generic number series';
                 }
-                field(Description; Description)
+                field(Description; Rec.Description)
                 {
                     ApplicationArea = all;
                     tooltip = 'Description for Identification purpose for  the user';
                 }
-                field("Search Name"; "Search Name")
+                field("Search Name"; Rec."Search Name")
                 {
                     ApplicationArea = all;
                     tooltip = 'ant name search ';
                 }
-                field("Spec ID"; "Spec ID")
+                field("Spec ID"; Rec."Spec ID")
                 {
                     ApplicationArea = all;
                     tooltip = 'Specification is a group of characteristics to be inspected of an item';
                 }
-                field("QC Enabled"; "QC Enabled")
+                field("QC Enabled"; Rec."QC Enabled")
                 {
                     ApplicationArea = all;
                     tooltip = 'In bound Inspection Data Sheets are created only if the item is QC Enabled';
                 }
-                field("Unit of Measure Code"; "Unit of Measure Code")
+                field("Unit of Measure Code"; Rec."Unit of Measure Code")
                 {
                     ApplicationArea = all;
                     tooltip = ' unit of measure code from item unit of measure where the quantity to customer is to be dispatched';
                 }
-                field(Block; Block)
+                field(Block; Rec.Block)
                 {
                     ApplicationArea = all;
                     tooltip = 'any order user the block';

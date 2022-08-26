@@ -22,12 +22,12 @@ page 33000277 "Quality Reason Codes B2B"
         {
             repeater(Control1000000000)
             {
-                field("Code"; Code)
+                field("Code"; Rec.Code)
                 {
                     ApplicationArea = all;
                     tooltip = 'system of words,letter symbols used';
                 }
-                field(Description; Description)
+                field(Description; Rec.Description)
                 {
                     ApplicationArea = all;
                     tooltip = 'Description for Identification purpose for  the user';

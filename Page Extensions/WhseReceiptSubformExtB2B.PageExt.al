@@ -61,7 +61,7 @@ pageextension 33000314 "WhseReceiptSubformExt B2B" extends "Whse. Receipt Subfor
     begin
         // Start  B2BQC1.00.00 - 01 Create Inspection Data Sheets
 
-        CreateInspectionDataSheetsWH();//B2BQC1.00.01
+        Rec.CreateInspectionDataSheetsWH();//B2BQC1.00.01
 
         // Stop   B2BQC1.00.00 - 01
     end;

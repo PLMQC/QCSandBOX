@@ -23,33 +23,33 @@ page 33000272 "Posted Inspect. DS Details B2B"
         {
             repeater(Control1000000000)
             {
-                field("No."; "No.")
+                field("No."; Rec."No.")
                 {
                     ApplicationArea = all;
                     tooltip = 'enter ther number slected from no.series';
                 }
-                field("Posted By"; "Posted By")
+                field("Posted By"; Rec."Posted By")
                 {
                     ApplicationArea = all;
                     tooltip = 'which order posted';
                 }
-                field("Posted Date"; "Posted Date")
+                field("Posted Date"; Rec."Posted Date")
                 {
                     ApplicationArea = all;
                     tooltip = 'which data is the posted data';
                 }
-                field("Posted Time"; "Posted Time")
+                field("Posted Time"; Rec."Posted Time")
                 {
                     ApplicationArea = all;
                     tooltip = 'which time to post';
-            
-    
-             }
+
+
+                }
             }
         }
     }
 
-          actions
+    actions
     {
         area(processing)
         {
@@ -58,7 +58,7 @@ page 33000272 "Posted Inspect. DS Details B2B"
                 Caption = '&Show';
                 Image = View;
                 Promoted = true;
-                PromotedOnly =true;
+                PromotedOnly = true;
                 PromotedCategory = Process;
                 RunObject = Page "Posted Ins Data Sheet B2B";
                 RunPageLink = "No." = FIELD("No.");

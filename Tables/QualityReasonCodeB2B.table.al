@@ -15,13 +15,13 @@ table 33000268 "Quality Reason Code B2B"
 
     fields
     {
-        field(1;"Code";Code[20])
+        field(1; "Code"; Code[20])
         {
             Caption = 'Code';
             NotBlank = true;
             DataClassification = CustomerContent;
         }
-        field(2;Description;Text[30])
+        field(2; Description; Text[30])
         {
             Caption = 'Description';
             DataClassification = CustomerContent;
@@ -30,7 +30,7 @@ table 33000268 "Quality Reason Code B2B"
 
     keys
     {
-        key(Key1;"Code")
+        key(Key1; "Code")
         {
         }
     }

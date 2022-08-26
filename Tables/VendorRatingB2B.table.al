@@ -28,7 +28,7 @@ table 33000265 "Vendor Rating B2B"
         }
         field(5; Inspected; Decimal)
         {
-            CalcFormula = Sum ("Inspection Receipt Header B2B".Quantity WHERE("Vendor No." = FIELD("Vendor No."),
+            CalcFormula = Sum("Inspection Receipt Header B2B".Quantity WHERE("Vendor No." = FIELD("Vendor No."),
                                                                           "Item No." = FIELD("Item No."),
                                                                           "Posting Date" = FIELD("Date Filter"),
                                                                           "Rework Level" = CONST(0),
@@ -39,7 +39,7 @@ table 33000265 "Vendor Rating B2B"
         }
         field(6; Accepted; Decimal)
         {
-            CalcFormula = Sum ("Inspection Receipt Header B2B"."Qty. Accepted" WHERE("Vendor No." = FIELD("Vendor No."),
+            CalcFormula = Sum("Inspection Receipt Header B2B"."Qty. Accepted" WHERE("Vendor No." = FIELD("Vendor No."),
                                                                                  "Item No." = FIELD("Item No."),
                                                                                  "Posting Date" = FIELD("Date Filter"),
                                                                                  "Rework Level" = CONST(0),
@@ -50,7 +50,7 @@ table 33000265 "Vendor Rating B2B"
         }
         field(7; "Accepted UD"; Decimal)
         {
-            CalcFormula = Sum ("Inspection Receipt Header B2B"."Qty. Accepted Under Deviation" WHERE("Vendor No." = FIELD("Vendor No."),
+            CalcFormula = Sum("Inspection Receipt Header B2B"."Qty. Accepted Under Deviation" WHERE("Vendor No." = FIELD("Vendor No."),
                                                                                                  "Item No." = FIELD("Item No."),
                                                                                                  "Posting Date" = FIELD("Date Filter"),
                                                                                                  "Rework Level" = CONST(0),
@@ -61,7 +61,7 @@ table 33000265 "Vendor Rating B2B"
         }
         field(8; Rework; Decimal)
         {
-            CalcFormula = Sum ("Inspection Receipt Header B2B"."Qty. Rework" WHERE("Vendor No." = FIELD("Vendor No."),
+            CalcFormula = Sum("Inspection Receipt Header B2B"."Qty. Rework" WHERE("Vendor No." = FIELD("Vendor No."),
                                                                                "Item No." = FIELD("Item No."),
                                                                                "Posting Date" = FIELD("Date Filter"),
                                                                                "Rework Level" = CONST(0),
@@ -72,7 +72,7 @@ table 33000265 "Vendor Rating B2B"
         }
         field(9; Reject; Decimal)
         {
-            CalcFormula = Sum ("Inspection Receipt Header B2B"."Qty. Rejected" WHERE("Vendor No." = FIELD("Vendor No."),
+            CalcFormula = Sum("Inspection Receipt Header B2B"."Qty. Rejected" WHERE("Vendor No." = FIELD("Vendor No."),
                                                                                  "Item No." = FIELD("Item No."),
                                                                                  "Posting Date" = FIELD("Date Filter"),
                                                                                  "Rework Level" = CONST(0),

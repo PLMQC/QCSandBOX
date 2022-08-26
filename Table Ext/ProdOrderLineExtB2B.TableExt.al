@@ -5,7 +5,7 @@ tableextension 33000254 "ProdOrderLineExt B2B" extends "Prod. Order Line"
     fields
     {
 
-       
+
         field(33000250; "WIP QC Enabled B2B"; Boolean)
         {
             Caption = 'WIP QC Enabled';
@@ -31,7 +31,7 @@ tableextension 33000254 "ProdOrderLineExt B2B" extends "Prod. Order Line"
         }
         field(33000254; "Quantity Accepted B2B"; Decimal)
         {
-            CalcFormula = Sum ("Quality Ledger Entry B2B".Quantity WHERE("Source Type" = FILTER(WIP),
+            CalcFormula = Sum("Quality Ledger Entry B2B".Quantity WHERE("Source Type" = FILTER(WIP),
                                                                      "Order No." = FIELD("Prod. Order No."),
                                                                      "Order Line No." = FIELD("Line No."),
                                                                      "Entry Type" = FILTER(Accepted),
@@ -42,7 +42,7 @@ tableextension 33000254 "ProdOrderLineExt B2B" extends "Prod. Order Line"
         }
         field(33000255; "Quantity Rejected B2B"; Decimal)
         {
-            CalcFormula = Sum ("Quality Ledger Entry B2B".Quantity WHERE("Source Type" = FILTER(WIP),
+            CalcFormula = Sum("Quality Ledger Entry B2B".Quantity WHERE("Source Type" = FILTER(WIP),
                                                                      "Order No." = FIELD("Prod. Order No."),
                                                                      "Order Line No." = FIELD("Line No."),
                                                                      "Entry Type" = FILTER(Reject),
@@ -53,7 +53,7 @@ tableextension 33000254 "ProdOrderLineExt B2B" extends "Prod. Order Line"
         }
         field(33000256; "Quantity Rework B2B"; Decimal)
         {
-            CalcFormula = Sum ("Quality Ledger Entry B2B".Quantity WHERE("Source Type" = FILTER(WIP),
+            CalcFormula = Sum("Quality Ledger Entry B2B".Quantity WHERE("Source Type" = FILTER(WIP),
                                                                      "Order No." = FIELD("Prod. Order No."),
                                                                      "Order Line No." = FIELD("Line No."),
                                                                      "Entry Type" = FILTER(Rework),
@@ -79,9 +79,9 @@ tableextension 33000254 "ProdOrderLineExt B2B" extends "Prod. Order Line"
         // Stop   B2BQC1.00.00 - 01
     END;
 
-    
+
 
     var
-     InspectDataSheets :Codeunit "Inspection Data Sheets B2B";
+        InspectDataSheets: Codeunit "Inspection Data Sheets B2B";
 }
 

@@ -128,8 +128,8 @@ table 33000255 "Ins Datasheet Header B2B"
             Caption = 'Lot No.';
             DataClassification = CustomerContent;
             trigger OnValidate();
-            
-                
+
+
             begin
 
                 InspectionLot.reset();
@@ -246,7 +246,7 @@ table 33000255 "Ins Datasheet Header B2B"
         }
         field(40; Comment; Boolean)
         {
-            CalcFormula = Exist ("Quality Comment Line B2B" WHERE(Type = CONST("Inspection Data Sheets"),
+            CalcFormula = Exist("Quality Comment Line B2B" WHERE(Type = CONST("Inspection Data Sheets"),
                                                               "No." = FIELD("No.")));
             Caption = 'Comment';
             FieldClass = FlowField;
@@ -356,7 +356,11 @@ table 33000255 "Ins Datasheet Header B2B"
         field(101; "Document Type"; Option)
         {
             Caption = 'Document Type';
-            OptionMembers = Receipt,Production,Transfer,"Item Inspection","Return Order",Rework,"Sample Lot";
+            //QC1.4>>
+            //OptionMembers = Receipt,Production,Transfer,"Item Inspection","Return Order",Rework,"Sample Lot";
+            OptionMembers = Receipt,Production,Transfer,"Item Inspection","Return Order",Rework,"Sample Lot","Sales Order","Sample QC";
+            OptionCaption = 'Receipt,Production,Transfer,Item Inspection,Return Order,Rework,Sample Lot,Sales Order,Sample QC';
+            //QC1.4<<
             DataClassification = CustomerContent;
         }
         field(102; "Dimension Set ID"; Integer)
@@ -438,6 +442,7 @@ table 33000255 "Ins Datasheet Header B2B"
             MODIFY();
     end;
 
-    var InspectionLot: Record "Inspection Lot B2B";
+    var
+        InspectionLot: Record "Inspection Lot B2B";
 }
 

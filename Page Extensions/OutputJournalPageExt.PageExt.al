@@ -4,7 +4,7 @@ pageextension 33000303 OutPutJournalPageExtB2B extends "Output Journal"
     {
         addafter("No.")
         {
-            field("Routing No. B2B"; "Routing No.")
+            field("Routing No. B2B"; Rec."Routing No.")
             {
                 Caption = 'Routing No.';
                 ApplicationArea = All;

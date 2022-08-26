@@ -61,11 +61,17 @@ Codeunit 33000261 "ItemJnlPostLineExt B2B"
     var
         Item: Record 27;
         AcceptedQty: Decimal;
-        Text33000251Err: Label 'Outbound Quantity is more than Quantity Accepted.';
+        //QC1.4>>
+        //Text33000251Err: Label 'Outbound Quantity is more than Quantity Accepted.';
+        Text33000251Err: Label 'Inspection Status must not be Under Inspection in Quality Item Ledger Entry.';
+        ItemLedgerEntryLRec: Record "Item Ledger Entry";
+        //QC1.4<<
         Text33000250Err: Label 'Negative inventory is not allowed if the item is QC Enabled.';
     BEGIN
         // Start  B2BQC1.00.00 - 01
         //Exclude all Quality Items
+        //QC1.4>>
+        /*
         clear(AcceptedQty);//B2BQC1.00.01
         Item.GET(ItemLedgerEntry."Item No.");//B2BQC1.00.01
 
@@ -84,7 +90,30 @@ Codeunit 33000261 "ItemJnlPostLineExt B2B"
             ELSE
                 IF AcceptedQty < Abs(ItemLedgerEntry.Quantity) THEN
                     ERROR(Text33000250Err);
+        */
+        ItemLedgerEntryLRec.SetCurrentKey("Item No.", Open, "Variant Code", Positive, "Location Code", "Posting Date");
+        ItemLedgerEntryLRec.SetRange("Item No.", ItemLedgerEntry."Item No.");
+        ItemLedgerEntryLRec.SetRange(Open, true);
+        ItemLedgerEntryLRec.SetRange("Variant Code", ItemLedgerEntry."Variant Code");
+        ItemLedgerEntryLRec.SetRange(Positive, not ItemLedgerEntry.Positive);
+        ItemLedgerEntryLRec.SetRange("Location Code", ItemLedgerEntry."Location Code");
+        IF ItemLedgerEntryLRec.FIND('-') THEN
+            REPEAT
 
+                IF NOT QualityItemLedgEntry.GET(ItemLedgerEntryLRec."Entry No.") THEN BEGIN
+                    ItemLedgerEntryLRec.MARK(TRUE);
+                    AcceptedQty := AcceptedQty + ItemLedgerEntryLRec."Remaining Quantity";
+                END;
+            UNTIL ItemLedgerEntryLRec.NEXT() = 0;
+        ItemLedgerEntryLRec.MARKEDONLY(TRUE);
+        Item.Get(ItemLedgerEntry."Item No.");
+        IF (NOT ItemLedgerEntry.Positive) AND (Item."QC Enabled B2B") THEN
+            IF NOT ItemLedgerEntryLRec.FIND('-') THEN
+                ERROR(Text33000251Err)
+            ELSE
+                IF AcceptedQty < Abs(ItemLedgerEntry.Quantity) THEN
+                    ERROR(Text33000250Err);
+        //QC1.4<<
         // Stop   B2BQC1.00.00 - 01
     END;
 

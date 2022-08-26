@@ -24,27 +24,27 @@ page 33000292 "Specification Version List B2B"
         {
             repeater(Control1102152000)
             {
-                field("Version Code"; "Version Code")
+                field("Version Code"; Rec."Version Code")
                 {
                     ApplicationArea = all;
                     tooltip = 'mention the version code';
                 }
-                field(Description; Description)
+                field(Description; Rec.Description)
                 {
                     ApplicationArea = all;
                     tooltip = 'Description for Identification purpose for  the user';
                 }
-                field(Status; Status)
+                field(Status; Rec.Status)
                 {
                     ApplicationArea = all;
                     tooltip = 'Default is new. After entry of the relevant data, the status must be changed to Certified';
                 }
-                field("Starting Date"; "Starting Date")
+                field("Starting Date"; Rec."Starting Date")
                 {
                     ApplicationArea = all;
                     tooltip = 'enter the planning the manufacturing process start the  starting date';
                 }
-                field("Last Date Modified"; "Last Date Modified")
+                field("Last Date Modified"; Rec."Last Date Modified")
                 {
                     ApplicationArea = all;
                     tooltip = 'which date last modified the order it last date modified';

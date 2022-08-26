@@ -24,15 +24,14 @@ codeunit 33000257 "Trailing IDS Mgt B2B"
 
     procedure OnOpenPage(var TrailingIDSSetup: Record "Trailing IDS Setup B2B");
     begin
-        with TrailingIDSSetup do
-            if not GET(USERID()) then begin
-                Evaluate("User ID", USERID());
-                "Use Work Date as Base" := true;
-                "Period Length" := "Period Length"::Month;
-                "Value to Calculate" := "Value to Calculate"::"No. of IDS";
-                "Chart Type" := "Chart Type"::"Stacked Column";
-                INSERT();
-            end;
+        if not TrailingIDSSetup.GET(USERID()) then begin
+            Evaluate(TrailingIDSSetup."User ID", USERID());
+            TrailingIDSSetup."Use Work Date as Base" := true;
+            TrailingIDSSetup."Period Length" := TrailingIDSSetup."Period Length"::Month;
+            TrailingIDSSetup."Value to Calculate" := TrailingIDSSetup."Value to Calculate"::"No. of IDS";
+            TrailingIDSSetup."Chart Type" := TrailingIDSSetup."Chart Type"::"Stacked Column";
+            TrailingIDSSetup.INSERT();
+        end;
     end;
 
     procedure DrillDown(var BusChartBuf: Record "Business Chart Buffer");
@@ -69,33 +68,31 @@ codeunit 33000257 "Trailing IDS Mgt B2B"
         StatusText: Text[50];
     begin
         TrailingIDSSetup.GET(USERID());
-        with BusChartBuf do begin
-            Initialize();
-            "Period Length" := TrailingIDSSetup."Period Length";
-            SetPeriodXAxis();
-            CreateMap(ChartMap);
+        BusChartBuf.Initialize();
+        BusChartBuf."Period Length" := TrailingIDSSetup."Period Length";
+        BusChartBuf.SetPeriodXAxis();
+        CreateMap(ChartMap);
+        for IDSLoop := 1 to ARRAYLEN(ChartMap) do begin
+            if ChartMap[IDSLoop] = 1 then
+                StatusText := Text330001Txt
+            else
+                if ChartMap[IDSLoop] = 2 then
+                    StatusText := Text330002Txt;
+            BusChartBuf.AddMeasure(StatusText, IDSLoop, BusChartBuf."Data Type"::Decimal, TrailingIDSSetup.GetChartType());
+        end;
+
+        if CalcPeriods(FromDate, ToDate, BusChartBuf) then begin
+            BusChartBuf.AddPeriods(ToDate[1], ToDate[ARRAYLEN(ToDate)]);
+
             for IDSLoop := 1 to ARRAYLEN(ChartMap) do begin
-                if ChartMap[IDSLoop] = 1 then
-                    StatusText := Text330001Txt
-                else
-                    if ChartMap[IDSLoop] = 2 then
-                        StatusText := Text330002Txt;
-                AddMeasure(StatusText, IDSLoop, "Data Type"::Decimal, TrailingIDSSetup.GetChartType());
-            end;
-
-            if CalcPeriods(FromDate, ToDate, BusChartBuf) then begin
-                AddPeriods(ToDate[1], ToDate[ARRAYLEN(ToDate)]);
-
-                for IDSLoop := 1 to ARRAYLEN(ChartMap) do begin
-                    TotalValue := 0;
-                    for ColumnNo := 1 to ARRAYLEN(ToDate) do begin
-                        Value := GetIDSValue(ChartMap[IDSLoop], FromDate[ColumnNo], ToDate[ColumnNo]);
-                        if ColumnNo = 1 then
-                            TotalValue := Value
-                        else
-                            TotalValue += Value;
-                        SetValueByIndex(IDSLoop - 1, ColumnNo - 1, TotalValue);
-                    end;
+                TotalValue := 0;
+                for ColumnNo := 1 to ARRAYLEN(ToDate) do begin
+                    Value := GetIDSValue(ChartMap[IDSLoop], FromDate[ColumnNo], ToDate[ColumnNo]);
+                    if ColumnNo = 1 then
+                        TotalValue := Value
+                    else
+                        TotalValue += Value;
+                    BusChartBuf.SetValueByIndex(IDSLoop - 1, ColumnNo - 1, TotalValue);
                 end;
             end;
         end;

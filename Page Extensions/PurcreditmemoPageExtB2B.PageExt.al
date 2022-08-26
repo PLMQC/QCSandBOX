@@ -18,7 +18,7 @@ pageextension 33000289 "PurcreditmemoPageExt B2B" extends "Purchase Credit Memo"
                     trigger OnAction();
                     begin
                         // Start  B2BQC1.00.00 - 01
-                        CopyQRItemstoCreditMemo();
+                        Rec.CopyQRItemstoCreditMemo();
                         // Stop   B2BQC1.00.00 - 01
                     end;
                 }

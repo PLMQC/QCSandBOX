@@ -24,12 +24,12 @@ page 33000255 "Specification List B2B"
         {
             repeater(Control1000000000)
             {
-                field("Spec ID"; "Spec ID")
+                field("Spec ID"; Rec."Spec ID")
                 {
                     ApplicationArea = all;
                     tooltip = 'Specification is a group of characteristics to be inspected of an item';
                 }
-                field(Description; Description)
+                field(Description; Rec.Description)
                 {
                     ApplicationArea = all;
                     tooltip = 'Description for Identification purpose for  the user';
@@ -84,7 +84,7 @@ page 33000255 "Specification List B2B"
                 ToolTip = ' list of all the specifications defined in the system ';
                 Image = Print;
                 Promoted = true;
-                PromotedOnly =true;
+                PromotedOnly = true;
                 PromotedCategory = "Report";
                 RunObject = Report "Specification B2B";
                 ApplicationArea = all;

@@ -83,7 +83,7 @@ table 33000281 "Specification Version B2B"
 
     trigger OnDelete();
     var
-        
+
     begin
         SpecLine.reset();
         SpecLine.SETRANGE("Spec ID", "Specification No.");
@@ -112,21 +112,19 @@ table 33000281 "Specification Version B2B"
 
     procedure AssistEdit(OldSpecVersion: Record "Specification Version B2B"): Boolean;
     begin
-        with SpecVersion do begin
-            SpecVersion := Rec;
-            SpecHeader.GET("Specification No.");
-            SpecHeader.TESTFIELD("Version Nos.");
-            if NoSeriesMgt.SelectSeries(SpecHeader."Version Nos.", OldSpecVersion."No. Series", "No. Series") then begin
-                NoSeriesMgt.SetSeries("Version Code");
-                Rec := SpecVersion;
-                exit(true);
-            end;
+        SpecVersion := Rec;
+        SpecHeader.GET(SpecVersion."Specification No.");
+        SpecHeader.TESTFIELD("Version Nos.");
+        if NoSeriesMgt.SelectSeries(SpecHeader."Version Nos.", OldSpecVersion."No. Series", SpecVersion."No. Series") then begin
+            NoSeriesMgt.SetSeries(SpecVersion."Version Code");
+            Rec := SpecVersion;
+            exit(true);
         end;
     end;
 
     procedure TestStatus();
     var
-        
+
         SpecIndent: Codeunit "Spec Line Indent B2B";
         InspectGroupCode: Code[20];
         SamplingPlanCode: Code[20];
@@ -167,7 +165,9 @@ table 33000281 "Specification Version B2B"
         end else
             ERROR(Text000Err);
     end;
-    var SpecLine: Record "Specification Line B2B";
-    SpecLine2: Record "Specification Line B2B";
+
+    var
+        SpecLine: Record "Specification Line B2B";
+        SpecLine2: Record "Specification Line B2B";
 }
 

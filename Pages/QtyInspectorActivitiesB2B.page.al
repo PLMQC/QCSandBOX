@@ -21,7 +21,7 @@ page 33000295 "Qty Inspector Activities B2B"
             cuegroup("For Release")
             {
                 Caption = 'For Release';
-                field("Inspection Datasheet - Open"; "Inspection Datasheet - Open")
+                field("Inspection Datasheet - Open"; Rec."Inspection Datasheet - Open")
                 {
                     DrillDownPageID = "Inspection Data Sheet List B2B";
                     ApplicationArea = all;
@@ -52,7 +52,7 @@ page 33000295 "Qty Inspector Activities B2B"
             cuegroup("For Post")
             {
                 Caption = 'For Post';
-                field("Inspection Datasheet - Release"; "Inspection Datasheet - Release")
+                field("Inspection Datasheet - Release"; Rec."Inspection Datasheet - Release")
                 {
                     Caption = 'Inspection Datasheet - Release';
                     DrillDownPageID = "Inspection Data Sheet List B2B";
@@ -69,13 +69,13 @@ page 33000295 "Qty Inspector Activities B2B"
 
     trigger OnOpenPage();
     begin
-        RESET();
-        if not GET() then begin
-            INIT();
-            INSERT();
+        Rec.RESET();
+        if not Rec.GET() then begin
+            Rec.INIT();
+            Rec.INSERT();
         end;
 
-        SETFILTER("Date Filter", '>=%1', WORKDATE());
+        Rec.SETFILTER("Date Filter", '>=%1', WORKDATE());
     end;
 }
 

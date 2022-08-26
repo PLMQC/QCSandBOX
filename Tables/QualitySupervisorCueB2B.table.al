@@ -14,40 +14,40 @@ table 33000287 "Quality Supervisor Cue B2B"
 
     fields
     {
-        field(1;"Primary Key";Code[10])
+        field(1; "Primary Key"; Code[10])
         {
             Caption = 'Primary Key';
             DataClassification = CustomerContent;
         }
-        field(2;"Inspection Receipt";Integer)
+        field(2; "Inspection Receipt"; Integer)
         {
-            CalcFormula = Count("Inspection Receipt Header B2B" WHERE (Status=FILTER(false)));
+            CalcFormula = Count("Inspection Receipt Header B2B" WHERE(Status = FILTER(false)));
             Caption = 'Inspection Receipt';
             Editable = false;
             FieldClass = FlowField;
         }
-        field(3;"Posted Inspection Datasheet";Integer)
+        field(3; "Posted Inspection Datasheet"; Integer)
         {
             CalcFormula = Count("Posted Ins DatasheetHeader B2B");
             Caption = 'Posted Inspection Datasheet';
             Editable = false;
             FieldClass = FlowField;
         }
-        field(4;"Posted Inspection Receipt";Integer)
+        field(4; "Posted Inspection Receipt"; Integer)
         {
-            CalcFormula = Count("Inspection Receipt Header B2B" WHERE (Status=FILTER(true)));
+            CalcFormula = Count("Inspection Receipt Header B2B" WHERE(Status = FILTER(true)));
             Caption = 'Posted Inspection Receipt';
             Editable = false;
             FieldClass = FlowField;
         }
-        field(5;"Purchase Order - Open";Integer)
+        field(5; "Purchase Order - Open"; Integer)
         {
-            CalcFormula = Count("Purchase Header" WHERE ("Document Type"=FILTER(Order)));
+            CalcFormula = Count("Purchase Header" WHERE("Document Type" = FILTER(Order)));
             Caption = 'Purchase Order - Open';
             Editable = false;
             FieldClass = FlowField;
         }
-        field(20;"Date Filter";Date)
+        field(20; "Date Filter"; Date)
         {
             Caption = 'Date Filter';
             Editable = false;
@@ -57,7 +57,7 @@ table 33000287 "Quality Supervisor Cue B2B"
 
     keys
     {
-        key(Key1;"Primary Key")
+        key(Key1; "Primary Key")
         {
         }
     }

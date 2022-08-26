@@ -2,41 +2,41 @@ pageextension 33000304 "PostedPurchRcpSubFPageExt B2B" extends "Posted Purchase 
 {
     layout
     {
-        addafter("ShortcutDimCode[8]" )
+        addafter("ShortcutDimCode[8]")
         {
-        
-           
-            
-            field("Spec ID B2B"; "Spec ID B2B")
+
+
+
+            field("Spec ID B2B"; Rec."Spec ID B2B")
             {
                 ApplicationArea = all;
                 ToolTip = 'Specification is a group of characteristics to be inspected of an item';
             }
-            field("Quantity Accepted B2B"; "Quantity Accepted B2B")
+            field("Quantity Accepted B2B"; Rec."Quantity Accepted B2B")
             {
                 //Editable = "Quantity AcceptedEditable";
                 ApplicationArea = all;
                 ToolTip = 'satsified the quantity inspection process that is quantity Accepted editable';
             }
-            field("Quantity Rework B2B"; "Quantity Rework B2B")
-            
+            field("Quantity Rework B2B"; Rec."Quantity Rework B2B")
+
             {
                 //Editable = "Quantity ReworkEditable";
                 ApplicationArea = all;
-                ToolTip ='the rework items must be sent for rework to the vendor for the edit quantity gor send the vendor';
+                ToolTip = 'the rework items must be sent for rework to the vendor for the edit quantity gor send the vendor';
             }
-            field("QC Enabled B2B"; "QC Enabled B2B")
+            field("QC Enabled B2B"; Rec."QC Enabled B2B")
             {
                 ApplicationArea = all;
                 ToolTip = 'In bound Inspection Data Sheets are created only if the item is QC Enabled';
             }
-            field("Quantity Rejected B2B"; "Quantity Rejected B2B")
+            field("Quantity Rejected B2B"; Rec."Quantity Rejected B2B")
             {
                 //Editable = "Quantity RejectedEditable";
                 ApplicationArea = all;
                 tooltip = 'rejected quantity send location for the edit quantity use the quantity rejected editable';
             }
-            field("Quality Before Receipt B2B"; "Quality Before Receipt B2B")
+            field("Quality Before Receipt B2B"; Rec."Quality Before Receipt B2B")
             {
                 ApplicationArea = all;
                 ToolTip = 'Inspection is done before the material offered by the vendor is taken into the inventory';
@@ -50,7 +50,7 @@ pageextension 33000304 "PostedPurchRcpSubFPageExt B2B" extends "Posted Purchase 
     {
         modify("&Undo Receipt")
         {
-           
+
             trigger OnBeforeAction();
             begin
                 UndoReceiptLineQCCheck();
@@ -74,7 +74,7 @@ pageextension 33000304 "PostedPurchRcpSubFPageExt B2B" extends "Posted Purchase 
                 action("PostedInspDataSheets B2B")
                 {
                     Caption = '&Posted Inspection Data Sheets';
-                    ToolTip='posted inspection data sheet  used for reporting and vendor analysis';
+                    ToolTip = 'posted inspection data sheet  used for reporting and vendor analysis';
                     RunObject = Page "Posted Ins DataSheet List B2B";
                     RunPageLink = "Order No." = FIELD("Order No.");
                     RunPageView = SORTING("Rework Level");
@@ -84,7 +84,7 @@ pageextension 33000304 "PostedPurchRcpSubFPageExt B2B" extends "Posted Purchase 
                 action("Inspection Receipts B2B")
                 {
                     Caption = 'Inspection &Receipts';
-                    tooltip ='Inspection receipt through which the user actually accepts, rejects or sends for rework';
+                    tooltip = 'Inspection receipt through which the user actually accepts, rejects or sends for rework';
                     RunObject = Page "Inspection Receipt List B2B";
                     RunPageLink = "Order No." = FIELD("Order No."),
                                       Status = FILTER(FALSE);
@@ -107,7 +107,7 @@ pageextension 33000304 "PostedPurchRcpSubFPageExt B2B" extends "Posted Purchase 
             action("InspectionLots B2B")
             {
                 Caption = 'Inspection &Lots';
-                ToolTip = 'Defines the Inspection Lots  ' ;
+                ToolTip = 'Defines the Inspection Lots  ';
 
                 ApplicationArea = all;
                 Image = LotInfo;
@@ -134,9 +134,9 @@ pageextension 33000304 "PostedPurchRcpSubFPageExt B2B" extends "Posted Purchase 
     begin
         // Start  B2BQC1.00.00 - 01 Show Inspection Data Sheets
 
-        InspectDataSheet.SETRANGE("Receipt No.", "Document No.");
-        InspectDataSheet.SETRANGE("Item No.", "No.");
-        InspectDataSheet.SETRANGE("Purch. Line No", "Line No.");
+        InspectDataSheet.SETRANGE("Receipt No.", Rec."Document No.");
+        InspectDataSheet.SETRANGE("Item No.", Rec."No.");
+        InspectDataSheet.SETRANGE("Purch. Line No", Rec."Line No.");
         InspectDataSheet.SETCURRENTKEY("Rework Level");
         PAGE.RUN(PAGE::"Inspection Data Sheet List B2B", InspectDataSheet);
 
@@ -147,9 +147,9 @@ pageextension 33000304 "PostedPurchRcpSubFPageExt B2B" extends "Posted Purchase 
     begin
         // Start  B2BQC1.00.00 - 01 Show Posted Inspection Data Sheets
 
-        PostedInspectDataSheet.SETRANGE("Receipt No.", "Document No.");
-        PostedInspectDataSheet.SETRANGE("Item No.", "No.");
-        PostedInspectDataSheet.SETRANGE("Purch. Line No", "Line No.");
+        PostedInspectDataSheet.SETRANGE("Receipt No.", Rec."Document No.");
+        PostedInspectDataSheet.SETRANGE("Item No.", Rec."No.");
+        PostedInspectDataSheet.SETRANGE("Purch. Line No", Rec."Line No.");
         PostedInspectDataSheet.SETCURRENTKEY("Rework Level");
         PAGE.RUN(PAGE::"Posted Ins DataSheet List B2B", PostedInspectDataSheet);
 
@@ -160,8 +160,8 @@ pageextension 33000304 "PostedPurchRcpSubFPageExt B2B" extends "Posted Purchase 
     begin
         // Start  B2BQC1.00.00 - 01 Show Inspection Report
 
-        InspectReportHeader.SETRANGE("Receipt No.", "Document No.");
-        InspectReportHeader.SETRANGE("Purch Line No", "Line No.");
+        InspectReportHeader.SETRANGE("Receipt No.", Rec."Document No.");
+        InspectReportHeader.SETRANGE("Purch Line No", Rec."Line No.");
         InspectReportHeader.SETFILTER(InspectReportHeader.Status, '%1', Status);
         InspectReportHeader.SETCURRENTKEY("Rework Level");
         PAGE.RUN(PAGE::"Inspection Receipt List B2B", InspectReportHeader);
@@ -175,12 +175,12 @@ pageextension 33000304 "PostedPurchRcpSubFPageExt B2B" extends "Posted Purchase 
     begin
         // Start  B2BQC1.00.00 - 01 Show Inspection Lots
 
-        TESTFIELD("QC Enabled B2B");
-        IF Type = Type::Item THEN BEGIN
+        Rec.TESTFIELD("QC Enabled B2B");
+        IF Rec.Type = Rec.Type::Item THEN BEGIN
             InspectLots.RESET();
-            InspectLots.SETRANGE("Document No.", "Document No.");
-            InspectLots.SETRANGE("Purch. Line No.", "Line No.");
-            InspectLots.SETRANGE("Item No.", "No.");
+            InspectLots.SETRANGE("Document No.", Rec."Document No.");
+            InspectLots.SETRANGE("Purch. Line No.", Rec."Line No.");
+            InspectLots.SETRANGE("Item No.", Rec."No.");
             PAGE.RUN(PAGE::"Inspection Lots B2B", InspectLots);
         END;
 
@@ -191,11 +191,11 @@ pageextension 33000304 "PostedPurchRcpSubFPageExt B2B" extends "Posted Purchase 
     begin
         // Start  B2BQC1.00.00 - 01 Create Inspection Data Sheets
 
-        IF Type = Type::Item THEN BEGIN
-            TESTFIELD("Spec ID B2B");
-            InspectLots.SETRANGE("Document No.", "Document No.");
-            InspectLots.SETRANGE("Purch. Line No.", "Line No.");
-            InspectLots.SETRANGE("Item No.", "No.");
+        IF Rec.Type = Rec.Type::Item THEN BEGIN
+            Rec.TESTFIELD("Spec ID B2B");
+            InspectLots.SETRANGE("Document No.", Rec."Document No.");
+            InspectLots.SETRANGE("Purch. Line No.", Rec."Line No.");
+            InspectLots.SETRANGE("Item No.", Rec."No.");
             InspectLots.SETRANGE("Inspect. Data Sheet Created", TRUE);
             IF NOT InspectLots.FIND('-') THEN BEGIN
                 InspectLots.SETRANGE("Inspect. Data Sheet Created");
@@ -212,16 +212,16 @@ pageextension 33000304 "PostedPurchRcpSubFPageExt B2B" extends "Posted Purchase 
 
     local procedure UndoReceiptLineQCCheck();
     var
-       
+
         PIDS: Record 33000263;
         PIDSL: Record 33000264;
         Text000Err: Label 'You cannot UndoReceipt as Inspections Data Sheets are Posted';
     begin
         // Start  B2BQC1.00.00 - 01 UndoReceitLine
-        IF "QC Enabled B2B" = TRUE THEN BEGIN
+        IF Rec."QC Enabled B2B" = TRUE THEN BEGIN
             IDS.reset();
-            IDS.SETRANGE("Receipt No.", "Document No.");
-            IDS.SETRANGE("Purch. Line No", "Line No.");
+            IDS.SETRANGE("Receipt No.", Rec."Document No.");
+            IDS.SETRANGE("Purch. Line No", Rec."Line No.");
             IF NOT IDS.FIND('-') THEN
                 ERROR(Text000Err)
             ELSE BEGIN
@@ -248,7 +248,8 @@ pageextension 33000304 "PostedPurchRcpSubFPageExt B2B" extends "Posted Purchase 
         END;
     end;
 
-    var  IDS: Record 33000255;
+    var
+        IDS: Record 33000255;
         IDSL: Record 33000256;
         QILE: Record 33000262;
 

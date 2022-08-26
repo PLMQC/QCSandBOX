@@ -43,7 +43,7 @@ tableextension 33000252 "ItemExt B2B" extends Item
         }
         field(33000253; "Quantity Under Inspection B2B"; Decimal)
         {
-            CalcFormula = Sum ("Quality Item Ledger Entry B2B"."Remaining Quantity" WHERE("Item No." = FIELD("No."),
+            CalcFormula = Sum("Quality Item Ledger Entry B2B"."Remaining Quantity" WHERE("Item No." = FIELD("No."),
                                                                                       "Global Dimension 1 Code" = FIELD("Global Dimension 1 Filter"),
                                                                                       "Global Dimension 2 Code" = FIELD("Global Dimension 2 Filter"),
                                                                                       "Location Code" = FIELD("Location Filter"),
@@ -60,7 +60,7 @@ tableextension 33000252 "ItemExt B2B" extends Item
         }
         field(33000254; "Quantity Rejected B2B"; Decimal)
         {
-            CalcFormula = Sum ("Quality Item Ledger Entry B2B"."Remaining Quantity" WHERE("Item No." = FIELD("No."),
+            CalcFormula = Sum("Quality Item Ledger Entry B2B"."Remaining Quantity" WHERE("Item No." = FIELD("No."),
                                                                                       "Global Dimension 1 Code" = FIELD("Global Dimension 1 Filter"),
                                                                                       "Global Dimension 2 Code" = FIELD("Global Dimension 2 Filter"),
                                                                                       "Location Code" = FIELD("Location Filter"),
@@ -111,7 +111,7 @@ tableextension 33000252 "ItemExt B2B" extends Item
         }
         field(33000258; "Quantity Rework B2B"; Decimal)
         {
-            CalcFormula = Sum ("Quality Item Ledger Entry B2B"."Remaining Quantity" WHERE("Item No." = FIELD("No."),
+            CalcFormula = Sum("Quality Item Ledger Entry B2B"."Remaining Quantity" WHERE("Item No." = FIELD("No."),
                                                                                       "Global Dimension 1 Code" = FIELD("Global Dimension 1 Filter"),
                                                                                       "Global Dimension 2 Code" = FIELD("Global Dimension 2 Filter"),
                                                                                       "Location Code" = FIELD("Location Filter"),
@@ -128,7 +128,7 @@ tableextension 33000252 "ItemExt B2B" extends Item
         }
         field(33000259; "Quantity Sent for Rework B2B"; Decimal)
         {
-            CalcFormula = Sum ("Quality Item Ledger Entry B2B"."Remaining Quantity" WHERE("Item No." = FIELD("No."),
+            CalcFormula = Sum("Quality Item Ledger Entry B2B"."Remaining Quantity" WHERE("Item No." = FIELD("No."),
                                                                                       "Global Dimension 1 Code" = FIELD("Global Dimension 1 Filter"),
                                                                                       "Global Dimension 2 Code" = FIELD("Global Dimension 2 Filter"),
                                                                                       "Location Code" = FIELD("Location Filter"),

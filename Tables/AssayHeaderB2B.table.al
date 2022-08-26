@@ -68,7 +68,7 @@ table 33000266 "Assay Header B2B"
         }
         field(10; Comment; Boolean)
         {
-            CalcFormula = Exist ("Quality Comment Line B2B" WHERE(Type = CONST(Assay),
+            CalcFormula = Exist("Quality Comment Line B2B" WHERE(Type = CONST(Assay),
                                                               "No." = FIELD("No.")));
             Caption = 'Comment';
             FieldClass = FlowField;
@@ -108,17 +108,15 @@ table 33000266 "Assay Header B2B"
 
     procedure AssistEdit(oldAssayNo: Record "Assay Header B2B"): Boolean;
     begin
-        with AssayHeader do begin
-            AssayHeader := Rec;
+        AssayHeader := Rec;
+        QCSetup.GET();
+        QCSetup.TESTFIELD("Assay Nos.");
+        if NoSeriesMgt.SelectSeries(QCSetup."Assay Nos.", oldAssayNo."No. Series", AssayHeader."No. Series") then begin
             QCSetup.GET();
             QCSetup.TESTFIELD("Assay Nos.");
-            if NoSeriesMgt.SelectSeries(QCSetup."Assay Nos.", oldAssayNo."No. Series", "No. Series") then begin
-                QCSetup.GET();
-                QCSetup.TESTFIELD("Assay Nos.");
-                NoSeriesMgt.SetSeries("No.");
-                Rec := AssayHeader;
-                exit(true);
-            end;
+            NoSeriesMgt.SetSeries(AssayHeader."No.");
+            Rec := AssayHeader;
+            exit(true);
         end;
     end;
 }

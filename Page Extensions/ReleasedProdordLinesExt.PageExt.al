@@ -4,25 +4,25 @@ pageextension 33000312 ReleasedProdOrdLinesExtB2B extends "Released Prod. Order 
     {
         addafter(Description)
         {
-            field("WIP QC Enabled B2B"; "WIP QC Enabled B2B")
+            field("WIP QC Enabled B2B"; Rec."WIP QC Enabled B2B")
             {
                 ApplicationArea = All;
                 Caption = 'WIP QC Enabled';
                 ToolTip = 'work in process Inspection Data Sheets are created only if the item is WIP QC Enabled';
             }
-            field("WIP Spec ID B2B"; "WIP Spec ID B2B")
+            field("WIP Spec ID B2B"; Rec."WIP Spec ID B2B")
             {
                 ApplicationArea = All;
                 Caption = 'WIP Spec ID';
-                ToolTip ='work in process Specification is a group of characteristics to be inspected of an item';
+                ToolTip = 'work in process Specification is a group of characteristics to be inspected of an item';
             }
-            field("Quantity Sent to Quality B2B"; "Quantity Sent to Quality B2B")
+            field("Quantity Sent to Quality B2B"; Rec."Quantity Sent to Quality B2B")
             {
                 ApplicationArea = All;
                 Caption = 'Quantity Sent to Quality';
                 tooltip = 'how much Qty sent to Quanlity';
             }
-            field("Quantity Sending to Quality B2B"; "Qty Sending to Quality B2B")
+            field("Quantity Sending to Quality B2B"; Rec."Qty Sending to Quality B2B")
             {
                 ApplicationArea = All;
                 Caption = 'Quantity Sending to Quality';
@@ -37,8 +37,8 @@ pageextension 33000312 ReleasedProdOrdLinesExtB2B extends "Released Prod. Order 
                     Text33000252Txt: Label 'Should not be greater than  Rework Qty.';
                     Text33000253Txt: Label 'Should not be greater than ...';
                 BEGIN
-                    ProdOrderRoutingLine.SETRANGE("Prod. Order No.", "Prod. Order No.");
-                    ProdOrderRoutingLine.SETRANGE("Routing Reference No.", "Line No.");
+                    ProdOrderRoutingLine.SETRANGE("Prod. Order No.", Rec."Prod. Order No.");
+                    ProdOrderRoutingLine.SETRANGE("Routing Reference No.", Rec."Line No.");
                     IF ProdOrderRoutingLine.FIND('-') THEN
                         REPEAT
                             IF ProdOrderRoutingLine."QC Enabled B2B" THEN BEGIN
@@ -49,45 +49,45 @@ pageextension 33000312 ReleasedProdOrdLinesExtB2B extends "Released Prod. Order 
                                 END ELSE
                                     IF (ProdOrderRoutingLine."Quantity Accepted B2B" + ProdOrderRoutingLine."Prev. Qty B2B") < TempQtySendingtoQuality THEN
                                         TempQtySendingtoQuality := ProdOrderRoutingLine."Quantity Accepted B2B" + ProdOrderRoutingLine."Prev. Qty B2B";
-                                IF ("Qty Sending to Quality B2B" + "Quantity Sent to Quality B2B") > TempQtySendingtoQuality THEN
+                                IF (Rec."Qty Sending to Quality B2B" + Rec."Quantity Sent to Quality B2B") > TempQtySendingtoQuality THEN
                                     ERROR(Text33000250Txt);
                             END;
                         UNTIL ProdOrderRoutingLine.NEXT() = 0;
 
-                    CALCFIELDS("Quantity Accepted B2B", "Quantity Rejected B2B", "Quantity Rework B2B");
-                    IF ("Quantity Sent to Quality B2B" = 0) AND ("Quantity Accepted B2B" = 0) AND
-                       ("Quantity Rejected B2B" = 0) AND ("Quantity Rework B2B" = 0)
+                    Rec.CALCFIELDS("Quantity Accepted B2B", "Quantity Rejected B2B", "Quantity Rework B2B");
+                    IF (Rec."Quantity Sent to Quality B2B" = 0) AND (Rec."Quantity Accepted B2B" = 0) AND
+                       (Rec."Quantity Rejected B2B" = 0) AND (Rec."Quantity Rework B2B" = 0)
                     THEN BEGIN
-                        IF "Qty Sending to Quality B2B" > Quantity THEN
+                        IF Rec."Qty Sending to Quality B2B" > Rec.Quantity THEN
                             ERROR(Text33000251Txt)
                     END ELSE
-                        IF "Quantity Sent to Quality B2B" = ("Quantity Accepted B2B" + "Quantity Rejected B2B" + "Quantity Rework B2B") THEN
-                            IF "Qty Sending to Quality B2B" <= Quantity - ("Quantity Accepted B2B" + "Quantity Rejected B2B") THEN
-                                "Qty Sending to Quality B2B" := "Qty Sending to Quality B2B"
+                        IF Rec."Quantity Sent to Quality B2B" = (Rec."Quantity Accepted B2B" + Rec."Quantity Rejected B2B" + Rec."Quantity Rework B2B") THEN
+                            IF Rec."Qty Sending to Quality B2B" <= Rec.Quantity - (Rec."Quantity Accepted B2B" + Rec."Quantity Rejected B2B") THEN
+                                Rec."Qty Sending to Quality B2B" := Rec."Qty Sending to Quality B2B"
                             ELSE
                                 ERROR(Text33000252Txt)
                         ELSE
-                            IF "Qty Sending to Quality B2B" <= "Quantity Rejected B2B" - ("Quantity Sent to Quality B2B" - Quantity) THEN
-                                "Qty Sending to Quality B2B" := "Qty Sending to Quality B2B"
+                            IF Rec."Qty Sending to Quality B2B" <= Rec."Quantity Rejected B2B" - (Rec."Quantity Sent to Quality B2B" - Rec.Quantity) THEN
+                                Rec."Qty Sending to Quality B2B" := Rec."Qty Sending to Quality B2B"
                             ELSE
                                 ERROR(Text33000253Txt);
-                    MODIFY();
+                    Rec.MODIFY();
                 END;
             }
-            field("Quantity Accepted B2B"; "Quantity Accepted B2B")
+            field("Quantity Accepted B2B"; Rec."Quantity Accepted B2B")
             {
                 ApplicationArea = All;
                 Caption = 'Quantity Accepted';
                 ToolTip = 'the inspection data sheet is quantity characteristic  approval is the accepted quantity';
 
             }
-            field("Quantity Rejected B2B"; "Quantity Rejected B2B")
+            field("Quantity Rejected B2B"; Rec."Quantity Rejected B2B")
             {
                 ApplicationArea = All;
                 Caption = 'Quantity Rejected';
                 tooltip = 'the inspection data sheet is quantity characteristic is not approval the rejected quantity';
             }
-            field("Quantity Rework B2B"; "Quantity Rework B2B")
+            field("Quantity Rework B2B"; Rec."Quantity Rework B2B")
             {
                 ApplicationArea = All;
                 Caption = 'Quantity Rework';
@@ -136,7 +136,7 @@ pageextension 33000312 ReleasedProdOrdLinesExtB2B extends "Released Prod. Order 
                 action("Posted Inspection Receipt B2B")
                 {
                     Caption = 'Posted I&nspection Receipt';
-                    tooltip  = 'Posted Inspection Receipts used for reporting and vendor analysis';
+                    tooltip = 'Posted Inspection Receipts used for reporting and vendor analysis';
                     Image = PostedReceipt;
                     ApplicationArea = All;
                     RunObject = Page 33000267;
@@ -156,7 +156,7 @@ pageextension 33000312 ReleasedProdOrdLinesExtB2B extends "Released Prod. Order 
     begin
         // Start  B2BQC1.00.00 - 01 Create Inspection Data Sheets
 
-        CreateInspectionDataSheets();
+        Rec.CreateInspectionDataSheets();
 
         // Stop   B2BQC1.00.00 - 01
     end;

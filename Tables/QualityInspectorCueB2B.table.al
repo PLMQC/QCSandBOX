@@ -21,28 +21,28 @@ table 33000286 "Quality Inspector Cue B2B"
         }
         field(2; "Inspection Datasheet - Open"; Integer)
         {
-            CalcFormula = Count ("Ins Datasheet Header B2B" WHERE(Status = FILTER(Open)));
+            CalcFormula = Count("Ins Datasheet Header B2B" WHERE(Status = FILTER(Open)));
             Caption = 'Inspection Datasheet - Open';
             Editable = false;
             FieldClass = FlowField;
         }
         field(3; "Posted Inspection Datasheet"; Integer)
         {
-            CalcFormula = Count ("Posted Ins DatasheetHeader B2B");
+            CalcFormula = Count("Posted Ins DatasheetHeader B2B");
             Caption = 'Posted Inspection Datasheet';
             Editable = false;
             FieldClass = FlowField;
         }
         field(4; "Posted Inspection Receipt"; Integer)
         {
-            CalcFormula = Count ("Inspection Receipt Header B2B" WHERE(Status = FILTER(true)));
+            CalcFormula = Count("Inspection Receipt Header B2B" WHERE(Status = FILTER(true)));
             Caption = 'Posted Inspection Receipt';
             Editable = false;
             FieldClass = FlowField;
         }
         field(5; "Purchase Order - Open"; Integer)
         {
-            CalcFormula = Count ("Purchase Header" WHERE("Document Type" = FILTER(Order)));
+            CalcFormula = Count("Purchase Header" WHERE("Document Type" = FILTER(Order)));
             Caption = 'Purchase Order - Open';
             Editable = false;
             FieldClass = FlowField;
@@ -55,7 +55,7 @@ table 33000286 "Quality Inspector Cue B2B"
         }
         field(21; "Inspection Datasheet - Release"; Integer)
         {
-            CalcFormula = Count ("Ins Datasheet Header B2B" WHERE(Status = FILTER(Released)));
+            CalcFormula = Count("Ins Datasheet Header B2B" WHERE(Status = FILTER(Released)));
             Caption = 'Inspection Datasheet - Open';
             Editable = false;
             FieldClass = FlowField;

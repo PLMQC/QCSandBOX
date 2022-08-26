@@ -22,27 +22,27 @@ page 33000261 "Sampling Line Subform B2B"
         {
             repeater(Control1000000000)
             {
-                field("Lot Size - Min"; "Lot Size - Min")
+                field("Lot Size - Min"; Rec."Lot Size - Min")
                 {
                     Editable = false;
                     ApplicationArea = all;
                     tooltip = 'That is, enter the min value of the selected range in the “Lot Size-min” ';
 
                 }
-                field("Lot Size - Max"; "Lot Size - Max")
+                field("Lot Size - Max"; Rec."Lot Size - Max")
                 {
                     ApplicationArea = all;
                     tooltip = 'That is, enter the max value of the selected range in the “Lot Size-Max”';
                 }
-                field("Sampling Size"; "Sampling Size")
+                field("Sampling Size"; Rec."Sampling Size")
                 {
                     ApplicationArea = all;
                     tooltip = 'sample size to be considered to assess the quality of the item';
                 }
-                field("Allowable Defects - Max"; "Allowable Defects - Max")
+                field("Allowable Defects - Max"; Rec."Allowable Defects - Max")
                 {
                     ApplicationArea = all;
-                   ToolTip = 'This Field Defines Maximum Alloe' ;
+                    ToolTip = 'This Field Defines Maximum Alloe';
                 }
             }
         }

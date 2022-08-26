@@ -30,7 +30,7 @@ codeunit 33000250 "Post-Inspection Data Sheet B2B"
         Evaluate(PostInspectData."Posted By", USERID());
         PostInspectData.INSERT();
 
-        InspectDataLine.SETRANGE("Document No.", "No.");
+        InspectDataLine.SETRANGE("Document No.", Rec."No.");
         InspectDataLine.SETCURRENTKEY("Character Group No.");
         InspectReport.SETRANGE("Document No.", InspReportNo);
         if InspectReport.FIND('+') then
@@ -48,10 +48,10 @@ codeunit 33000250 "Post-Inspection Data Sheet B2B"
                     InspectReport.TRANSFERFIELDS(InspectDataLine);
                     InspectReport."Document No." := InspReportNo;
                     InspectReport."Line No." := LineNo + 10000;
-                    InspectReport."Receipt No." := "Receipt No.";
+                    InspectReport."Receipt No." := Rec."Receipt No.";
                     InspectReport."Posting Date" := TODAY();
-                    InspectReport."Item No." := "Item No.";
-                    InspectReport."Vendor No." := "Vendor No.";
+                    InspectReport."Item No." := Rec."Item No.";
+                    InspectReport."Vendor No." := Rec."Vendor No.";
                     InspectReport."Purch Line No." := PostInspectData."Purch. Line No";
                     InspectReport."Posted Inspect Doc. No." := PostInspectData."No.";
                     InspectReport.INSERT();
@@ -64,8 +64,8 @@ codeunit 33000250 "Post-Inspection Data Sheet B2B"
     var
         QualitySetup: Record "Quality Control Setup B2B";
         InspectDataLine: Record "Inspection Datasheet Line B2B";
-       
-      
+
+
         InspectReportHeader: Record "Inspection Receipt Header B2B";
         InspectReport: Record "Inspection Receipt Line B2B";
         NoSeriesMgt: Codeunit NoSeriesManagement;
@@ -77,6 +77,8 @@ codeunit 33000250 "Post-Inspection Data Sheet B2B"
     procedure InsertInspectionReportHeader(InspectHeader: Record "Posted Ins DatasheetHeader B2B"): Code[20];
     var
     begin
+        //QC1.4>>
+        /*
         if InspectHeader."Source Type" = InspectHeader."Source Type"::"In Bound" then begin
             if InspectReportHeader."Quality Before Receipt" then
                 InspectReportHeader.SETRANGE("Order No.", InspectHeader."Order No.")
@@ -93,6 +95,9 @@ codeunit 33000250 "Post-Inspection Data Sheet B2B"
             InspectReportHeader.SETRANGE("Production Batch No.", InspectHeader."Production Batch No.");
             InspectReportHeader.SETRANGE("Rework Reference No.", InspectHeader."Rework Reference No.");
         end;
+        */
+        GetInspectReportHeader(InspectReportHeader, InspectHeader);
+        //QC1.4<<
 
         if not InspectReportHeader.FIND('-') then begin
             InspectReportHeader.INIT();
@@ -163,7 +168,41 @@ codeunit 33000250 "Post-Inspection Data Sheet B2B"
     begin
     end;
 
-    var  PostInspectData: Record "Posted Ins DatasheetHeader B2B";
-      PostInspectDataLine: Record "Posted Ins Datasheet Line B2B";
+    //QC1.4>>
+    procedure GetInspectReportHeader(Var InspectReportHeader: Record "Inspection Receipt Header B2B"; InspectHeader: Record "Posted Ins DatasheetHeader B2B")
+    var
+        IsHandled: Boolean;
+    begin
+        IsHandled := false;
+        OnBeforeGetInspectReportHeader(InspectReportHeader, InspectHeader, IsHandled);
+        if IsHandled then
+            exit;
+        if InspectHeader."Source Type" = InspectHeader."Source Type"::"In Bound" then begin
+            if InspectReportHeader."Quality Before Receipt" then
+                InspectReportHeader.SETRANGE("Order No.", InspectHeader."Order No.")
+            else
+                InspectReportHeader.SETRANGE("Receipt No.", InspectHeader."Receipt No.");
+            InspectReportHeader.SETRANGE("Purch Line No", InspectHeader."Purch. Line No");
+            InspectReportHeader.SETRANGE("Lot No.", InspectHeader."Lot No.");
+            InspectReportHeader.SETRANGE("Purchase Consignment", InspectHeader."Purchase Consignment No.");
+            InspectReportHeader.SETRANGE("Rework Reference No.", InspectHeader."Rework Reference No.");
+
+        end else begin
+            InspectReportHeader.SETRANGE("Prod. Order No.", InspectHeader."Prod. Order No.");
+            InspectReportHeader.SETRANGE("Prod. Order Line", InspectHeader."Prod. Order Line");
+            InspectReportHeader.SETRANGE("Production Batch No.", InspectHeader."Production Batch No.");
+            InspectReportHeader.SETRANGE("Rework Reference No.", InspectHeader."Rework Reference No.");
+        end;
+    end;
+
+    [IntegrationEvent(false, false)]
+    procedure OnBeforeGetInspectReportHeader(Var InspectReportHeader: Record "Inspection Receipt Header B2B"; InspectHeader: Record "Posted Ins DatasheetHeader B2B"; var IsHandled: boolean)
+    begin
+    end;
+    //QC1.4<<
+
+    var
+        PostInspectData: Record "Posted Ins DatasheetHeader B2B";
+        PostInspectDataLine: Record "Posted Ins Datasheet Line B2B";
 }
 

@@ -22,12 +22,12 @@ page 33000250 "Inspection Groups B2B"
         {
             repeater(Control1000000000)
             {
-                field("Code"; Code)
+                field("Code"; Rec.Code)
                 {
                     ApplicationArea = All;
                     ToolTip = 'system of words,letters,or signs uesd to represent a code';
                 }
-                field(Description; Description)
+                field(Description; Rec.Description)
                 {
                     ApplicationArea = all;
                     tooltip = 'enter the name the items';

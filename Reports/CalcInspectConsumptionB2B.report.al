@@ -95,14 +95,14 @@ report 33000265 "Calc.Inspect Consumption B2B"
         LastItemJnlLine: Record "Item Journal Line";
         UOMMgt: Codeunit "Unit of Measure Management";
         Text000Msg: Label 'Calculating consumption...\\';
-        Text001Msg: Label 'Prod. Order No.   #1##########\',Comment = '%1 = Order No';
-        Text002Msg: Label 'Item No.          #2##########\',Comment = '%2 = Item No';
-        Text003Msg: Label 'Quantity          #3##########',Comment = '%3 = Quantity';
+        Text001Msg: Label 'Prod. Order No.   #1##########\', Comment = '%1 = Order No';
+        Text002Msg: Label 'Item No.          #2##########\', Comment = '%2 = Item No';
+        Text003Msg: Label 'Quantity          #3##########', Comment = '%3 = Quantity';
         Window: Dialog;
         PostingDate: Date;
         CalcBasedOn: Option "Actual Output","Expected Output";
         UnitOfMeasConv: Decimal;
-    
+
         ToTemplateName: Code[10];
         ToBatchName: Code[10];
         NextConsumpJnlLineNo: Integer;
@@ -167,6 +167,8 @@ report 33000265 "Calc.Inspect Consumption B2B"
         ToTemplateName := TemplateName;
         ToBatchName := BatchName;
     end;
-    var     LocationCode: Code[10];
+
+    var
+        LocationCode: Code[10];
 }
 

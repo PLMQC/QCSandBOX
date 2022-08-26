@@ -23,7 +23,7 @@ tableextension 33000251 "ItemJournalExt B2B" extends "Item Journal Line"
         }
     }
 
-    
+
     procedure CreateInspectionDataSheets();
     var
         ProdOrderRoutingLine: Record 5409;

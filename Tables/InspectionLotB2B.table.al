@@ -111,10 +111,10 @@ table 33000259 "Inspection Lot B2B"
 
     procedure CopyItemTrackingLots();
     var
-       
+
         ItemLedgEntry: Record "Item Ledger Entry";
         InspectLot: Record "Inspection Lot B2B";
-        
+
         LineNo: Integer;
     begin
         ItemEntryRelation.reset();
@@ -167,7 +167,8 @@ table 33000259 "Inspection Lot B2B"
         TempItemLedgEntry.RESET();
     end;
 
-    var  ItemEntryRelation: Record "Item Entry Relation";
-    TempItemLedgEntry: Record "Item Ledger Entry" temporary;
+    var
+        ItemEntryRelation: Record "Item Entry Relation";
+        TempItemLedgEntry: Record "Item Ledger Entry" temporary;
 }
 

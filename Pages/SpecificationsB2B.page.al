@@ -25,24 +25,24 @@ page 33000253 "Specifications B2B"
             group(General)
             {
                 Caption = 'General';
-                field("Spec ID"; "Spec ID")
+                field("Spec ID"; Rec."Spec ID")
                 {
                     Importance = Promoted;
                     ApplicationArea = all;
                     ToolTip = 'Specification is a group of characteristics to be inspected of an item';
                     trigger OnAssistEdit();
                     begin
-                        if AssistEdit(xRec) then
+                        if Rec.AssistEdit(xRec) then
                             CurrPage.UPDATE();
                     end;
                 }
-                field(Description; Description)
+                field(Description; Rec.Description)
                 {
                     Importance = Promoted;
                     ApplicationArea = all;
                     ToolTip = 'Description for Identification purpose for  the user';
                 }
-                field(Status; Status)
+                field(Status; Rec.Status)
                 {
                     Importance = Promoted;
                     ApplicationArea = all;
@@ -52,7 +52,7 @@ page 33000253 "Specifications B2B"
                         StatusOnAfterValidate();
                     end;
                 }
-                field("Version Nos."; "Version Nos.")
+                field("Version Nos."; Rec."Version Nos.")
                 {
                     ApplicationArea = all;
                     ToolTip = 'Number series that you use to create a new version of the BOM';
@@ -70,10 +70,10 @@ page 33000253 "Specifications B2B"
                     var
                         SpecVersion: Record "Specification Version B2B";
                     begin
-                        SpecVersion.SETRANGE("Specification No.", "Spec ID");
+                        SpecVersion.SETRANGE("Specification No.", Rec."Spec ID");
                         SpecVersion.SETRANGE("Version Code", ActiveVersionCode);
                         PAGE.RUNMODAL(PAGE::"Specification Version B2B", SpecVersion);
-                        ActiveVersionCode := GetSpecVersion("Spec ID", WORKDATE(), true);
+                        ActiveVersionCode := Rec.GetSpecVersion(Rec."Spec ID", WORKDATE(), true);
                     end;
                 }
             }
@@ -140,7 +140,7 @@ page 33000253 "Specifications B2B"
                     ApplicationArea = all;
                     trigger OnAction();
                     begin
-                        TESTFIELD("Spec ID");
+                        Rec.TESTFIELD("Spec ID");
                         if PAGE.RUNMODAL(0, SpecHeader) = ACTION::LookupOK then
                             SpecCopy.CopySpec(SpecHeader."Spec ID", '', Rec, '');
                     end;
@@ -157,13 +157,13 @@ page 33000253 "Specifications B2B"
                     ApplicationArea = all;
                     trigger OnAction();
                     begin
-                        CopyAssay();
+                        Rec.CopyAssay();
                     end;
                 }
                 action(Indent)
                 {
                     Caption = 'Indent';
-                   tooltip = 'Purchase department receives the Indents from the various departments for procurement of materials';
+                    tooltip = 'Purchase department receives the Indents from the various departments for procurement of materials';
                     Image = Indent;
                     Promoted = true;
                     PromotedOnly = true;
@@ -195,7 +195,7 @@ page 33000253 "Specifications B2B"
     trigger OnAfterGetRecord();
     begin
 
-        ActiveVersionCode := GetSpecVersion("Spec ID", WORKDATE(), true);
+        ActiveVersionCode := Rec.GetSpecVersion(Rec."Spec ID", WORKDATE(), true);
     end;
 
 

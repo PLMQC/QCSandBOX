@@ -17,13 +17,13 @@ codeunit 33000260 "Specification-Copy B2B"
     end;
 
     var
-        Text000Err: Label 'The %1 cannot be copied to itself.',comment = '%1 = TableCaption';
-        Text001Err: Label '%1 on %2 %3 must not be %4',comment ='%1 = Status ;%2 = TABLECAPTION ; %3 = SpecID  ; %4 = status';
-        Text002Err: Label '%1 on %2 %3 %4 must not be %5',comment ='%1 = ;%2 = ;%3 = ; %4 = ; %5 = ';
+        Text000Err: Label 'The %1 cannot be copied to itself.', comment = '%1 = TableCaption';
+        Text001Err: Label '%1 on %2 %3 must not be %4', comment = '%1 = Status ;%2 = TABLECAPTION ; %3 = SpecID  ; %4 = status';
+        Text002Err: Label '%1 on %2 %3 %4 must not be %5', comment = '%1 = ;%2 = ;%3 = ; %4 = ; %5 = ';
 
     procedure CopySpec(SpecHeaderNo: Code[20]; FromVersionCode: Code[20]; CurrentSpecHeader: Record "Specification Header B2B"; ToVersionCode: Code[20]);
     var
-      
+
         ToSpecLine: Record "Specification Line B2B";
         SpecVersion: Record "Specification Version B2B";
     begin
@@ -92,6 +92,7 @@ codeunit 33000260 "Specification-Copy B2B"
         SpecVersionList2 := OldSpecVersionList;
     end;
 
-    var   FromSpecLine: Record "Specification Line B2B";
+    var
+        FromSpecLine: Record "Specification Line B2B";
 }
 

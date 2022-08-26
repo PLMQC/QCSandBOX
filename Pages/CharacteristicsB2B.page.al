@@ -22,23 +22,23 @@ page 33000251 "Characteristics B2B"
         {
             repeater(Control1000000000)
             {
-                field("Code"; Code)
+                field("Code"; Rec.Code)
                 {
                     ApplicationArea = all;
                     ToolTip = 'system of words,letter,or signs used to represent code';
 
                 }
-                field(Description; Description)
+                field(Description; Rec.Description)
                 {
                     ApplicationArea = all;
                     ToolTip = 'Description for Identification purpose for  the user.';
                 }
-                field(Qualitative; Qualitative)
+                field(Qualitative; Rec.Qualitative)
                 {
                     ApplicationArea = all;
                     tooltip = ' for those attributes that are qualitative in nature.';
                 }
-                field("Unit of Measure Code"; "Unit of Measure Code")
+                field("Unit of Measure Code"; Rec."Unit of Measure Code")
                 {
                     ApplicationArea = all;
                     ToolTip = 'unit of measure code is the assign the measure the pieces,box';
@@ -53,8 +53,8 @@ page 33000251 "Characteristics B2B"
 
     trigger OnAfterGetRecord();
     begin
-        if Code <> '' then
-            CALCFIELDS(Attachment);
+        if Rec.Code <> '' then
+            Rec.CALCFIELDS(Attachment);
     end;
 }
 

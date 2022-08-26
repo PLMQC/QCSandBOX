@@ -22,52 +22,52 @@ page 33000279 "Assay Subform B2B"
         {
             repeater(Control1000000000)
             {
-                field("Character Code"; "Character Code")
+                field("Character Code"; Rec."Character Code")
                 {
                     ApplicationArea = all;
                     tooltip = 'The character or attribute of the item that is to be observed for quality assessment';
                 }
-                field(Description; Description)
+                field(Description; Rec.Description)
                 {
                     ApplicationArea = all;
                     tooltip = 'Description for Identification purpose for  the user';
                 }
-                field("Normal Value (Num)"; "Normal Value (Num)")
+                field("Normal Value (Num)"; Rec."Normal Value (Num)")
                 {
                     ApplicationArea = all;
                     tooltip = 'Normal value of the characteristics in numbers numeric test data';
                 }
-                field("Min. Value (Num)"; "Min. Value (Num)")
+                field("Min. Value (Num)"; Rec."Min. Value (Num)")
                 {
                     ApplicationArea = all;
                     tooltip = 'Minimum permitted value to acceptance in number ';
                 }
-                field("Max. Value (Num)"; "Max. Value (Num)")
+                field("Max. Value (Num)"; Rec."Max. Value (Num)")
                 {
                     ApplicationArea = all;
                     tooltip = 'Maximum permitted value to acceptance in numbe';
                 }
-                field("Normal Value (Char)"; "Normal Value (Char)")
+                field("Normal Value (Char)"; Rec."Normal Value (Char)")
                 {
                     ApplicationArea = all;
                     tooltip = 'Normal permitted value to acceptance in character e.g. Colour = Blue';
                 }
-                field("Min. Value (Char)"; "Min. Value (Char)")
+                field("Min. Value (Char)"; Rec."Min. Value (Char)")
                 {
                     ApplicationArea = all;
                     tooltip = 'Minimum permitted value to acceptance in character';
                 }
-                field("Max. Value (Char)"; "Max. Value (Char)")
+                field("Max. Value (Char)"; Rec."Max. Value (Char)")
                 {
                     ApplicationArea = all;
                     tooltip = 'Maximum permitted value to acceptance in character';
                 }
-                field("Unit of Measure Code"; "Unit of Measure Code")
+                field("Unit of Measure Code"; Rec."Unit of Measure Code")
                 {
                     ApplicationArea = all;
                     tooltip = ' unit of measure code from item unit of measure where the quantity is to be dispatched';
                 }
-                field(Qualitative; Qualitative)
+                field(Qualitative; Rec.Qualitative)
                 {
                     ApplicationArea = all;
                     tooltip = 'those attributes that are qualitative in nature';

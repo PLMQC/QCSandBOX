@@ -21,25 +21,25 @@ page 33000296 "Qty Supervisor Activities B2B"
             cuegroup("For Post")
             {
                 Caption = 'For Post';
-                field("Inspection Receipt"; "Inspection Receipt")
+                field("Inspection Receipt"; Rec."Inspection Receipt")
                 {
                     DrillDownPageID = "Inspection Receipt List B2B";
                     ApplicationArea = all;
                     tooltip = 'this field user Inspection receipt through which the user actually accepts, rejects or sends for rework';
                 }
-               /*
-                actions
-                {
-                    action("NewPurchaseOrder")
-                    {
-                        Caption = 'New Purchase Order';
-                        RunObject = Page "Purchase Order";
-                        RunPageMode = Create;
-                        Visible = false;
-                        ApplicationArea = all;
-                    }
-                }
-                */
+                /*
+                 actions
+                 {
+                     action("NewPurchaseOrder")
+                     {
+                         Caption = 'New Purchase Order';
+                         RunObject = Page "Purchase Order";
+                         RunPageMode = Create;
+                         Visible = false;
+                         ApplicationArea = all;
+                     }
+                 }
+                 */
             }
         }
     }
@@ -50,13 +50,13 @@ page 33000296 "Qty Supervisor Activities B2B"
 
     trigger OnOpenPage();
     begin
-        RESET();
-        if not GET() then begin
-            INIT();
-            INSERT();
+        Rec.RESET();
+        if not Rec.GET() then begin
+            Rec.INIT();
+            Rec.INSERT();
         end;
 
-        SETFILTER("Date Filter", '>=%1', WORKDATE());
+        Rec.SETFILTER("Date Filter", '>=%1', WORKDATE());
     end;
 }
 

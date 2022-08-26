@@ -25,120 +25,120 @@ page 33000270 "Inspection Receipt Subform B2B"
             {
                 IndentationColumn = DescriptionIndent;
                 IndentationControls = Description;
-                field("Character Code"; "Character Code")
+                field("Character Code"; Rec."Character Code")
                 {
                     Editable = false;
                     ApplicationArea = all;
                     tooltip = 'The character or attribute of the item that is to be observed for quality assessment';
                 }
-                field(Description; Description)
+                field(Description; Rec.Description)
                 {
                     Editable = false;
                     ApplicationArea = all;
                     tooltip = 'Description for Identification purpose for  the user';
                 }
-                field("Sampling Plan Code"; "Sampling Plan Code")
+                field("Sampling Plan Code"; Rec."Sampling Plan Code")
                 {
                     Editable = false;
                     ApplicationArea = all;
                     tooltip = 'sampling plan that is applicable to the set of characters to be inspected by the inspection group';
                 }
-                field("Normal Value (Num)"; "Normal Value (Num)")
+                field("Normal Value (Num)"; Rec."Normal Value (Num)")
                 {
                     Editable = false;
                     ApplicationArea = all;
 
                     tooltip = 'Normal value of the characteristics in numbers numeric test data';
                 }
-                field("Min. Value (Num)"; "Min. Value (Num)")
+                field("Min. Value (Num)"; Rec."Min. Value (Num)")
                 {
                     Editable = false;
                     ApplicationArea = all;
                     tooltip = 'Minimum permitted value to acceptance in number ';
                 }
-                field("Max. Value (Num)"; "Max. Value (Num)")
+                field("Max. Value (Num)"; Rec."Max. Value (Num)")
                 {
                     Editable = false;
                     ApplicationArea = all;
                     tooltip = 'Maximum permitted value to acceptance in number ';
                 }
-                field("Normal Value (Text)"; "Normal Value (Text)")
+                field("Normal Value (Text)"; Rec."Normal Value (Text)")
                 {
                     Editable = false;
                     ApplicationArea = all;
                     tooltip = 'Normal value of the characteristics in numbers numeric test data';
                 }
-                field("Min. Value (Text)"; "Min. Value (Text)")
+                field("Min. Value (Text)"; Rec."Min. Value (Text)")
                 {
                     Editable = false;
                     ApplicationArea = all;
                     ToolTip = 'Minimum permitted value to acceptance in number ';
                 }
-                field("Max. Value (Text)"; "Max. Value (Text)")
+                field("Max. Value (Text)"; Rec."Max. Value (Text)")
                 {
                     Editable = false;
                     ApplicationArea = all;
                     tooltip = '-Maximum permitted value to acceptance in number ';
                 }
-                field("Unit of Measure Code"; "Unit of Measure Code")
+                field("Unit of Measure Code"; Rec."Unit of Measure Code")
                 {
                     Editable = false;
                     ApplicationArea = all;
                     tooltip = ' required unit of measure code from item unit of measure where the quantity';
                 }
-                field("Lot Size - Min"; "Lot Size - Min")
+                field("Lot Size - Min"; Rec."Lot Size - Min")
                 {
                     Editable = false;
                     ApplicationArea = all;
                     tooltip = 'Lot Size-min  and the corresponding Sampling size';
                 }
-                field("Lot Size - Max"; "Lot Size - Max")
+                field("Lot Size - Max"; Rec."Lot Size - Max")
                 {
                     Editable = false;
                     ApplicationArea = all;
                     tooltip = 'Lot Size-Max  and the corresponding Sampling size';
                 }
-                field("Allowable Defects - Max"; "Allowable Defects - Max")
+                field("Allowable Defects - Max"; Rec."Allowable Defects - Max")
                 {
-                    ToolTip = 'Allowed Defects Maximum Quantity sholud Define  ' ;
+                    ToolTip = 'Allowed Defects Maximum Quantity sholud Define  ';
 
                     Editable = false;
                     ApplicationArea = all;
                 }
-                field("Total Qty"; "Total Qty")
+                field("Total Qty"; Rec."Total Qty")
                 {
                     Editable = false;
                     ApplicationArea = all;
                     tooltip = 'This is the total number of quantity being ordered';
                 }
-                field("Accepted Qty"; "Accepted Qty")
+                field("Accepted Qty"; Rec."Accepted Qty")
                 {
                     Editable = false;
                     ApplicationArea = all;
                     tooltip = 'the inspection data sheet is quantity characteristic  approval is the accepted quantity';
                 }
-                field("Rejected Qty"; "Rejected Qty")
+                field("Rejected Qty"; Rec."Rejected Qty")
                 {
                     Editable = false;
                     ApplicationArea = all;
                     tooltip = 'the inspection data sheet is quantity characteristic is not approval the rejected quantity';
                 }
-                field(Accept; Accept)
+                field(Accept; Rec.Accept)
                 {
                     ApplicationArea = all;
                     tooltip = 'any quantity is approval is the accept';
                 }
-                field("Reason Code"; "Reason Code")
+                field("Reason Code"; Rec."Reason Code")
                 {
                     ApplicationArea = all;
                     tooltip = 'Reason Codes are normally used during the Quality Operation';
                 }
-                field("Inspection Persons"; "Inspection Persons")
+                field("Inspection Persons"; Rec."Inspection Persons")
                 {
                     ApplicationArea = all;
                     tooltip = 'which person to tested the quantity inspection persons';
                 }
-                field(Remarks; Remarks)
+                field(Remarks; Rec.Remarks)
                 {
                     ApplicationArea = all;
                     tooltip = 'any quantity remark items';
@@ -168,13 +168,13 @@ page 33000270 "Inspection Receipt Subform B2B"
 
     local procedure CharacterCodeOnFormat();
     begin
-        "Character CodeEmphasize" := "Character Type" <> "Character Type"::Standard;
+        "Character CodeEmphasize" := Rec."Character Type" <> Rec."Character Type"::Standard;
     end;
 
     local procedure DescriptionOnFormat();
     begin
-        DescriptionEmphasize := "Character Type" <> "Character Type"::Standard;
-        DescriptionIndent := Indentation;
+        DescriptionEmphasize := Rec."Character Type" <> Rec."Character Type"::Standard;
+        DescriptionIndent := Rec.Indentation;
     end;
 }
 

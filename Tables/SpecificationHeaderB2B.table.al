@@ -44,7 +44,7 @@ table 33000253 "Specification Header B2B"
         }
         field(6; Comment; Boolean)
         {
-            CalcFormula = Exist ("Quality Comment Line B2B" WHERE(Type = CONST(Specification),
+            CalcFormula = Exist("Quality Comment Line B2B" WHERE(Type = CONST(Specification),
                                                               "No." = FIELD("Spec ID")));
             Caption = 'Comment';
             FieldClass = FlowField;
@@ -118,29 +118,27 @@ table 33000253 "Specification Header B2B"
         Item: Record Item;
         NoSeriesMgt: Codeunit NoSeriesManagement;
 
-        Text015Err: Label 'You can not delete Specification %1 as Inspection Data Sheet exist.',Comment = '%1 = Spec ID';
-        Text016Err: Label 'You can not delete Specification %1 as Purchase Line exist.',Comment = '%1 = Spec ID';
+        Text015Err: Label 'You can not delete Specification %1 as Inspection Data Sheet exist.', Comment = '%1 = Spec ID';
+        Text016Err: Label 'You can not delete Specification %1 as Purchase Line exist.', Comment = '%1 = Spec ID';
         Text017Err: Label 'No specification lines exist.';
 
     procedure AssistEdit(OldSpec: Record "Specification Header B2B"): Boolean;
     begin
-        with Spec do begin
-            Spec := Rec;
+        Spec := Rec;
+        QualitySetup.GET();
+        QualitySetup.TESTFIELD("Specification Nos.");
+        if NoSeriesMgt.SelectSeries(QualitySetup."Specification Nos.", OldSpec."No. Series", Spec."No. Series") then begin
             QualitySetup.GET();
             QualitySetup.TESTFIELD("Specification Nos.");
-            if NoSeriesMgt.SelectSeries(QualitySetup."Specification Nos.", OldSpec."No. Series", "No. Series") then begin
-                QualitySetup.GET();
-                QualitySetup.TESTFIELD("Specification Nos.");
-                NoSeriesMgt.SetSeries("Spec ID");
-                Rec := Spec;
-                exit(true);
-            end;
+            NoSeriesMgt.SetSeries(Spec."Spec ID");
+            Rec := Spec;
+            exit(true);
         end;
     end;
 
     procedure TestStatus();
     var
-       
+
         SamplinPlan: Record "Sampling Plan Header B2B";
         SpecIndent: Codeunit "Spec Line Indent B2B";
         InspectGroupCode: Code[20];
@@ -188,8 +186,8 @@ table 33000253 "Specification Header B2B"
     procedure CopyAssay();
     var
         AssayHeader: Record "Assay Header B2B";
-       
-        
+
+
         SpecLineNo: Integer;
     begin
         TESTFIELD("Spec ID");
@@ -245,9 +243,9 @@ table 33000253 "Specification Header B2B"
 
     procedure GetSpecVersion(SpecHeaderNo: Code[20]; Date: Date; OnlyCertified: Boolean): Code[20];
     var
-        
+
     begin
-         SpecVersion.reset();
+        SpecVersion.reset();
         SpecVersion.SETCURRENTKEY("Specification No.", "Starting Date");
         SpecVersion.SETRANGE("Specification No.", SpecHeaderNo);
         SpecVersion.SETFILTER("Starting Date", '%1|..%2', 0D, Date);
@@ -258,10 +256,12 @@ table 33000253 "Specification Header B2B"
 
         exit(SpecVersion."Version Code");
     end;
-    var SpecVersion: Record "Specification Version B2B";
-         SpecLine2 : Record "Specification Line B2B";
 
-         SpecLine: Record "Specification Line B2B";
-          AssayLine: Record "Assay Line B2B";
+    var
+        SpecVersion: Record "Specification Version B2B";
+        SpecLine2: Record "Specification Line B2B";
+
+        SpecLine: Record "Specification Line B2B";
+        AssayLine: Record "Assay Line B2B";
 }
 

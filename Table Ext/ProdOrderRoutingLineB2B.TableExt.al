@@ -102,7 +102,7 @@ tableextension 33000255 "ProdOrderRoutingLine B2B" extends "Prod. Order Routing 
         }
         field(33000260; "Quantity Accepted B2B"; Decimal)
         {
-            CalcFormula = Sum ("Quality Ledger Entry B2B".Quantity WHERE("Source Type" = FILTER(WIP),
+            CalcFormula = Sum("Quality Ledger Entry B2B".Quantity WHERE("Source Type" = FILTER(WIP),
                                                                      "Order No." = FIELD("Prod. Order No."),
                                                                      "Order Line No." = FIELD("Routing Reference No."),
                                                                      "Entry Type" = FILTER(Accepted),
@@ -113,7 +113,7 @@ tableextension 33000255 "ProdOrderRoutingLine B2B" extends "Prod. Order Routing 
         }
         field(33000261; "Quantity Rejected B2B"; Decimal)
         {
-            CalcFormula = Sum ("Quality Ledger Entry B2B".Quantity WHERE("Source Type" = FILTER(WIP),
+            CalcFormula = Sum("Quality Ledger Entry B2B".Quantity WHERE("Source Type" = FILTER(WIP),
                                                                      "Order No." = FIELD("Prod. Order No."),
                                                                      "Order Line No." = FIELD("Routing Reference No."),
                                                                      "Entry Type" = FILTER(Reject),
@@ -124,7 +124,7 @@ tableextension 33000255 "ProdOrderRoutingLine B2B" extends "Prod. Order Routing 
         }
         field(33000262; "Quantity Rework B2B"; Decimal)
         {
-            CalcFormula = Sum ("Quality Ledger Entry B2B"."Remaining Quantity" WHERE("Source Type" = FILTER(WIP),
+            CalcFormula = Sum("Quality Ledger Entry B2B"."Remaining Quantity" WHERE("Source Type" = FILTER(WIP),
                                                                                  "Order No." = FIELD("Prod. Order No."),
                                                                                  "Order Line No." = FIELD("Routing Reference No."),
                                                                                  "Entry Type" = FILTER(Rework),
@@ -145,7 +145,7 @@ tableextension 33000255 "ProdOrderRoutingLine B2B" extends "Prod. Order Routing 
         }
     }
 
- 
+
     procedure GetSpecVersion(): Code[20];
     var
         SpecHeader: Record 33000253;

@@ -25,10 +25,10 @@ codeunit 33000253 "Inspection Jnl. Post Line B2B"
         else
             QualityLedgerEntryNo := 0;
         InitQualityLedger(Rec);
-        if ("Item Tracking Exists") and ("Source Type" = "Source Type"::"In Bound") and
-           (not "Quality Before Receipt")
+        if (Rec."Item Tracking Exists") and (Rec."Source Type" = Rec."Source Type"::"In Bound") and
+           (not Rec."Quality Before Receipt")
         then begin
-            if Item.GET("Item No.") then;
+            if Item.GET(Rec."Item No.") then;
             IF ItemTrackingCode.GET(Item."Item Tracking Code") THEN;
 
             IF (ItemTrackingCode."SN Specific Tracking") OR (ItemTrackingCode."SN Sales Inbound Tracking") OR
@@ -37,23 +37,28 @@ codeunit 33000253 "Inspection Jnl. Post Line B2B"
             ELSE
                 IF ((ItemTrackingCode."Lot Specific Tracking") OR (ItemTrackingCode."Lot Sales Inbound Tracking") OR
                         (ItemTrackingCode."Lot Sales Outbound Tracking")) THEN
-                    InsertQCItemTrackingLedger(DATABASE::"Purch. Rcpt. Line", 0, "Receipt No.", '', 0, "Purch Line No", Rec);
+                    InsertQCItemTrackingLedger(DATABASE::"Purch. Rcpt. Line", 0, Rec."Receipt No.", '', 0, Rec."Purch Line No", Rec);
 
         end else
             InsertQualityLedgerEntry(Rec);
-        if "Source Type" = "Source Type"::"In Bound" then begin
-            if not "Quality Before Receipt" then
-                UpdatePurchRcptLine(Rec)
-            else
-                UpdateWhseReceipts(Rec);
-            InsertItemVendorRating(Rec);
-        end;
+
+        //QC1.4>>
+        OnBeforeUpdatePurchReceiptLine(Rec, IsHandled);
+        if not IsHandled then
+            //QC1.4<<
+        if Rec."Source Type" = Rec."Source Type"::"In Bound" then begin
+                if not Rec."Quality Before Receipt" then
+                    UpdatePurchRcptLine(Rec)
+                else
+                    UpdateWhseReceipts(Rec);
+                InsertItemVendorRating(Rec);
+            end;
         UpdateInspectAcptLevels(Rec);
-        Evaluate("Posted By", USERID());
-        "Posted Date" := TODAY();
-        "Posted Time" := TIME();
-        Status := true;
-        MODIFY();
+        Evaluate(Rec."Posted By", USERID());
+        Rec."Posted Date" := TODAY();
+        Rec."Posted Time" := TIME();
+        Rec.Status := true;
+        Rec.MODIFY();
     end;
 
     var
@@ -389,37 +394,35 @@ codeunit 33000253 "Inspection Jnl. Post Line B2B"
         // QualityItemLedgEntry : Record "Quality Item Ledger Entry";
         ItemLedgEntry: Record "Item Ledger Entry";
     begin
-        with QualityLedgerEntry do begin
-            case "Entry Type" of
-                "Entry Type"::Reject:
-                    begin
-                        ItemLedgEntry.GET(QualityLedgerEntry."Item Ledger Entry No.");
-                        QualityItemLedgEntry.TRANSFERFIELDS(ItemLedgEntry);
-                        QualityItemLedgEntry."Inspection Status" := QualityItemLedgEntry."Inspection Status"::Rejected;
-                        QualityItemLedgEntry."Quality Ledger Entry No." := QualityLedgerEntry."Entry No.";
-                        QualityItemLedgEntry.Reject := true;
-                        QualityItemLedgEntry.Accept := false;
-                        QualityItemLedgEntry.INSERT();
-                    end;
-                "Entry Type"::Rework, "Entry Type"::Reworked:
-                    exit;
-            end;
-            QualityItemLedgEntry."Quality Ledger Entry No." := QualityLedgerEntry."Entry No.";
-            QualityItemLedgEntry.GET(QualityLedgerEntry."In bound Item Ledger Entry No.");
-            if QualityLedgerEntry."Rework Reference No." = '' then begin
-                QualityItemLedgEntry."Remaining Quantity" := QualityItemLedgEntry."Remaining Quantity" - QualityLedgerEntry.Quantity;
-                QualityItemLedgEntry.Accept := false;
-                QualityItemLedgEntry.Rework := true;
-            end else begin
-                QualityItemLedgEntry."Remaining Quantity" := QualityItemLedgEntry."Remaining Quantity" - QtyToApply;
-                QualityItemLedgEntry.Accept := false;
-                QualityItemLedgEntry.Rework := true;
-            end;
-            if QualityItemLedgEntry."Remaining Quantity" = 0 then
-                QualityItemLedgEntry.DELETE()
-            else
-                QualityItemLedgEntry.MODIFY();
+        case QualityLedgerEntry."Entry Type" of
+            QualityLedgerEntry."Entry Type"::Reject:
+                begin
+                    ItemLedgEntry.GET(QualityLedgerEntry."Item Ledger Entry No.");
+                    QualityItemLedgEntry.TRANSFERFIELDS(ItemLedgEntry);
+                    QualityItemLedgEntry."Inspection Status" := QualityItemLedgEntry."Inspection Status"::Rejected;
+                    QualityItemLedgEntry."Quality Ledger Entry No." := QualityLedgerEntry."Entry No.";
+                    QualityItemLedgEntry.Reject := true;
+                    QualityItemLedgEntry.Accept := false;
+                    QualityItemLedgEntry.INSERT();
+                end;
+            QualityLedgerEntry."Entry Type"::Rework, QualityLedgerEntry."Entry Type"::Reworked:
+                exit;
         end;
+        QualityItemLedgEntry."Quality Ledger Entry No." := QualityLedgerEntry."Entry No.";
+        QualityItemLedgEntry.GET(QualityLedgerEntry."In bound Item Ledger Entry No.");
+        if QualityLedgerEntry."Rework Reference No." = '' then begin
+            QualityItemLedgEntry."Remaining Quantity" := QualityItemLedgEntry."Remaining Quantity" - QualityLedgerEntry.Quantity;
+            QualityItemLedgEntry.Accept := false;
+            QualityItemLedgEntry.Rework := true;
+        end else begin
+            QualityItemLedgEntry."Remaining Quantity" := QualityItemLedgEntry."Remaining Quantity" - QtyToApply;
+            QualityItemLedgEntry.Accept := false;
+            QualityItemLedgEntry.Rework := true;
+        end;
+        if QualityItemLedgEntry."Remaining Quantity" = 0 then
+            QualityItemLedgEntry.DELETE()
+        else
+            QualityItemLedgEntry.MODIFY();
     end;
 
     procedure UpdateWhseReceipts(InspectReceipt2: Record "Inspection Receipt Header B2B");
@@ -649,8 +652,14 @@ codeunit 33000253 "Inspection Jnl. Post Line B2B"
     procedure InsertQCItemTrackingLedger(Type: Integer; Subtype: Integer; ID: Code[20]; BatchName: Code[10]; ProdOrderLine: Integer; RefNo: Integer; var InspectReceipt2: Record "Inspection Receipt Header B2B");
     var
 
-    // QualityItemLedgEntry : Record "Quality Item Ledger Entry";
+        // QualityItemLedgEntry : Record "Quality Item Ledger Entry";
+        IsHandled: Boolean; //QC1.4
     begin
+        //QC1.4>>
+        OnBeforeInsertQCItemTrackingLedger(InspectReceipt2, QualityLedgerEntry, QualityLedgerEntryNo, IsHandled);
+        if IsHandled then
+            exit;
+        //QC1.4<<
         ItemEntryRelation.SETCURRENTKEY("Source ID", "Source Type");
         ItemEntryRelation.SETRANGE("Source Type", Type);
         ItemEntryRelation.SETRANGE("Source Subtype", Subtype);
@@ -988,140 +997,138 @@ codeunit 33000253 "Inspection Jnl. Post Line B2B"
     begin
         if not CONFIRM(Text002Qst, true) then
             exit;
-        with InspectRcpt do begin
-            if DeliveryChalan.FIND('+') then
-                DelryChalanNo := DeliveryChalan."Entry No."
-            else
-                DelryChalanNo := 0;
-            if "Source Type" = "Source Type"::"In Bound" then begin
-                Vendor.GET("Vendor No.");
-                Vendor.TESTFIELD(Vendor."Rework Location B2B");
-            end;
-            if (InspectRcpt."Source Type" = "Source Type"::"In Bound") and (not InspectRcpt."Quality Before Receipt") and
-               (InspectRcpt."Qty. to Vendor(Rework)" <> 0)
-            then //begin
-                if InspectRcpt."Rework Level" = 0 then begin
-                    ItemJnlLine.SETRANGE(ItemJnlLine."Journal Template Name", Text330001Txt);
-                    ItemJnlLine.SETRANGE(ItemJnlLine."Journal Batch Name", Text330002Txt);
-                    if ItemJnlLine.FIND('-') then
-                        ItemJnlLine.DELETEALL();
-                    ItemJnlLine.RESET();
-                    ItemJnlLine.INIT();
-                    ItemJnlLine."Journal Template Name" := Text330001Txt;
-                    ItemJnlLine."Journal Batch Name" := Text330002Txt;
-                    ItemJnlLine."Posting Date" := WORKDATE();
-                    ItemJnlLine."Document Date" := WORKDATE();
-                    ItemJnlLine."Document No." := "No.";
-                    ItemJnlLine."Line No." := ItemReclassLineNo();
-                    ItemJnlLine."Entry Type" := ItemJnlLine."Entry Type"::Transfer;
-                    ItemJnlLine.VALIDATE("Item No.", "Item No.");
-                    ItemJnlLine.VALIDATE(ItemJnlLine."Unit of Measure Code", InspectRcpt."Unit of Measure Code");
-                    ItemJnlLine.VALIDATE(Quantity, "Qty. to Vendor(Rework)");
-                    if "Location Code" <> '' then
-                        ItemJnlLine.VALIDATE("Location Code", "Location Code");
-                    ItemJnlLine.VALIDATE("New Location Code", Vendor."Rework Location B2B");
-                    ItemJnlLine.VALIDATE("Applies-to Entry", "Item Ledger Entry No.");
-                    ItemJnlLine."Quality Ledger Entry No. B2B" := "Item Ledger Entry No.";
-                    ItemJnlLine."Dimension Set ID" := InspectRcpt."Dimension Set ID";
-                    ItemJnlLine."New Dimension Set ID" := InspectRcpt."Dimension Set ID";
-                    ItemJnlLine.INSERT();
-                    ItemJnlPostLine.RUN(ItemJnlLine);
-                    QualityItemLedgEntry.GET("Item Ledger Entry No.");
-                    QualityItemLedgEntry."Remaining Quantity" := QualityItemLedgEntry."Remaining Quantity" - "Qty. to Vendor(Rework)";
-                    if QualityItemLedgEntry."Remaining Quantity" = 0 then
-                        QualityItemLedgEntry.DELETE()
-                    else
-                        QualityItemLedgEntry.MODIFY();
-                    ItemApplnEntry.SETRANGE("Transferred-from Entry No.", "Item Ledger Entry No.");
-                    if ItemApplnEntry.FIND('+') then;
-                    ItemLedgEntry.GET(ItemApplnEntry."Inbound Item Entry No.");
-                    QualityItemLedgEntry.TRANSFERFIELDS(ItemLedgEntry);
-                    QualityItemLedgEntry."Sent for Rework" := true;
-                    QualityItemLedgEntry.Accept := false;
-                    QualityItemLedgEntry.INSERT();
-                end else begin
-                    RemainQty := "Qty. to Vendor(Rework)";
-                    QualityItemLedgEntry.SETRANGE("Document No.", "Rework Reference No.");
-                    QualityItemLedgEntry.SETRANGE("Inspection Status", QualityItemLedgEntry."Inspection Status"::"Under Inspection");
-                    QualityItemLedgEntry.SETRANGE("Sent for Rework", false);
-                    if QualityItemLedgEntry.FIND('-') then
-                        repeat
-                            if RemainQty <= QualityItemLedgEntry."Remaining Quantity" then
-                                QtyToApply := RemainQty
-                            else
-                                QtyToApply := QualityItemLedgEntry."Remaining Quantity";
-                            RemainQty := RemainQty - QtyToApply;
-                            if QtyToApply <> 0 then begin
-                                ItemJnlLine.SETRANGE(ItemJnlLine."Journal Template Name", Text330001Txt);
-                                ItemJnlLine.SETRANGE(ItemJnlLine."Journal Batch Name", Text330002Txt);
-                                if ItemJnlLine.FIND('-') then
-                                    ItemJnlLine.DELETEALL();
-                                ItemJnlLine.RESET();
-                                ItemJnlLine.INIT();
-                                ItemJnlLine."Journal Template Name" := Text330001Txt;
-                                ItemJnlLine."Journal Batch Name" := Text330002Txt;
-                                ItemJnlLine."Posting Date" := WORKDATE();
-                                ItemJnlLine."Document Date" := WORKDATE();
-                                ItemJnlLine."Document No." := "No.";
-                                ItemJnlLine."Line No." := ItemReclassLineNo();
-                                ItemJnlLine."Entry Type" := ItemJnlLine."Entry Type"::Transfer;
-                                ItemJnlLine.VALIDATE("Item No.", "Item No.");
-                                ItemJnlLine.VALIDATE(Quantity, QtyToApply);
-                                ItemJnlLine.VALIDATE("Location Code", "Location Code");
-                                ItemJnlLine.VALIDATE("New Location Code", Vendor."Rework Location B2B");
-                                ItemJnlLine.VALIDATE("Applies-to Entry", QualityItemLedgEntry."Entry No.");
-                                ItemJnlLine."Quality Ledger Entry No. B2B" := QualityItemLedgEntry."Entry No.";
-                                ItemJnlLine."Dimension Set ID" := InspectRcpt."Dimension Set ID";
-                                ItemJnlLine."New Dimension Set ID" := InspectRcpt."Dimension Set ID";
-                                ItemJnlLine.INSERT();
-                                ItemJnlPostLine.RUN(ItemJnlLine);
-                                QualityItemLedgEntry."Remaining Quantity" := QualityItemLedgEntry."Remaining Quantity" - QtyToApply;
-                                if QualityItemLedgEntry."Remaining Quantity" = 0 then
-                                    QualityItemLedgEntry.DELETE()
-                                else
-                                    QualityItemLedgEntry.MODIFY();
-                                ItemApplnEntry.SETRANGE("Transferred-from Entry No.", QualityItemLedgEntry."Entry No.");
-                                if ItemApplnEntry.FIND('+') then;
-                                ItemLedgEntry.GET(ItemApplnEntry."Inbound Item Entry No.");
-                                QualityItemLedgEntry.TRANSFERFIELDS(ItemLedgEntry);
-                                QualityItemLedgEntry."Sent for Rework" := true;
-                                QualityItemLedgEntry.Accept := false;
-                                QualityItemLedgEntry.INSERT();
-                            end;
-                            i := i + 1;
-                        until QualityItemLedgEntry.NEXT() = 0;
-                end;
-            //end;
-            if "Qty. to Vendor(Rework)" <> 0 then begin
-                DelryChalanNo := DeliveryChalan."Entry No." + 1;
-                QualityLedgEntryFill.SETRANGE("Document No.", "No.");
-                QualityLedgEntryFill.SETFILTER("Entry Type", '=%1', QualityLedgEntryFill."Entry Type"::Rework);
-                QualityLedgEntryFill.FIND('-');
-                DeliveryChalan.INIT();
-                DeliveryChalan.TRANSFERFIELDS(QualityLedgEntryFill);
-                DeliveryChalan."Entry No." := DelryChalanNo;
-                DeliveryChalan.Quantity := "Qty. to Vendor(Rework)";
-                DeliveryChalan."Remaining Quantity" := "Qty. to Vendor(Rework)";
-                DeliveryChalan."Inbound Item Ledger Entry No." := QualityItemLedgEntry."Entry No.";
-                DeliveryChalan.INSERT();
-            end;
-            if "Qty. to Vendor(Rejected)" <> 0 then begin
-                DelryChalanNo := DeliveryChalan."Entry No." + 1;
-                QualityLedgEntryFill.SETRANGE("Document No.", "No.");
-                QualityLedgEntryFill.SETFILTER("Entry Type", '=%1', QualityLedgEntryFill."Entry Type"::Reject);
-                QualityLedgEntryFill.FIND('-');
-                DeliveryChalan.INIT();
-                DeliveryChalan.TRANSFERFIELDS(QualityLedgEntryFill);
-                DeliveryChalan."Entry No." := DelryChalanNo;
-                DeliveryChalan.Quantity := "Qty. to Vendor(Rejected)";
-                DeliveryChalan."Remaining Quantity" := 0;
-                DeliveryChalan.INSERT();
-            end;
-            "Qty. sent to Vendor(Rejected)" := "Qty. sent to Vendor(Rejected)" + "Qty. to Vendor(Rejected)";
-            "Qty. to Vendor(Rejected)" := 0;
-            "Qty. sent to Vendor(Rework)" := "Qty. sent to Vendor(Rework)" + "Qty. to Vendor(Rework)";
-            "Qty. to Vendor(Rework)" := 0;
+        if DeliveryChalan.FIND('+') then
+            DelryChalanNo := DeliveryChalan."Entry No."
+        else
+            DelryChalanNo := 0;
+        if InspectRcpt."Source Type" = InspectRcpt."Source Type"::"In Bound" then begin
+            Vendor.GET(InspectRcpt."Vendor No.");
+            Vendor.TESTFIELD(Vendor."Rework Location B2B");
         end;
+        if (InspectRcpt."Source Type" = InspectRcpt."Source Type"::"In Bound") and (not InspectRcpt."Quality Before Receipt") and
+           (InspectRcpt."Qty. to Vendor(Rework)" <> 0)
+        then //begin
+            if InspectRcpt."Rework Level" = 0 then begin
+                ItemJnlLine.SETRANGE(ItemJnlLine."Journal Template Name", Text330001Txt);
+                ItemJnlLine.SETRANGE(ItemJnlLine."Journal Batch Name", Text330002Txt);
+                if ItemJnlLine.FIND('-') then
+                    ItemJnlLine.DELETEALL();
+                ItemJnlLine.RESET();
+                ItemJnlLine.INIT();
+                ItemJnlLine."Journal Template Name" := Text330001Txt;
+                ItemJnlLine."Journal Batch Name" := Text330002Txt;
+                ItemJnlLine."Posting Date" := WORKDATE();
+                ItemJnlLine."Document Date" := WORKDATE();
+                ItemJnlLine."Document No." := InspectRcpt."No.";
+                ItemJnlLine."Line No." := ItemReclassLineNo();
+                ItemJnlLine."Entry Type" := ItemJnlLine."Entry Type"::Transfer;
+                ItemJnlLine.VALIDATE("Item No.", InspectRcpt."Item No.");
+                ItemJnlLine.VALIDATE(ItemJnlLine."Unit of Measure Code", InspectRcpt."Unit of Measure Code");
+                ItemJnlLine.VALIDATE(Quantity, InspectRcpt."Qty. to Vendor(Rework)");
+                if InspectRcpt."Location Code" <> '' then
+                    ItemJnlLine.VALIDATE("Location Code", InspectRcpt."Location Code");
+                ItemJnlLine.VALIDATE("New Location Code", Vendor."Rework Location B2B");
+                ItemJnlLine.VALIDATE("Applies-to Entry", InspectRcpt."Item Ledger Entry No.");
+                ItemJnlLine."Quality Ledger Entry No. B2B" := InspectRcpt."Item Ledger Entry No.";
+                ItemJnlLine."Dimension Set ID" := InspectRcpt."Dimension Set ID";
+                ItemJnlLine."New Dimension Set ID" := InspectRcpt."Dimension Set ID";
+                ItemJnlLine.INSERT();
+                ItemJnlPostLine.RUN(ItemJnlLine);
+                QualityItemLedgEntry.GET(InspectRcpt."Item Ledger Entry No.");
+                QualityItemLedgEntry."Remaining Quantity" := QualityItemLedgEntry."Remaining Quantity" - InspectRcpt."Qty. to Vendor(Rework)";
+                if QualityItemLedgEntry."Remaining Quantity" = 0 then
+                    QualityItemLedgEntry.DELETE()
+                else
+                    QualityItemLedgEntry.MODIFY();
+                ItemApplnEntry.SETRANGE("Transferred-from Entry No.", InspectRcpt."Item Ledger Entry No.");
+                if ItemApplnEntry.FIND('+') then;
+                ItemLedgEntry.GET(ItemApplnEntry."Inbound Item Entry No.");
+                QualityItemLedgEntry.TRANSFERFIELDS(ItemLedgEntry);
+                QualityItemLedgEntry."Sent for Rework" := true;
+                QualityItemLedgEntry.Accept := false;
+                QualityItemLedgEntry.INSERT();
+            end else begin
+                RemainQty := InspectRcpt."Qty. to Vendor(Rework)";
+                QualityItemLedgEntry.SETRANGE("Document No.", InspectRcpt."Rework Reference No.");
+                QualityItemLedgEntry.SETRANGE("Inspection Status", QualityItemLedgEntry."Inspection Status"::"Under Inspection");
+                QualityItemLedgEntry.SETRANGE("Sent for Rework", false);
+                if QualityItemLedgEntry.FIND('-') then
+                    repeat
+                        if RemainQty <= QualityItemLedgEntry."Remaining Quantity" then
+                            QtyToApply := RemainQty
+                        else
+                            QtyToApply := QualityItemLedgEntry."Remaining Quantity";
+                        RemainQty := RemainQty - QtyToApply;
+                        if QtyToApply <> 0 then begin
+                            ItemJnlLine.SETRANGE(ItemJnlLine."Journal Template Name", Text330001Txt);
+                            ItemJnlLine.SETRANGE(ItemJnlLine."Journal Batch Name", Text330002Txt);
+                            if ItemJnlLine.FIND('-') then
+                                ItemJnlLine.DELETEALL();
+                            ItemJnlLine.RESET();
+                            ItemJnlLine.INIT();
+                            ItemJnlLine."Journal Template Name" := Text330001Txt;
+                            ItemJnlLine."Journal Batch Name" := Text330002Txt;
+                            ItemJnlLine."Posting Date" := WORKDATE();
+                            ItemJnlLine."Document Date" := WORKDATE();
+                            ItemJnlLine."Document No." := InspectRcpt."No.";
+                            ItemJnlLine."Line No." := ItemReclassLineNo();
+                            ItemJnlLine."Entry Type" := ItemJnlLine."Entry Type"::Transfer;
+                            ItemJnlLine.VALIDATE("Item No.", InspectRcpt."Item No.");
+                            ItemJnlLine.VALIDATE(Quantity, QtyToApply);
+                            ItemJnlLine.VALIDATE("Location Code", InspectRcpt."Location Code");
+                            ItemJnlLine.VALIDATE("New Location Code", Vendor."Rework Location B2B");
+                            ItemJnlLine.VALIDATE("Applies-to Entry", QualityItemLedgEntry."Entry No.");
+                            ItemJnlLine."Quality Ledger Entry No. B2B" := QualityItemLedgEntry."Entry No.";
+                            ItemJnlLine."Dimension Set ID" := InspectRcpt."Dimension Set ID";
+                            ItemJnlLine."New Dimension Set ID" := InspectRcpt."Dimension Set ID";
+                            ItemJnlLine.INSERT();
+                            ItemJnlPostLine.RUN(ItemJnlLine);
+                            QualityItemLedgEntry."Remaining Quantity" := QualityItemLedgEntry."Remaining Quantity" - QtyToApply;
+                            if QualityItemLedgEntry."Remaining Quantity" = 0 then
+                                QualityItemLedgEntry.DELETE()
+                            else
+                                QualityItemLedgEntry.MODIFY();
+                            ItemApplnEntry.SETRANGE("Transferred-from Entry No.", QualityItemLedgEntry."Entry No.");
+                            if ItemApplnEntry.FIND('+') then;
+                            ItemLedgEntry.GET(ItemApplnEntry."Inbound Item Entry No.");
+                            QualityItemLedgEntry.TRANSFERFIELDS(ItemLedgEntry);
+                            QualityItemLedgEntry."Sent for Rework" := true;
+                            QualityItemLedgEntry.Accept := false;
+                            QualityItemLedgEntry.INSERT();
+                        end;
+                        i := i + 1;
+                    until QualityItemLedgEntry.NEXT() = 0;
+            end;
+        //end;
+        if InspectRcpt."Qty. to Vendor(Rework)" <> 0 then begin
+            DelryChalanNo := DeliveryChalan."Entry No." + 1;
+            QualityLedgEntryFill.SETRANGE("Document No.", InspectRcpt."No.");
+            QualityLedgEntryFill.SETFILTER("Entry Type", '=%1', QualityLedgEntryFill."Entry Type"::Rework);
+            QualityLedgEntryFill.FIND('-');
+            DeliveryChalan.INIT();
+            DeliveryChalan.TRANSFERFIELDS(QualityLedgEntryFill);
+            DeliveryChalan."Entry No." := DelryChalanNo;
+            DeliveryChalan.Quantity := InspectRcpt."Qty. to Vendor(Rework)";
+            DeliveryChalan."Remaining Quantity" := InspectRcpt."Qty. to Vendor(Rework)";
+            DeliveryChalan."Inbound Item Ledger Entry No." := QualityItemLedgEntry."Entry No.";
+            DeliveryChalan.INSERT();
+        end;
+        if InspectRcpt."Qty. to Vendor(Rejected)" <> 0 then begin
+            DelryChalanNo := DeliveryChalan."Entry No." + 1;
+            QualityLedgEntryFill.SETRANGE("Document No.", InspectRcpt."No.");
+            QualityLedgEntryFill.SETFILTER("Entry Type", '=%1', QualityLedgEntryFill."Entry Type"::Reject);
+            QualityLedgEntryFill.FIND('-');
+            DeliveryChalan.INIT();
+            DeliveryChalan.TRANSFERFIELDS(QualityLedgEntryFill);
+            DeliveryChalan."Entry No." := DelryChalanNo;
+            DeliveryChalan.Quantity := InspectRcpt."Qty. to Vendor(Rejected)";
+            DeliveryChalan."Remaining Quantity" := 0;
+            DeliveryChalan.INSERT();
+        end;
+        InspectRcpt."Qty. sent to Vendor(Rejected)" := InspectRcpt."Qty. sent to Vendor(Rejected)" + InspectRcpt."Qty. to Vendor(Rejected)";
+        InspectRcpt."Qty. to Vendor(Rejected)" := 0;
+        InspectRcpt."Qty. sent to Vendor(Rework)" := InspectRcpt."Qty. sent to Vendor(Rework)" + InspectRcpt."Qty. to Vendor(Rework)";
+        InspectRcpt."Qty. to Vendor(Rework)" := 0;
     end;
 
     procedure ReceiveReworkAndPost(var InspectRcpt: Record "Inspection Receipt Header B2B");
@@ -1135,46 +1142,44 @@ codeunit 33000253 "Inspection Jnl. Post Line B2B"
         if not CONFIRM(Text003QSt, true) then
             exit;
 
-        with InspectRcpt do begin
-            if DeliveryChalan.FIND('+') then
-                DelryChalanNo := DeliveryChalan."Entry No." + 1
-            else
-                DelryChalanNo := 1;
-            TESTFIELD("Qty. to Receive(Rework)");
-            RemainQty := "Qty. to Receive(Rework)";
-            DeliveryChalan.RESET();
-            if DeliveryChalan.GET(InspectRcpt."Rework Reference Document No.") then begin
-                DeliveryChalan2.INIT();
-                DeliveryChalan2.TRANSFERFIELDS(DeliveryChalan);
-                DeliveryChalan2."Entry No." := DelryChalanNo;
-                DeliveryChalan2."Applies-to Entry" := InspectRcpt."Rework Reference Document No.";
-                DeliveryChalan2."Posting Date" := WORKDATE();
-                DeliveryChalan2."Document Type" := DeliveryChalan2."Document Type"::"In Bound";
-                DeliveryChalan2.Quantity := RemainQty;
-                DeliveryChalan2."Remaining Quantity" := 0;
-                DeliveryChalan2.Open := false;
-                DeliveryChalan2.Positive := true;
-                DeliveryChalan2.INSERT();
-                if RemainQty > 0 then begin
-                    if RemainQty < DeliveryChalan."Remaining Quantity" then begin
-                        DeliveryChalan."Remaining Quantity" := DeliveryChalan."Remaining Quantity" - RemainQty;
-                        RemainQty := 0
-                    end else begin
-                        RemainQty := RemainQty - DeliveryChalan."Remaining Quantity";
-                        DeliveryChalan."Remaining Quantity" := 0;
-                        DeliveryChalan.Open := false;
-                    end;
-                    DeliveryChalan.MODIFY();
+        if DeliveryChalan.FIND('+') then
+            DelryChalanNo := DeliveryChalan."Entry No." + 1
+        else
+            DelryChalanNo := 1;
+        InspectRcpt.TESTFIELD("Qty. to Receive(Rework)");
+        RemainQty := InspectRcpt."Qty. to Receive(Rework)";
+        DeliveryChalan.RESET();
+        if DeliveryChalan.GET(InspectRcpt."Rework Reference Document No.") then begin
+            DeliveryChalan2.INIT();
+            DeliveryChalan2.TRANSFERFIELDS(DeliveryChalan);
+            DeliveryChalan2."Entry No." := DelryChalanNo;
+            DeliveryChalan2."Applies-to Entry" := InspectRcpt."Rework Reference Document No.";
+            DeliveryChalan2."Posting Date" := WORKDATE();
+            DeliveryChalan2."Document Type" := DeliveryChalan2."Document Type"::"In Bound";
+            DeliveryChalan2.Quantity := RemainQty;
+            DeliveryChalan2."Remaining Quantity" := 0;
+            DeliveryChalan2.Open := false;
+            DeliveryChalan2.Positive := true;
+            DeliveryChalan2.INSERT();
+            if RemainQty > 0 then begin
+                if RemainQty < DeliveryChalan."Remaining Quantity" then begin
+                    DeliveryChalan."Remaining Quantity" := DeliveryChalan."Remaining Quantity" - RemainQty;
+                    RemainQty := 0
+                end else begin
+                    RemainQty := RemainQty - DeliveryChalan."Remaining Quantity";
+                    DeliveryChalan."Remaining Quantity" := 0;
+                    DeliveryChalan.Open := false;
                 end;
-                if ("Source Type" = "Source Type"::"In Bound") and (not "Quality Before Receipt") then
-                    ReceiptRework(InspectRcpt);
-                if DeliveryChalan.FIND('+') then
-                    InspectRcpt."DC Inbound Ledger Entry." := DeliveryChalan."Inbound Item Ledger Entry No.";
-                InspectRcpt.MODIFY();
-                InspectDataSheets.CreateReworkInspectDataSheets(InspectRcpt);
-                "Qty. Received(Rework)" := "Qty. Received(Rework)" + "Qty. to Receive(Rework)";
-                "Qty. to Receive(Rework)" := 0;
+                DeliveryChalan.MODIFY();
             end;
+            if (InspectRcpt."Source Type" = InspectRcpt."Source Type"::"In Bound") and (not InspectRcpt."Quality Before Receipt") then
+                ReceiptRework(InspectRcpt);
+            if DeliveryChalan.FIND('+') then
+                InspectRcpt."DC Inbound Ledger Entry." := DeliveryChalan."Inbound Item Ledger Entry No.";
+            InspectRcpt.MODIFY();
+            InspectDataSheets.CreateReworkInspectDataSheets(InspectRcpt);
+            InspectRcpt."Qty. Received(Rework)" := InspectRcpt."Qty. Received(Rework)" + InspectRcpt."Qty. to Receive(Rework)";
+            InspectRcpt."Qty. to Receive(Rework)" := 0;
         end;
     end;
 
@@ -1261,63 +1266,61 @@ codeunit 33000253 "Inspection Jnl. Post Line B2B"
     begin
         if not CONFIRM(Text002Qst, true) then
             exit;
-        with InspectRcptHeader do begin
-            QualityItemLedgerEntry.reset();
-            if DeliveryChalan.FIND('+') then
-                DelryChalanNo := DeliveryChalan."Entry No."
-            else
-                DelryChalanNo := 0;
-            if InspectRcptHeader."Rework Level" = 0 then
-                QualityItemLedgerEntry.SETRANGE("Document No.", "Receipt No.")
-            else
-                QualityItemLedgerEntry.SETRANGE("Document No.", InspectRcptHeader."No.");
-            if InspectRcptHeader."Lot No." <> '' then //B2BQC1.00.01
-                QualityItemLedgEntry.setrange("Lot No.", InspectRcptHeader."Lot No.");//B2BQC1.00.01
-            //QualityItemLedgerEntry.SETRANGE("Sending to Rework", true);//B2BQC1.00.01
-            if QualityItemLedgerEntry.FIND('-') then
-                repeat
-                    if Vend.GET(InspectRcptHeader."Vendor No.") then begin
-                        Vend.TESTFIELD(Vend."Rework Location B2B");
-                        QualityItemLedgerEntry."Location Code" := Vend."Rework Location B2B";
-                    end;
-                    QualityItemLedgerEntry."Sending to Rework" := false;
-                    QualityItemLedgerEntry.Rework := false;
-                    QualityItemLedgerEntry."Sent for Rework" := true;
-                    QualityItemLedgerEntry.MODIFY();
-                    if "Qty. to Vendor(Rework)" <> 0 then begin
-                        QualityLedgEntry2.reset();
-                        QualityLedgEntry2.SETRANGE("Item Ledger Entry No.", QualityItemLedgerEntry."Entry No.");
-                        if QualityLedgEntry2.FIND('-') then begin
-                            DelryChalanNo := DeliveryChalan."Entry No." + 1;
-                            DeliveryChalan.INIT();
-                            DeliveryChalan.TRANSFERFIELDS(QualityLedgEntry2);
-                            DeliveryChalan."Document No." := InspectRcptHeader."No.";
-                            DeliveryChalan.Open := true;
-                            DeliveryChalan."Entry No." := DelryChalanNo;
-                            DelryChalanNo := DelryChalanNo + 1;
-                            DeliveryChalan.Quantity := QualityLedgEntry2.Quantity;
-                            DeliveryChalan."Remaining Quantity" := QualityLedgEntry2.Quantity;
-                            DeliveryChalan."Inbound Item Ledger Entry No." := QualityItemLedgerEntry."Entry No.";
-                            DeliveryChalan.INSERT();
-                        end;
-                    end;
-                    if "Qty. to Vendor(Rejected)" <> 0 then begin
+        QualityItemLedgerEntry.reset();
+        if DeliveryChalan.FIND('+') then
+            DelryChalanNo := DeliveryChalan."Entry No."
+        else
+            DelryChalanNo := 0;
+        if InspectRcptHeader."Rework Level" = 0 then
+            QualityItemLedgerEntry.SETRANGE("Document No.", InspectRcptHeader."Receipt No.")
+        else
+            QualityItemLedgerEntry.SETRANGE("Document No.", InspectRcptHeader."No.");
+        if InspectRcptHeader."Lot No." <> '' then //B2BQC1.00.01
+            QualityItemLedgEntry.setrange("Lot No.", InspectRcptHeader."Lot No.");//B2BQC1.00.01
+                                                                                  //QualityItemLedgerEntry.SETRANGE("Sending to Rework", true);//B2BQC1.00.01
+        if QualityItemLedgerEntry.FIND('-') then
+            repeat
+                if Vend.GET(InspectRcptHeader."Vendor No.") then begin
+                    Vend.TESTFIELD(Vend."Rework Location B2B");
+                    QualityItemLedgerEntry."Location Code" := Vend."Rework Location B2B";
+                end;
+                QualityItemLedgerEntry."Sending to Rework" := false;
+                QualityItemLedgerEntry.Rework := false;
+                QualityItemLedgerEntry."Sent for Rework" := true;
+                QualityItemLedgerEntry.MODIFY();
+                if InspectRcptHeader."Qty. to Vendor(Rework)" <> 0 then begin
+                    QualityLedgEntry2.reset();
+                    QualityLedgEntry2.SETRANGE("Item Ledger Entry No.", QualityItemLedgerEntry."Entry No.");
+                    if QualityLedgEntry2.FIND('-') then begin
                         DelryChalanNo := DeliveryChalan."Entry No." + 1;
-                        QualityLedgEntry2.SETRANGE("Document No.", "No.");
-                        QualityLedgEntry2.SETFILTER("Entry Type", '=%1', QualityLedgEntry2."Entry Type"::Reject);
-                        QualityLedgEntry2.FIND('-');
                         DeliveryChalan.INIT();
                         DeliveryChalan.TRANSFERFIELDS(QualityLedgEntry2);
+                        DeliveryChalan."Document No." := InspectRcptHeader."No.";
+                        DeliveryChalan.Open := true;
                         DeliveryChalan."Entry No." := DelryChalanNo;
-                        DeliveryChalan.Quantity := "Qty. to Vendor(Rejected)";
-                        DeliveryChalan."Remaining Quantity" := 0;
+                        DelryChalanNo := DelryChalanNo + 1;
+                        DeliveryChalan.Quantity := QualityLedgEntry2.Quantity;
+                        DeliveryChalan."Remaining Quantity" := QualityLedgEntry2.Quantity;
+                        DeliveryChalan."Inbound Item Ledger Entry No." := QualityItemLedgerEntry."Entry No.";
                         DeliveryChalan.INSERT();
                     end;
-                until QualityItemLedgerEntry.NEXT() = 0;
-            "Qty. sent to Vendor(Rework)" := "Qty. sent to Vendor(Rework)" + "Qty. to Vendor(Rework)";
-            "Qty. to Vendor(Rework)" := 0;
-            MESSAGE(Text004Msg);
-        end;
+                end;
+                if InspectRcptHeader."Qty. to Vendor(Rejected)" <> 0 then begin
+                    DelryChalanNo := DeliveryChalan."Entry No." + 1;
+                    QualityLedgEntry2.SETRANGE("Document No.", InspectRcptHeader."No.");
+                    QualityLedgEntry2.SETFILTER("Entry Type", '=%1', QualityLedgEntry2."Entry Type"::Reject);
+                    QualityLedgEntry2.FIND('-');
+                    DeliveryChalan.INIT();
+                    DeliveryChalan.TRANSFERFIELDS(QualityLedgEntry2);
+                    DeliveryChalan."Entry No." := DelryChalanNo;
+                    DeliveryChalan.Quantity := InspectRcptHeader."Qty. to Vendor(Rejected)";
+                    DeliveryChalan."Remaining Quantity" := 0;
+                    DeliveryChalan.INSERT();
+                end;
+            until QualityItemLedgerEntry.NEXT() = 0;
+        InspectRcptHeader."Qty. sent to Vendor(Rework)" := InspectRcptHeader."Qty. sent to Vendor(Rework)" + InspectRcptHeader."Qty. to Vendor(Rework)";
+        InspectRcptHeader."Qty. to Vendor(Rework)" := 0;
+        MESSAGE(Text004Msg);
     end;
 
     procedure UpdateReceiveRework(var InspectRcptHeader: Record "Inspection Receipt Header B2B");
@@ -1330,50 +1333,48 @@ codeunit 33000253 "Inspection Jnl. Post Line B2B"
     begin
         if not CONFIRM(Text003Qst, true) then
             exit;
-        with InspectRcptHeader do begin
-            TESTFIELD("Qty. to Receive(Rework)");
-            RemainQty := "Qty. to Receive(Rework)";
-            if DeliveryChalan.FIND('+') then
-                DelryChalanNo := DeliveryChalan."Entry No." + 1
-            else
-                DelryChalanNo := 1;
-            if DeliveryChalan.GET("Rework Reference Document No.") then begin
-                if QualityItemLedgerEntryrework.GET(DeliveryChalan."Item Ledger Entry No.") then begin
-                    if Vend.GET("Vendor No.") then
-                        QualityItemLedgerEntryrework."Location Code" := "Location Code";
-                    QualityItemLedgerEntryrework."Sent for Rework" := false;
-                    QualityItemLedgerEntryrework.Accept := true;
-                    QualityItemLedgerEntryrework.MODIFY();
-                end;
-                DeliveryChalan2.INIT();
-                DeliveryChalan2.TRANSFERFIELDS(DeliveryChalan);
-                DeliveryChalan2."Entry No." := DelryChalanNo;
-                DeliveryChalan2."Applies-to Entry" := "Rework Reference Document No.";
-                DeliveryChalan2."Posting Date" := WORKDATE();
-                DeliveryChalan2."Document Type" := DeliveryChalan2."Document Type"::"In Bound";
-                DeliveryChalan2.Quantity := RemainQty;
-                DeliveryChalan2."Remaining Quantity" := 0;
-                DeliveryChalan2.Open := false;
-                DeliveryChalan2.Positive := true;
-                DeliveryChalan2.INSERT();
-                if RemainQty > 0 then begin
-                    if RemainQty < DeliveryChalan."Remaining Quantity" then begin
-                        DeliveryChalan."Remaining Quantity" := DeliveryChalan."Remaining Quantity" - RemainQty;
-                        RemainQty := 0
-                    end else begin
-                        RemainQty := RemainQty - DeliveryChalan."Remaining Quantity";
-                        DeliveryChalan."Remaining Quantity" := 0;
-                        DeliveryChalan.Open := false;
-                    end;
-                    DeliveryChalan.MODIFY();
-                end;
-                if ("Source Type" = "Source Type"::"In Bound") and (not "Quality Before Receipt") then
-                    InspectDataSheets.CreateReworkInspectDataSheets(InspectRcptHeader);
-                "Qty. Received(Rework)" := "Qty. Received(Rework)" + "Qty. to Receive(Rework)";
-                "Qty. to Receive(Rework)" := 0;
+        InspectRcptHeader.TESTFIELD("Qty. to Receive(Rework)");
+        RemainQty := InspectRcptHeader."Qty. to Receive(Rework)";
+        if DeliveryChalan.FIND('+') then
+            DelryChalanNo := DeliveryChalan."Entry No." + 1
+        else
+            DelryChalanNo := 1;
+        if DeliveryChalan.GET(InspectRcptHeader."Rework Reference Document No.") then begin
+            if QualityItemLedgerEntryrework.GET(DeliveryChalan."Item Ledger Entry No.") then begin
+                if Vend.GET(InspectRcptHeader."Vendor No.") then
+                    QualityItemLedgerEntryrework."Location Code" := InspectRcptHeader."Location Code";
+                QualityItemLedgerEntryrework."Sent for Rework" := false;
+                QualityItemLedgerEntryrework.Accept := true;
+                QualityItemLedgerEntryrework.MODIFY();
             end;
-            MESSAGE(Text005Msg);
+            DeliveryChalan2.INIT();
+            DeliveryChalan2.TRANSFERFIELDS(DeliveryChalan);
+            DeliveryChalan2."Entry No." := DelryChalanNo;
+            DeliveryChalan2."Applies-to Entry" := InspectRcptHeader."Rework Reference Document No.";
+            DeliveryChalan2."Posting Date" := WORKDATE();
+            DeliveryChalan2."Document Type" := DeliveryChalan2."Document Type"::"In Bound";
+            DeliveryChalan2.Quantity := RemainQty;
+            DeliveryChalan2."Remaining Quantity" := 0;
+            DeliveryChalan2.Open := false;
+            DeliveryChalan2.Positive := true;
+            DeliveryChalan2.INSERT();
+            if RemainQty > 0 then begin
+                if RemainQty < DeliveryChalan."Remaining Quantity" then begin
+                    DeliveryChalan."Remaining Quantity" := DeliveryChalan."Remaining Quantity" - RemainQty;
+                    RemainQty := 0
+                end else begin
+                    RemainQty := RemainQty - DeliveryChalan."Remaining Quantity";
+                    DeliveryChalan."Remaining Quantity" := 0;
+                    DeliveryChalan.Open := false;
+                end;
+                DeliveryChalan.MODIFY();
+            end;
+            if (InspectRcptHeader."Source Type" = InspectRcptHeader."Source Type"::"In Bound") and (not InspectRcptHeader."Quality Before Receipt") then
+                InspectDataSheets.CreateReworkInspectDataSheets(InspectRcptHeader);
+            InspectRcptHeader."Qty. Received(Rework)" := InspectRcptHeader."Qty. Received(Rework)" + InspectRcptHeader."Qty. to Receive(Rework)";
+            InspectRcptHeader."Qty. to Receive(Rework)" := 0;
         end;
+        MESSAGE(Text005Msg);
 
     end;
 
@@ -1539,6 +1540,17 @@ codeunit 33000253 "Inspection Jnl. Post Line B2B"
     procedure OnAfterItemJnlLineInsert(var ItemJnlLine: Record "Item Journal Line"; QualityLedgEntry2: Record "Quality Ledger Entry B2B")
     begin
     end;
+    //QC1.4>>
+    [IntegrationEvent(false, false)]
+    procedure OnBeforeUpdatePurchReceiptLine(var InsReceiptHeader: Record "Inspection Receipt Header B2B"; var IsHandled: Boolean)
+    begin
+    end;
+
+    [IntegrationEvent(false, false)]
+    procedure OnBeforeInsertQCItemTrackingLedger(var InsReceiptHeader: Record "Inspection Receipt Header B2B"; var QualityLedgerEntry: Record "Quality Ledger Entry B2B"; var QualityLedgerEntryNo: Integer; var IsHandled: Boolean)
+    begin
+    end;
+    //QC1.4<<
 
     PROCEDURE UpdateResEntryFortReturnOrder(VAR PurchaseLine: Record 39; VAR QualityLedgEntry2: Record 33000262);
     VAR
@@ -1596,6 +1608,6 @@ codeunit 33000253 "Inspection Jnl. Post Line B2B"
         QualityLedgEntryUpdateParent: Record "Quality Ledger Entry B2B";
         QualityLedgEntryParentIR: Record "Quality Ledger Entry B2B";
         QualityItemLedgEntry: Record "Quality Item Ledger Entry B2B";
-
+        IsHandled: Boolean; //QC1.4
 }
 

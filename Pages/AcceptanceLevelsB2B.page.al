@@ -13,7 +13,7 @@ page 33000282 "Acceptance Levels B2B"
     Caption = 'Acceptance Levels';
     PageType = List;
     SourceTable = "Acceptance Level B2B";
-    UsageCategory =Lists;
+    UsageCategory = Lists;
     ApplicationArea = all;
 
     layout
@@ -22,27 +22,27 @@ page 33000282 "Acceptance Levels B2B"
         {
             repeater(Control1000000000)
             {
-                field("Code"; Code)
+                field("Code"; Rec.Code)
                 {
                     ApplicationArea = all;
                     tooltip = 'enter the code of source';
                 }
-                field(Description; Description)
+                field(Description; Rec.Description)
                 {
                     ApplicationArea = all;
                     tooltip = 'Description for Identification purpose for  the user';
                 }
-                field(Type; Type)
+                field(Type; Rec.Type)
                 {
                     ApplicationArea = all;
                     tooltip = ' this list of the all order';
                 }
-                field("Reason Code"; "Reason Code")
+                field("Reason Code"; Rec."Reason Code")
                 {
                     ApplicationArea = all;
                     tooltip = 'reason define which define the levels of acceptance, rejections/reworks at the time of Inspection Receipts';
                 }
-                field("Vendor Rating"; "Vendor Rating")
+                field("Vendor Rating"; Rec."Vendor Rating")
                 {
                     ApplicationArea = all;
                     tooltip = 'vendor rating the number';

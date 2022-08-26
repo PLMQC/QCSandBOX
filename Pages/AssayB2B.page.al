@@ -23,7 +23,7 @@ page 33000278 "Assay B2B"
             group(General)
             {
                 Caption = 'General';
-                field("No."; "No.")
+                field("No."; Rec."No.")
                 {
                     AssistEdit = true;
                     Importance = Promoted;
@@ -31,28 +31,28 @@ page 33000278 "Assay B2B"
                     tooltip = ' automatic numbering using generic number series';
                     trigger OnAssistEdit();
                     begin
-                        if AssistEdit(xRec) then
+                        if Rec.AssistEdit(xRec) then
                             CurrPage.UPDATE();
                     end;
                 }
-                field(Description; Description)
+                field(Description; Rec.Description)
                 {
                     Importance = Promoted;
                     ApplicationArea = all;
                     tooltip = 'Description for Identification purpose for  the user';
                 }
-                field("Sampling Plan Code"; "Sampling Plan Code")
+                field("Sampling Plan Code"; Rec."Sampling Plan Code")
                 {
                     Importance = Promoted;
                     ApplicationArea = all;
                     tooltip = 'sampling plan that is applicable to the set of characters to be inspected by the inspection group';
                 }
-                field("Inspection Group Code"; "Inspection Group Code")
+                field("Inspection Group Code"; Rec."Inspection Group Code")
                 {
                     ApplicationArea = all;
                     tooltip = 'inspection group that is responsible for inspection of the group of characters enlisted between Begin and end';
                 }
-                field(Status; Status)
+                field(Status; Rec.Status)
                 {
                     ApplicationArea = all;
                     tooltip = 'Default is new. After entry of the relevant data, the status must be changed to Certified';
@@ -91,7 +91,7 @@ page 33000278 "Assay B2B"
     local procedure OnAfterGetCurrRecordCust();
     begin
         xRec := Rec;
-        SETRANGE("No.");
+        Rec.SETRANGE("No.");
     end;
 }
 

@@ -90,7 +90,7 @@ page 33000298 "Quality Inspector RC B2B"
                     IsHeader = true;
                 }
                 */
-                   
+
             }
         }
     }

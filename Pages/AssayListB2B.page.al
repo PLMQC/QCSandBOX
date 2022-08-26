@@ -24,27 +24,27 @@ page 33000280 "Assay List B2B"
         {
             repeater(Control1000000000)
             {
-                field("No."; "No.")
+                field("No."; Rec."No.")
                 {
                     ApplicationArea = all;
                     tooltip = ' automatic numbering using generic number series';
                 }
-                field(Description; Description)
+                field(Description; Rec.Description)
                 {
                     ApplicationArea = all;
                     tooltip = 'Description for Identification purpose for  the user';
                 }
-                field("Sampling Plan Code"; "Sampling Plan Code")
+                field("Sampling Plan Code"; Rec."Sampling Plan Code")
                 {
                     ApplicationArea = all;
                     tooltip = 'sampling plan that is applicable to the set of characters to be inspected by the inspection group';
                 }
-                field(Status; Status)
+                field(Status; Rec.Status)
                 {
                     ApplicationArea = all;
                     tooltip = 'Default is new. After entry of the relevant data, the status must be changed to Certified';
                 }
-                field("Inspection Group Code"; "Inspection Group Code")
+                field("Inspection Group Code"; Rec."Inspection Group Code")
                 {
                     ApplicationArea = all;
                     tooltip = 'inspection group that is responsible for inspection of the group of characters enlisted between Begin and end';

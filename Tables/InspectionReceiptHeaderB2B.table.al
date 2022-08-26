@@ -279,7 +279,7 @@ table 33000269 "Inspection Receipt Header B2B"
         }
         field(46; Comment; Boolean)
         {
-            CalcFormula = Exist ("Quality Comment Line B2B" WHERE(Type = CONST("Inspection Receipt"),
+            CalcFormula = Exist("Quality Comment Line B2B" WHERE(Type = CONST("Inspection Receipt"),
                                                               "No." = FIELD("No.")));
             Caption = 'Comment';
             FieldClass = FlowField;
@@ -477,14 +477,18 @@ table 33000269 "Inspection Receipt Header B2B"
         field(97; "Document Type"; Option)
         {
             Caption = 'Document Type';
-            OptionMembers = Receipt,Production,Transfer,"Item Inspection","Return Order",Rework,"Sample Lot";
+            //QC1.4>>
+            //OptionMembers = Receipt,Production,Transfer,"Item Inspection","Return Order",Rework,"Sample Lot";
+            OptionMembers = Receipt,Production,Transfer,"Item Inspection","Return Order",Rework,"Sample Lot","Sales Order","Sample QC";
+            OptionCaption = 'Receipt,Production,Transfer,Item Inspection,Return Order,Rework,Sample Lot,Sales Order,Sample QC';
+            //QC1.4<<
             DataClassification = CustomerContent;
         }
         field(98; "Shortcut Dimension 1 Code"; Code[20])
         {
             CaptionClass = '1,2,1';
             Caption = 'Shortcut Dimension 1 Code';
-                       
+
             TableRelation = "Dimension Value".Code WHERE("Global Dimension No." = CONST(1));
             DataClassification = CustomerContent;
         }
@@ -492,7 +496,7 @@ table 33000269 "Inspection Receipt Header B2B"
         {
             CaptionClass = '1,2,2';
             Caption = 'Shortcut Dimension 2 Code';
-                       
+
             TableRelation = "Dimension Value".Code WHERE("Global Dimension No." = CONST(2));
             DataClassification = CustomerContent;
         }
@@ -553,12 +557,17 @@ table 33000269 "Inspection Receipt Header B2B"
     procedure ShowItemTrackingLines();
     var
         PurchLine: Record "Purchase Line";
-        
+
         InspectJnlLine: Codeunit "Inspection Jnl. Post Line B2B";
+        IsHandled: Boolean; //QC1.4
     begin
+        //QC1.4>>
+        OnBeforeShowItemTrackingLines(Rec, IsHandled);
+        if IsHandled then
+            exit;
+        //QC1.4<<
         if "Source Type" = "Source Type"::"In Bound" then begin
             if not "Quality Before Receipt" then
-                
                 InspectJnlLine.CallPostedItemTrackingForm(DATABASE::"Purch. Rcpt. Line", 0, "Receipt No.", '', 0, "Purch Line No", Rec)
             else begin
                 PurchLine.GET(PurchLine."Document Type"::Order, "Order No.", "Purch Line No");
@@ -577,7 +586,7 @@ table 33000269 "Inspection Receipt Header B2B"
 
     procedure QualityAcceptanceLevels(QualityType: Option Accepted,"Accepted Under Deviation",Rework,Rejected);
     var
-       
+
     begin
         CLEAR(IRAcceptanceLevels);
         IRAcceptanceLevels.GetIRNumber("No.", Quantity, QualityType);
@@ -635,7 +644,14 @@ table 33000269 "Inspection Receipt Header B2B"
             MODIFY();
     end;
 
-    var  InspectRcptAcptLevels: Record "IR Acceptance Levels B2B";
-    ProdOrderLine: Record "Prod. Order Line";
+    //QC1.4>>
+    [IntegrationEvent(false, false)]
+    procedure OnBeforeShowItemTrackingLines(var InsRcptHdr: Record "Inspection Receipt Header B2B"; var IsHandled: Boolean)
+    begin
+    end;
+    //QC1.4<<
+    var
+        InspectRcptAcptLevels: Record "IR Acceptance Levels B2B";
+        ProdOrderLine: Record "Prod. Order Line";
 }
 

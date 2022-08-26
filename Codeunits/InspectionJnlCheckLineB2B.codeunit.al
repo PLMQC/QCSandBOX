@@ -45,6 +45,9 @@ codeunit 33000252 "Inspection Jnl. Check Line B2B"
             InspectDataSheet.SETRANGE("Prod. Order Line", InspectReceipt."Prod. Order Line");
             InspectDataSheet.SETRANGE("Production Batch No.", InspectReceipt."Production Batch No.");
         end;
+        //QC1.4>>
+        OnBeforeApplyInsDataSheetFilters(InspectReceipt, InspectDataSheet);
+        //QC1.4<<
         //if InspectDataSheet.FIND('-') then
         if not InspectDataSheet.IsEmpty() then
             ERROR(Text001Err, InspectReceipt."Receipt No.", InspectReceipt."Purch Line No");
@@ -84,5 +87,12 @@ codeunit 33000252 "Inspection Jnl. Check Line B2B"
         if InspectRcpt."Qty. Rejected" <> InspectAcptLevel.Quantity then
             ERROR(Text003Err, InspectRcpt.FIELDCAPTION("Qty. Rejected"));
     end;
+
+    //QC1.4>>
+    [IntegrationEvent(false, false)]
+    procedure OnBeforeApplyInsDataSheetFilters(InspectReceipt: Record "Inspection Receipt Header B2B"; var InspectDataSheet: Record "Ins Datasheet Header B2B")
+    begin
+    end;
+    //QC1.4<<
 }
 

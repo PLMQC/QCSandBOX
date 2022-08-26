@@ -59,7 +59,7 @@ page 33000299 "Quality Supervisor RC B2B"
                 Caption = 'Inspection Receipts';
                 RunObject = Report "Inspection Receipt B2B";
                 ApplicationArea = all;
-                tooltip  = 'Inspection receipt through which the user actually accepts, rejects or sends for rework';
+                tooltip = 'Inspection receipt through which the user actually accepts, rejects or sends for rework';
             }
             action("Inspection Data Sheet")
             {

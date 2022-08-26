@@ -26,22 +26,22 @@ page 33000293 "Quality Comment List B2B"
         {
             repeater(Control1)
             {
-                field(Type; Type)
+                field(Type; Rec.Type)
                 {
                     ApplicationArea = all;
                     tooltip = 'selected which type users';
                 }
-                field("No."; "No.")
+                field("No."; Rec."No.")
                 {
                     ApplicationArea = all;
                     tooltip = ' automatic numbering using generic number series';
                 }
-                field(Date; Date)
+                field(Date; Rec.Date)
                 {
                     ApplicationArea = all;
                     tooltip = 'mention the date order';
                 }
-                field(Comment; Comment)
+                field(Comment; Rec.Comment)
                 {
                     ApplicationArea = all;
                     tooltip = 'The user can add comments to a specification';

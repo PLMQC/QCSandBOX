@@ -20,11 +20,11 @@ codeunit 33000255 "Spec Line Indent B2B"
                 STRSUBSTNO(
                   Text000Qst +
                   Text001Qst +
-                  Text003Qst, "Spec ID"), true)
+                  Text003Qst, Rec."Spec ID"), true)
             then
                 exit;
 
-        SpecLine.SETRANGE("Spec ID", "Spec ID");
+        SpecLine.SETRANGE("Spec ID", Rec."Spec ID");
         SpecLine.SETRANGE("Version Code", '');
         Indent();
     end;
@@ -49,24 +49,23 @@ codeunit 33000255 "Spec Line Indent B2B"
 
         if NoOfChars = 0 then
             NoOfChars := 1;
-        with SpecLine do
-            if FIND('-') then
-                repeat
-                    Progress := Progress + 1;
-                    Window.UPDATE(1, 10000 * Progress div NoOfChars);
+        if SpecLine.FIND('-') then
+            repeat
+                Progress := Progress + 1;
+                Window.UPDATE(1, 10000 * Progress div NoOfChars);
 
-                    if "Character Type" = "Character Type"::"End" then begin
-                        if i < 1 then
-                            ERROR(Text005Err, "Character Code");
-                        i := i - 1;
-                    end;
+                if SpecLine."Character Type" = SpecLine."Character Type"::"End" then begin
+                    if i < 1 then
+                        ERROR(Text005Err, SpecLine."Character Code");
+                    i := i - 1;
+                end;
 
-                    Indentation := i;
-                    MODIFY();
+                SpecLine.Indentation := i;
+                SpecLine.MODIFY();
 
-                    if "Character Type" = "Character Type"::"Begin" then
-                        i := i + 1;
-                until NEXT() = 0;
+                if SpecLine."Character Type" = SpecLine."Character Type"::"Begin" then
+                    i := i + 1;
+            until SpecLine.NEXT() = 0;
         Window.CLOSE();
     end;
 

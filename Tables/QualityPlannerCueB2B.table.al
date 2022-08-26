@@ -21,21 +21,21 @@ table 33000285 "Quality Planner Cue B2B"
         }
         field(2; "Certified Specifications"; Integer)
         {
-            CalcFormula = Count ("Specification Header B2B" WHERE(Status = FILTER(Certified)));
+            CalcFormula = Count("Specification Header B2B" WHERE(Status = FILTER(Certified)));
             Caption = 'Certified Specifications';
             Editable = false;
             FieldClass = FlowField;
         }
         field(3; "Certified Sampling Plan"; Integer)
         {
-            CalcFormula = Count ("Sampling Plan Header B2B" WHERE(Status = FILTER(Certified)));
+            CalcFormula = Count("Sampling Plan Header B2B" WHERE(Status = FILTER(Certified)));
             Caption = 'Certified Sampling Plan';
             Editable = false;
             FieldClass = FlowField;
         }
         field(4; "Sub Assembly"; Integer)
         {
-            CalcFormula = Count ("Sub Assembly B2B" WHERE(Block = FILTER(false)));
+            CalcFormula = Count("Sub Assembly B2B" WHERE(Block = FILTER(false)));
             Caption = 'Sub Assembly';
             Editable = false;
             FieldClass = FlowField;

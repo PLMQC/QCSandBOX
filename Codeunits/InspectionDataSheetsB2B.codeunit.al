@@ -14,12 +14,12 @@ codeunit 33000251 "Inspection Data Sheets B2B"
 
     trigger OnRun();
     begin
-        TESTFIELD("Lot No.");
-        if "Inspect. Data Sheet Created" then
-            if not CONFIRM(Text001QstLbl, false, "Lot No.") then
+        Rec.TESTFIELD("Lot No.");
+        if Rec."Inspect. Data Sheet Created" then
+            if not CONFIRM(Text001QstLbl, false, Rec."Lot No.") then
                 exit;
-        PurchRcptLine.GET("Document No.", "Purch. Line No.");
-        PurchRcptHeader.SETRANGE("No.", "Document No.");
+        PurchRcptLine.GET(Rec."Document No.", Rec."Purch. Line No.");
+        PurchRcptHeader.SETRANGE("No.", Rec."Document No.");
         PurchRcptHeader.FIND('-');
         InspLot.COPY(Rec);
         InitInspectionHeader(InspectionType::"Purchase Lot");
@@ -27,8 +27,8 @@ codeunit 33000251 "Inspection Data Sheets B2B"
 
         if not CheckVendorQualityApproval(PurchRcptLine, true) then
             exit;
-        "Inspect. Data Sheet Created" := true;
-        MODIFY();
+        Rec."Inspect. Data Sheet Created" := true;
+        Rec.MODIFY();
         MESSAGE(Text000Msg);
     end;
 
@@ -104,7 +104,7 @@ codeunit 33000251 "Inspection Data Sheets B2B"
 
     procedure CreateLotTrackInspectDataSheet(PurchRcptLine2: Record "Purch. Rcpt. Line");
     var
-       
+
     begin
         if PurchRcptLine."Quality Before Receipt B2B" then
             exit;
@@ -172,23 +172,21 @@ codeunit 33000251 "Inspection Data Sheets B2B"
 
     procedure CreateInprocInspectDataSheet(var ProdOrderRoutingLine2: Record "Prod. Order Routing Line");
     begin
-        with ProdOrderRoutingLine2 do begin
-            if not "QC Enabled B2B" then
-                exit;
-            TESTFIELD("Sub Assembly B2B");
-            TESTFIELD("Spec ID B2B");
-            TESTFIELD("Qty. to Produce B2B");
-            ProdOrderRoutingLine := ProdOrderRoutingLine2;
-            InitInspectionHeader(InspectionType::"Production Order");
-            InsertInspectionDataHeader();
-            "Quantity Produced B2B" := "Quantity Produced B2B" + "Qty. to Produce B2B";
-            "Quantity Sent to Quality B2B" := "Quantity Produced B2B";
-            if "Quantity B2B" - "Quantity Produced B2B" > 0 then
-                "Qty. to Produce B2B" := "Quantity B2B" - "Quantity Produced B2B"
-            else
-                "Qty. to Produce B2B" := 0;
-            ProdOrderRoutingLine2.MODIFY();
-        end;
+        if not ProdOrderRoutingLine2."QC Enabled B2B" then
+            exit;
+        ProdOrderRoutingLine2.TESTFIELD("Sub Assembly B2B");
+        ProdOrderRoutingLine2.TESTFIELD("Spec ID B2B");
+        ProdOrderRoutingLine2.TESTFIELD("Qty. to Produce B2B");
+        ProdOrderRoutingLine := ProdOrderRoutingLine2;
+        InitInspectionHeader(InspectionType::"Production Order");
+        InsertInspectionDataHeader();
+        ProdOrderRoutingLine2."Quantity Produced B2B" := ProdOrderRoutingLine2."Quantity Produced B2B" + ProdOrderRoutingLine2."Qty. to Produce B2B";
+        ProdOrderRoutingLine2."Quantity Sent to Quality B2B" := ProdOrderRoutingLine2."Quantity Produced B2B";
+        if ProdOrderRoutingLine2."Quantity B2B" - ProdOrderRoutingLine2."Quantity Produced B2B" > 0 then
+            ProdOrderRoutingLine2."Qty. to Produce B2B" := ProdOrderRoutingLine2."Quantity B2B" - ProdOrderRoutingLine2."Quantity Produced B2B"
+        else
+            ProdOrderRoutingLine2."Qty. to Produce B2B" := 0;
+        ProdOrderRoutingLine2.MODIFY();
         MESSAGE(Text000Msg);
     end;
 
@@ -405,9 +403,9 @@ codeunit 33000251 "Inspection Data Sheets B2B"
                     OnAfterInitInspectionHeaderInsTypeRework(InspectDataHeader, InspectionReceipt, PurchRcptLine);
                 end;
         end;
-        
+
         if itemrec.get(InspectDataHeader."Item No.") then
-          InspectDataHeader."New Location" := Itemrec."Rejection Location B2B";
+            InspectDataHeader."New Location" := Itemrec."Rejection Location B2B";
     end;
 
     procedure InsertInspectionDataHeader();
@@ -445,7 +443,7 @@ codeunit 33000251 "Inspection Data Sheets B2B"
 
     procedure InsertInspectionDataLine(InspectCode: Code[20]);
     var
-       
+
         CharGroupNo: Integer;
     begin
         Flag := false;
@@ -497,11 +495,11 @@ codeunit 33000251 "Inspection Data Sheets B2B"
 
     procedure CheckVendorQualityApproval(PurchRcptLine: Record "Purch. Rcpt. Line"; LotNo: Boolean): Boolean;
     var
-        
+
         PurchRcptHeaderLRec: Record "Purch. Rcpt. Header";
         PostingDate: Date;
     begin
-         VendorItemQA.reset();
+        VendorItemQA.reset();
         VendorItemQA.SETRANGE("Vendor No.", PurchRcptLine."Buy-from Vendor No.");
         VendorItemQA.SETRANGE("Item No.", PurchRcptLine."No.");
         if VendorItemQA.FIND('-') then begin
@@ -582,7 +580,7 @@ codeunit 33000251 "Inspection Data Sheets B2B"
 
     procedure CopyItemTrackingLots(PurchRcptLine: Record "Purch. Rcpt. Line");
     var
-        
+
         LineNo: Integer;
     begin
         ItemEntryRelation.SETCURRENTKEY("Source ID", "Source Type");
@@ -729,14 +727,16 @@ codeunit 33000251 "Inspection Data Sheets B2B"
     procedure OnBeforeInsertInspectionDataHeader(var InspectDataHeader: Record "Ins Datasheet Header B2B"; SpecLine: Record "Specification Line B2B")
     begin
     end;
-    var  InspectLot: Record "Inspection Lot B2B";
 
-     SpecLine1: Record "Specification Line B2B";
-     ItemEntryRelation: Record "Item Entry Relation";
-        
+    var
+        InspectLot: Record "Inspection Lot B2B";
+
+        SpecLine1: Record "Specification Line B2B";
+        ItemEntryRelation: Record "Item Entry Relation";
+
         TempItemLedgEntry: Record "Item Ledger Entry" temporary;
         VendorItemQA: Record "Vendor Item Qty Approval B2B";
-        ItemRec : Record Item ;
-    
+        ItemRec: Record Item;
+
 }
 

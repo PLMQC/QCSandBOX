@@ -443,6 +443,11 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Table Ins Datasheet Header B2B - Field Document Type - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Table 837677074 - Field 2363328873 - Property 62802879" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Receipt,Production,Transfer,Item Inspection,Return Order,Rework,Sample Lot,Sales Order,Sample QC</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Ins Datasheet Header B2B - Field Document Type - Property OptionCaption</note>
+        </trans-unit>
         <trans-unit id="Table 837677074 - Field 1527563463 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>External Document No.</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -992,6 +997,11 @@
           <source>Document Type</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Table Inspection Receipt Header B2B - Field Document Type - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 2719736681 - Field 2363328873 - Property 62802879" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Receipt,Production,Transfer,Item Inspection,Return Order,Rework,Sample Lot,Sales Order,Sample QC</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Inspection Receipt Header B2B - Field Document Type - Property OptionCaption</note>
         </trans-unit>
         <trans-unit id="Table 2719736681 - Field 1527563463 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>External Document No.</source>
@@ -1792,6 +1802,11 @@
           <source>Document Type</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Table Posted Ins DatasheetHeader B2B - Field Document Type - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3664250553 - Field 2363328873 - Property 62802879" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Receipt,Production,Transfer,Item Inspection,Return Order,Rework,Sample Lot,Sales Order,Sample QC</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table Posted Ins DatasheetHeader B2B - Field Document Type - Property OptionCaption</note>
         </trans-unit>
         <trans-unit id="Table 3664250553 - Field 1527563463 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>External Document No.</source>
@@ -4479,7 +4494,7 @@
           <note from="Xliff Generator" annotates="general" priority="3">Codeunit Inspection Jnl. Post Line B2B - NamedType Text330002Txt</note>
         </trans-unit>
         <trans-unit id="Codeunit 3053560844 - Method 2318797823 - NamedType 2654069626" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Outbound Quantity is more than Quantity Accepted.</source>
+          <source>Inspection Status must not be Under Inspection in Quality Item Ledger Entry.</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Codeunit ItemJnlPostLineExt B2B - Method ExcludeQualityItems - NamedType Text33000251Err</note>
         </trans-unit>

@@ -65,7 +65,7 @@ tableextension 33000256 "PurchRcptLineExt B2B" extends "Purch. Rcpt. Line"
     }
     keys
     {
-        
+
         //Need to resolve key .
         /*
                 key(Key1; Type, "Buy-from Vendor No.", "No.")
@@ -75,10 +75,10 @@ tableextension 33000256 "PurchRcptLineExt B2B" extends "Purch. Rcpt. Line"
         */
     }
 
-    
 
 
-    
+
+
 
 
     var

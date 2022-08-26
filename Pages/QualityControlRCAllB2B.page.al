@@ -76,10 +76,10 @@ page 33000305 "Quality Control RC All B2B"
                 }
                 action("Purchase Order")
                 {
-                   ApplicationArea = All;
-                   tooltip = 'Create a new Purchase Order. Select an item, which is QC enabled and check for the approval of vendors for that particular ite';
+                    ApplicationArea = All;
+                    tooltip = 'Create a new Purchase Order. Select an item, which is QC enabled and check for the approval of vendors for that particular ite';
                     Image = Purchase;
-                    RunObject = page "Purchase Orders";  
+                    RunObject = page "Purchase Orders";
                 }
             }
             group(History)
@@ -104,7 +104,7 @@ page 33000305 "Quality Control RC All B2B"
                 action("Quality Control Setup")
                 {
                     ApplicationArea = All;
-                    tooltip =  'The characteristic used for calculating Assay & Moisture need to be specified in Quality control setup';
+                    tooltip = 'The characteristic used for calculating Assay & Moisture need to be specified in Quality control setup';
                     Image = Task;
                     RunObject = page "Quality Control Setup B2B";
                 }
@@ -240,7 +240,7 @@ page 33000305 "Quality Control RC All B2B"
                     Image = Report;
                     RunObject = report "Daily Ins Data Sheet B2B";
                 }
-               
+
             }
         }
 

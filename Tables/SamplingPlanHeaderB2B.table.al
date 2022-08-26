@@ -55,7 +55,7 @@ table 33000252 "Sampling Plan Header B2B"
                             begin
                                 SamplingPlanLine.SETRANGE("Sampling Code", Code);
                                 if not SamplingPlanLine.FIND('-') then
-                                  ERROR(Text001Err); 
+                                    ERROR(Text001Err);
                                 SamplingPlanLine.reset();
                                 SamplingPlanLine.SETRANGE("Sampling Code", Code);
                                 PreviousSampLineSampleSize := 0;
@@ -64,12 +64,12 @@ table 33000252 "Sampling Plan Header B2B"
                                         if PreviousSampLineSampleSize > SamplingPlanLine."Sampling Size" then
                                             ERROR(Text000Err, SamplingPlanLine."Line No.");
                                         PreviousSampLineSampleSize := SamplingPlanLine."Sampling Size";
-                                        
+
                                     until SamplingPlanLine.NEXT() = 0;
                             end;
-                                   
-                                   
-                                  
+
+
+
                     end;
 
             end;

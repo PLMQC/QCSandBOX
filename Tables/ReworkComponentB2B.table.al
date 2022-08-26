@@ -171,7 +171,7 @@ table 33000279 "Rework Component B2B"
         }
         field(27; "Act. Consumption (Qty)"; Decimal)
         {
-            CalcFormula = - Sum ("Item Ledger Entry".Quantity WHERE("Entry Type" = CONST(Consumption),
+            CalcFormula = - Sum("Item Ledger Entry".Quantity WHERE("Entry Type" = CONST(Consumption),
                                                                    "Order No." = FIELD("Prod. Order No."),
                                                                    "Order Line No." = FIELD("Prod. Order Line No."),
                                                                    "Prod. Order Comp. Line No." = FIELD("Line No.")));
@@ -403,7 +403,7 @@ table 33000279 "Rework Component B2B"
         }
         field(63; "Reserved Qty. (Base)"; Decimal)
         {
-            CalcFormula = - Sum ("Reservation Entry"."Quantity (Base)" WHERE("Reservation Status" = CONST(Reservation),
+            CalcFormula = - Sum("Reservation Entry"."Quantity (Base)" WHERE("Reservation Status" = CONST(Reservation),
                                                                             "Source Type" = CONST(5407),
                                                                             "Source Subtype" = FIELD(Status),
                                                                             "Source ID" = FIELD("Prod. Order No."),
@@ -417,7 +417,7 @@ table 33000279 "Rework Component B2B"
         }
         field(71; "Reserved Quantity"; Decimal)
         {
-            CalcFormula = - Sum ("Reservation Entry".Quantity WHERE("Reservation Status" = CONST(Reservation),
+            CalcFormula = - Sum("Reservation Entry".Quantity WHERE("Reservation Status" = CONST(Reservation),
                                                                    "Source Type" = CONST(5407),
                                                                    "Source Subtype" = FIELD(Status),
                                                                    "Source ID" = FIELD("Prod. Order No."),
@@ -462,7 +462,7 @@ table 33000279 "Rework Component B2B"
         }
         field(5750; "Pick Qty."; Decimal)
         {
-            CalcFormula = Sum ("Warehouse Activity Line"."Qty. Outstanding" WHERE("Activity Type" = FILTER(<> "Put-away"),
+            CalcFormula = Sum("Warehouse Activity Line"."Qty. Outstanding" WHERE("Activity Type" = FILTER(<> "Put-away"),
                                                                                   "Source Type" = CONST(5407),
                                                                                   "Source Subtype" = FIELD(Status),
                                                                                   "Source No." = FIELD("Prod. Order No."),
@@ -499,7 +499,7 @@ table 33000279 "Rework Component B2B"
         }
         field(7303; "Pick Qty. (Base)"; Decimal)
         {
-            CalcFormula = Sum ("Warehouse Activity Line"."Qty. Outstanding (Base)" WHERE("Activity Type" = FILTER(<> "Put-away"),
+            CalcFormula = Sum("Warehouse Activity Line"."Qty. Outstanding (Base)" WHERE("Activity Type" = FILTER(<> "Put-away"),
                                                                                          "Source Type" = CONST(5407),
                                                                                          "Source Subtype" = FIELD(Status),
                                                                                          "Source No." = FIELD("Prod. Order No."),
@@ -650,11 +650,11 @@ table 33000279 "Rework Component B2B"
         GLSetup: Record "General Ledger Setup";
         Location: Record Location;
         UOMMgt: Codeunit "Unit of Measure Management";
-        Text000Err: Label 'A %1 %2 cannot be inserted, modified, or deleted.',Comment = '%1 = Status ; %2 = Table caption';
-        Text001Err: Label '%1 cannot be deleted as consumption is posted.',Comment = '%1 = TableCaption';
+        Text000Err: Label 'A %1 %2 cannot be inserted, modified, or deleted.', Comment = '%1 = Status ; %2 = Table caption';
+        Text001Err: Label '%1 cannot be deleted as consumption is posted.', Comment = '%1 = TableCaption';
         Text002Err: Label 'Expected Quantity should not be more than Remaining Quantity.';
-        Text99000001Err: Label 'You cannot rename a %1.',Comment = '%1 = TableCaption';
-        Text99000003Err: Label 'You cannot change %1 when %2 is %3.',Comment = '%1 = UnitCost; %2 = TableCaption; %3 = CostingMethod';
+        Text99000001Err: Label 'You cannot rename a %1.', Comment = '%1 = TableCaption';
+        Text99000003Err: Label 'You cannot change %1 when %2 is %3.', Comment = '%1 = UnitCost; %2 = TableCaption; %3 = CostingMethod';
         GLSetupRead: Boolean;
 
 
@@ -668,12 +668,12 @@ table 33000279 "Rework Component B2B"
 
         if not ProdOrderLine.GET(Status, "Prod. Order No.", "Prod. Order Line No.") then
             CLEAR(ProdOrderLine);
-        
-          exit(
-          STRSUBSTNO('%1 %2 %3',
-            "Prod. Order No.", ProdOrder.Description, ProdOrderLine."Item No."));
+
+        exit(
+        STRSUBSTNO('%1 %2 %3',
+          "Prod. Order No.", ProdOrder.Description, ProdOrderLine."Item No."));
     end;
- 
+
     local procedure CalcBaseQty(Qty: Decimal): Decimal;
     begin
         TESTFIELD("Qty. per Unit of Measure");

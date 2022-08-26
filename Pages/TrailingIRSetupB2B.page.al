@@ -23,7 +23,7 @@ page 33000303 "Trailing IR Setup B2B"
             group(General)
             {
                 Caption = 'General';
-                field("Use Work Date as Base"; "Use Work Date as Base")
+                field("Use Work Date as Base"; Rec."Use Work Date as Base")
                 {
                     ApplicationArea = all;
                     tooltip = 'which data work use the work date';
@@ -38,14 +38,14 @@ page 33000303 "Trailing IR Setup B2B"
 
     trigger OnOpenPage();
     begin
-        if not GET(USERID()) then begin
-            "User ID" := format(USERID());
-            "Use Work Date as Base" := true;
-            INSERT();
+        if not Rec.GET(USERID()) then begin
+            Rec."User ID" := format(USERID());
+            Rec."Use Work Date as Base" := true;
+            Rec.INSERT();
         end;
-        FILTERGROUP(2);
-        SETRANGE("User ID", USERID());
-        FILTERGROUP(0);
+        Rec.FILTERGROUP(2);
+        Rec.SETRANGE("User ID", USERID());
+        Rec.FILTERGROUP(0);
     end;
 }
 

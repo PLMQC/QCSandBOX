@@ -87,19 +87,19 @@ pageextension 33000306 "PostedWhrRcpSFFPageExt B2B" extends "Posted Whse. Receip
     begin
 
         //WMSMgt2.ShowPostedSourceDoc("Posted Source Document", "Posted Source No.");
-        WMSMgt2.ShowPostedSourceDocument("Posted Source Document", "Posted Source No.");
+        WMSMgt2.ShowPostedSourceDocument(Rec."Posted Source Document", Rec."Posted Source No.");
     end;
 
     local procedure ShowBinContents();
     var
         BinContent: Record 7302;
     begin
-        BinContent.ShowBinContents("Location Code", "Item No.", "Variant Code", "Bin Code");
+        BinContent.ShowBinContents(Rec."Location Code", Rec."Item No.", Rec."Variant Code", Rec."Bin Code");
     end;
 
     local procedure ShowWhseLine();
     begin
-        WMSMgt2.ShowWhseDocLine(0, "Whse. Receipt No.", "Whse Receipt Line No.");
+        WMSMgt2.ShowWhseRcptLine(Rec."Whse. Receipt No.", Rec."Whse Receipt Line No.");
     end;
 
 
@@ -111,10 +111,10 @@ pageextension 33000306 "PostedWhrRcpSFFPageExt B2B" extends "Posted Whse. Receip
     begin
         // Start  B2BQC1.00.00 - 01 Show Inspection Data Sheets
 
-        TESTFIELD("Source Document", "Source Document"::"Purchase Order");
-        InspectDataSheet.SETRANGE("Receipt No.", "Posted Source No.");
-        InspectDataSheet.SETRANGE("Item No.", "Item No.");
-        InspectDataSheet.SETRANGE("Purch. Line No", "Source Line No.");
+        Rec.TESTFIELD("Source Document", Rec."Source Document"::"Purchase Order");
+        InspectDataSheet.SETRANGE("Receipt No.", Rec."Posted Source No.");
+        InspectDataSheet.SETRANGE("Item No.", Rec."Item No.");
+        InspectDataSheet.SETRANGE("Purch. Line No", Rec."Source Line No.");
         PAGE.RUN(PAGE::"Inspection Data Sheet List B2B", InspectDataSheet);
 
         // Stop   B2BQC1.00.00 - 01
@@ -124,10 +124,10 @@ pageextension 33000306 "PostedWhrRcpSFFPageExt B2B" extends "Posted Whse. Receip
     begin
         // Start  B2BQC1.00.00 - 01 Show Posted Inspection Data Sheets
 
-        TESTFIELD("Source Document", "Source Document"::"Purchase Order");
-        PostedInspectDataSheet.SETRANGE("Receipt No.", "Posted Source No.");
-        PostedInspectDataSheet.SETRANGE("Item No.", "Item No.");
-        PostedInspectDataSheet.SETRANGE("Purch. Line No", "Source Line No.");
+        Rec.TESTFIELD("Source Document", Rec."Source Document"::"Purchase Order");
+        PostedInspectDataSheet.SETRANGE("Receipt No.", Rec."Posted Source No.");
+        PostedInspectDataSheet.SETRANGE("Item No.", Rec."Item No.");
+        PostedInspectDataSheet.SETRANGE("Purch. Line No", Rec."Source Line No.");
         PAGE.RUN(PAGE::"Posted Ins DataSheet List B2B", PostedInspectDataSheet);
 
         // Stop   B2BQC1.00.00 - 01
@@ -137,10 +137,10 @@ pageextension 33000306 "PostedWhrRcpSFFPageExt B2B" extends "Posted Whse. Receip
     begin
         // Start  B2BQC1.00.00 - 01 Show Inspection Receipt
 
-        TESTFIELD("Source Document", "Source Document"::"Purchase Order");
-        InspectReportHeader.SETRANGE("Receipt No.", "Posted Source No.");
-        InspectReportHeader.SETRANGE("Item No.", "Item No.");
-        InspectReportHeader.SETRANGE("Purch Line No", "Source Line No.");
+        Rec.TESTFIELD("Source Document", Rec."Source Document"::"Purchase Order");
+        InspectReportHeader.SETRANGE("Receipt No.", Rec."Posted Source No.");
+        InspectReportHeader.SETRANGE("Item No.", Rec."Item No.");
+        InspectReportHeader.SETRANGE("Purch Line No", Rec."Source Line No.");
         InspectReportHeader.SETRANGE(Status, FALSE);
         PAGE.RUN(PAGE::"Inspection Receipt List B2B", InspectReportHeader);
         InspectReportHeader.RESET();
@@ -152,10 +152,10 @@ pageextension 33000306 "PostedWhrRcpSFFPageExt B2B" extends "Posted Whse. Receip
     begin
         // Start  B2BQC1.00.00 - 01 Show Posted Inspection Receipt
 
-        TESTFIELD("Source Document", "Source Document"::"Purchase Order");
-        InspectReportHeader.SETRANGE("Receipt No.", "Posted Source No.");
-        InspectReportHeader.SETRANGE("Item No.", "Item No.");
-        InspectReportHeader.SETRANGE("Purch Line No", "Source Line No.");
+        Rec.TESTFIELD("Source Document", Rec."Source Document"::"Purchase Order");
+        InspectReportHeader.SETRANGE("Receipt No.", Rec."Posted Source No.");
+        InspectReportHeader.SETRANGE("Item No.", Rec."Item No.");
+        InspectReportHeader.SETRANGE("Purch Line No", Rec."Source Line No.");
         InspectReportHeader.SETRANGE(Status, TRUE);
         PAGE.RUN(PAGE::"Posted Ins Receipt List B2B", InspectReportHeader);//B2BQC1.00.01
         InspectReportHeader.RESET();

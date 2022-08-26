@@ -6,56 +6,56 @@ pageextension 33000308 "PurchOrdSubfExt B2B" extends "Purchase Order Subform"
         addafter(ShortcutDimCode8)
         {
 
-            field("Spec ID B2B"; "Spec ID B2B")
+            field("Spec ID B2B"; Rec."Spec ID B2B")
             {
                 ApplicationArea = all;
                 Caption = 'Spec ID';
                 ToolTip = 'Specification is a group of characteristics to be inspected of an item';
             }
-            field("Quantity Accepted B2B"; "Quantity Accepted B2B")
+            field("Quantity Accepted B2B"; Rec."Quantity Accepted B2B")
             {
                 ApplicationArea = all;
                 Caption = 'Quantity Accepted';
                 tooltip = 'the inspection data sheet is quantity characteristic  approval is the accepted quantity';
             }
-            field("Quantity Rework B2B"; "Quantity Rework B2B")
+            field("Quantity Rework B2B"; Rec."Quantity Rework B2B")
             {
                 ApplicationArea = all;
                 Caption = 'Quantity Rework';
                 tooltip = 'any remark the quantity send the vendor is the rework quantity';
             }
-            field("QC Enabled B2B"; "QC Enabled B2B")
+            field("QC Enabled B2B"; Rec."QC Enabled B2B")
             {
                 ApplicationArea = all;
                 Caption = 'QC Enabled';
                 ToolTip = 'In bound Inspection Data Sheets are created only if the item is QC Enabled';
             }
-            field("Quantity Rejected B2B"; "Quantity Rejected B2B")
+            field("Quantity Rejected B2B"; Rec."Quantity Rejected B2B")
             {
                 ApplicationArea = all;
                 Caption = 'Quantity Rejected';
                 ToolTip = 'the inspection data sheet is quantity characteristic is not approval the rejected quantity';
 
             }
-            field("Quality Before Receipt B2B"; "Quality Before Receipt B2B")
+            field("Quality Before Receipt B2B"; Rec."Quality Before Receipt B2B")
             {
                 ApplicationArea = all;
                 Caption = 'Quality Before Receipt';
                 ToolTip = 'Inspection is done before the material offered by the vendor is taken into the inventory';
             }
-            field("Qty. Sending to Quality B2B"; "Qty. Sending to Quality B2B")
+            field("Qty. Sending to Quality B2B"; Rec."Qty. Sending to Quality B2B")
             {
                 ApplicationArea = all;
                 Caption = 'Qty. Sending to Quality';
                 ToolTip = 'which Qty.sending to Quality';
             }
-            field("Qty. Sent to Quality B2B"; "Qty. Sent to Quality B2B")
+            field("Qty. Sent to Quality B2B"; Rec."Qty. Sent to Quality B2B")
             {
                 ApplicationArea = all;
                 Caption = 'Qty. Sent to Quality';
                 tooltip = 'how much Qty.sent to Quality';
             }
-            field("Qty. Sending to Quality(R) B2B"; "Qty. Sending to Quality(R) B2B")
+            field("Qty. Sending to Quality(R) B2B"; Rec."Qty. Sending to Quality(R) B2B")
             {
                 ApplicationArea = all;
                 Caption = 'Qty. Sending to Quality(R)';
@@ -150,8 +150,8 @@ pageextension 33000308 "PurchOrdSubfExt B2B" extends "Purchase Order Subform"
         //B2B1.2 Start
         //Commented
         //CreateInspectionDataSheets;
-        IF Quantity >= ("Qty. Sending to Quality B2B" + "Qty. Sent to Quality B2B") THEN
-            CreateInspectionDataSheets()
+        IF Rec.Quantity >= (Rec."Qty. Sending to Quality B2B" + Rec."Qty. Sent to Quality B2B") THEN
+            Rec.CreateInspectionDataSheets()
         ELSE
             ERROR(Text50001Err);
         //B2B1.2 Start End;
@@ -163,7 +163,7 @@ pageextension 33000308 "PurchOrdSubfExt B2B" extends "Purchase Order Subform"
     begin
         // Start  B2BQC1.00.00 - 01 Show Inspection Data Sheets
 
-        ShowDataSheets();
+        Rec.ShowDataSheets();
 
         // Stop   B2BQC1.00.00 - 01
     end;
@@ -173,7 +173,7 @@ pageextension 33000308 "PurchOrdSubfExt B2B" extends "Purchase Order Subform"
     begin
         // Start  B2BQC1.00.00 - 01 Show Posted Inspection Data Sheets
 
-        ShowPostDataSheets();
+        Rec.ShowPostDataSheets();
 
         // Stop   B2BQC1.00.00 - 01
     end;
@@ -183,7 +183,7 @@ pageextension 33000308 "PurchOrdSubfExt B2B" extends "Purchase Order Subform"
     begin
         // Start  B2BQC1.00.00 - 01 Show Inspection Receipt
 
-        ShowInspectReceipt();
+        Rec.ShowInspectReceipt();
         // Stop   B2BQC1.00.00 - 01
     end;
 
@@ -192,7 +192,7 @@ pageextension 33000308 "PurchOrdSubfExt B2B" extends "Purchase Order Subform"
     begin
         // Start  B2BQC1.00.00 - 01 Show Posted Inspection Receipt
 
-        ShowPostInspectReceipt();
+        Rec.ShowPostInspectReceipt();
 
         // Stop   B2BQC1.00.00 - 01
     end;

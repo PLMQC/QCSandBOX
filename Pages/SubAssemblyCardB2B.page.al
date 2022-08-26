@@ -23,45 +23,45 @@ page 33000284 "Sub Assembly Card B2B"
             group(General)
             {
                 Caption = 'General';
-                field("No."; "No.")
+                field("No."; Rec."No.")
                 {
                     Importance = Promoted;
                     ApplicationArea = all;
                     tooltip = ' automatic numbering using generic number series';
                     trigger OnAssistEdit();
                     begin
-                        if AssistEdit() then
+                        if Rec.AssistEdit() then
                             CurrPage.UPDATE();
                     end;
                 }
-                field(Description; Description)
+                field(Description; Rec.Description)
                 {
                     Importance = Promoted;
                     ApplicationArea = all;
                     tooltip = 'Description for Identification purpose for  the user';
                 }
-                field("Spec ID"; "Spec ID")
+                field("Spec ID"; Rec."Spec ID")
                 {
                     Importance = Promoted;
                     ApplicationArea = all;
                     tooltip = 'Specification is a group of characteristics to be inspected of an item';
                 }
-                field("QC Enabled"; "QC Enabled")
+                field("QC Enabled"; Rec."QC Enabled")
                 {
                     ApplicationArea = all;
                     tooltip = 'In bound Inspection Data Sheets are created only if the item is QC Enabled';
                 }
-                field("Unit of Measure Code"; "Unit of Measure Code")
+                field("Unit of Measure Code"; Rec."Unit of Measure Code")
                 {
                     ApplicationArea = all;
                     tooltip = 'unit of measure code from item unit of measure where the quantity to customer is to be dispatched';
                 }
-                field("Search Name"; "Search Name")
+                field("Search Name"; Rec."Search Name")
                 {
                     ApplicationArea = all;
                     tooltip = 'any name search ';
                 }
-                field(Block; Block)
+                field(Block; Rec.Block)
                 {
                     ApplicationArea = all;
                     tooltip = 'any orde to block';
@@ -83,7 +83,7 @@ page 33000284 "Sub Assembly Card B2B"
 
     trigger OnOpenPage();
     begin
-        SETRANGE("No.");
+        Rec.SETRANGE("No.");
     end;
 }
 

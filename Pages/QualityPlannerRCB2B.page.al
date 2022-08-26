@@ -12,7 +12,7 @@ page 33000297 "Quality Planner RC B2B"
 
     Caption = 'Quality Planner RC';
     PageType = RoleCenter;
-    
+
 
     layout
     {

@@ -26,7 +26,7 @@ page 33000268 "Posted Inspection Receipt B2B"
             group(General)
             {
                 Caption = 'General';
-                field("No."; "No.")
+                field("No."; Rec."No.")
                 {
                     Editable = false;
                     Importance = Promoted;
@@ -34,95 +34,95 @@ page 33000268 "Posted Inspection Receipt B2B"
                     tooltip = 'the number selected from the setup numbering tabs ';
 
                 }
-                field("Item No."; "Item No.")
+                field("Item No."; Rec."Item No.")
                 {
                     Editable = false;
                     Importance = Promoted;
                     ApplicationArea = all;
                     tooltip = 'enter the item number';
                 }
-                field("Item Description"; "Item Description")
+                field("Item Description"; Rec."Item Description")
                 {
                     Editable = false;
                     Importance = Promoted;
                     ApplicationArea = all;
                     tooltip = 'enter the name of the item description';
                 }
-                field("Unit of Measure Code"; "Unit of Measure Code")
+                field("Unit of Measure Code"; Rec."Unit of Measure Code")
                 {
                     Editable = false;
                     ApplicationArea = all;
                     tooltip = 'Define Unit of Measure of the items to be teste';
                 }
-                field(Quantity; Quantity)
+                field(Quantity; Rec.Quantity)
                 {
                     Editable = false;
                     ApplicationArea = all;
                     tooltip = 'This is the total number of items being ordered';
 
                 }
-                field("Spec ID"; "Spec ID")
+                field("Spec ID"; Rec."Spec ID")
                 {
                     Editable = false;
                     ApplicationArea = all;
                     tooltip = 'Specification is a group of characteristics to be inspected of an item';
                 }
-                field("Base Unit of Measure"; "Base Unit of Measure")
+                field("Base Unit of Measure"; Rec."Base Unit of Measure")
                 {
                     Editable = false;
                     ApplicationArea = all;
                     tooltip = ' You may need to create a base unit of measure if what you need is not on the default list';
                 }
-                field("Quantity(Base)"; "Quantity(Base)")
+                field("Quantity(Base)"; Rec."Quantity(Base)")
                 {
                     Editable = false;
                     ApplicationArea = all;
                     tooltip = 'This is the total number of items being ordered';
                 }
-                field("Posting Date"; "Posting Date")
+                field("Posting Date"; Rec."Posting Date")
                 {
                     Editable = false;
                     ApplicationArea = all;
                     tooltip = 'Date the order will post to G/L, customer, and item ledger entries';
                 }
-                field("Document Date"; "Document Date")
+                field("Document Date"; Rec."Document Date")
                 {
                     Editable = false;
                     ApplicationArea = all;
                     tooltip = 'This date is used to calculate the customers payment due date and finance charges';
                 }
-                field("Rework Reference No."; "Rework Reference No.")
+                field("Rework Reference No."; Rec."Rework Reference No.")
                 {
                     Editable = false;
                     ApplicationArea = all;
                     tooltip = 'At the time of receipt of the material back from the vendor, open the same document rework reference number';
                 }
-                field("Rework Inspect DS Created"; "Rework Inspect DS Created")
+                field("Rework Inspect DS Created"; Rec."Rework Inspect DS Created")
                 {
                     Editable = false;
                     ApplicationArea = all;
                     tooltip = 'material back from the the vendor again testing the material to created IDS & IR';
                 }
-                field("Source Type"; "Source Type")
+                field("Source Type"; Rec."Source Type")
                 {
                     Editable = false;
                     ApplicationArea = all;
                     tooltip = 'selected the sorce types';
                 }
-                field(Status; Status)
+                field(Status; Rec.Status)
                 {
                     Editable = false;
                     ApplicationArea = all;
                     ToolTip = 'Default is new. After entry of the relevant data, the status must be changed to “Certified”.';
 
                 }
-                field("Spec Version"; "Spec Version")
+                field("Spec Version"; Rec."Spec Version")
                 {
                     Editable = false;
                     ApplicationArea = all;
                     tooltip = 'specification version group of characteristics changed  the quality structure process ';
                 }
-                field("Lot No."; "Lot No.")
+                field("Lot No."; Rec."Lot No.")
                 {
                     Editable = false;
                     ApplicationArea = all;
@@ -139,82 +139,82 @@ page 33000268 "Posted Inspection Receipt B2B"
             group(Receipt)
             {
                 Caption = 'Receipt';
-                field("Vendor No."; "Vendor No.")
+                field("Vendor No."; Rec."Vendor No.")
                 {
                     Editable = false;
                     Importance = Promoted;
                     ApplicationArea = all;
                     tooltip = 'enter the vendor number';
                 }
-                field("Vendor Name"; "Vendor Name")
+                field("Vendor Name"; Rec."Vendor Name")
                 {
                     Editable = false;
                     Importance = Promoted;
                     ApplicationArea = all;
                     tooltip = 'enter the vendor name';
                 }
-                field("Vendor Name 2"; "Vendor Name 2")
+                field("Vendor Name 2"; Rec."Vendor Name 2")
                 {
                     Editable = false;
                     ApplicationArea = all;
                     tooltip = 'enter the vendor name 2';
                 }
-                field(Address; Address)
+                field(Address; Rec.Address)
                 {
                     Editable = false;
                     Importance = Promoted;
                     ApplicationArea = all;
                     tooltip = 'enter the vendor address';
                 }
-                field("Address 2"; "Address 2")
+                field("Address 2"; Rec."Address 2")
                 {
                     Editable = false;
                     ApplicationArea = all;
                     tooltip = 'enter the vendor addres 2';
                 }
-                field("Contact Person"; "Contact Person")
+                field("Contact Person"; Rec."Contact Person")
                 {
                     Editable = false;
                     ApplicationArea = all;
                     tooltip = 'enter the contact persons';
                 }
-                field("Receipt No."; "Receipt No.")
+                field("Receipt No."; Rec."Receipt No.")
                 {
                     Editable = false;
                     ApplicationArea = all;
                     tooltip = 'Receipt no. on which the sample as received';
                 }
-                field("Order No."; "Order No.")
+                field("Order No."; Rec."Order No.")
                 {
                     Editable = false;
                     ApplicationArea = all;
                     tooltip = 'enter the order number';
                 }
-                field("Purch Line No"; "Purch Line No")
+                field("Purch Line No"; Rec."Purch Line No")
                 {
                     Editable = false;
                     ApplicationArea = all;
                     tooltip = 'purchase order the  line mention the items ,uom ,quantity is the single line number';
                 }
-                field("External Document No."; "External Document No.")
+                field("External Document No."; Rec."External Document No.")
                 {
                     Editable = false;
                     ApplicationArea = all;
                     tooltip = 'Enter the External document number';
                 }
-                field("Purchase Consignment"; "Purchase Consignment")
+                field("Purchase Consignment"; Rec."Purchase Consignment")
                 {
                     ApplicationArea = all;
                     ToolTip = 'Defines no for Purchase consignment';
 
                 }
-                field("Item Tracking Exists"; "Item Tracking Exists")
+                field("Item Tracking Exists"; Rec."Item Tracking Exists")
                 {
                     Editable = false;
                     ApplicationArea = all;
                     ToolTip = 'Need to Assign Item Tracking';
                 }
-                field("Quality Before Receipt"; "Quality Before Receipt")
+                field("Quality Before Receipt"; Rec."Quality Before Receipt")
                 {
                     ApplicationArea = all;
                     tooltip = 'Inspection is done before the material offered by the vendor is taken into the inventory';
@@ -223,71 +223,71 @@ page 33000268 "Posted Inspection Receipt B2B"
             group(Production)
             {
                 Caption = 'Production';
-                field("Prod. Order No."; "Prod. Order No.")
+                field("Prod. Order No."; Rec."Prod. Order No.")
                 {
                     Editable = false;
                     Importance = Promoted;
                     ApplicationArea = all;
                     tooltip = 'the action of making or manufacturing  from components or raw materials, or the process out the finished products';
                 }
-                field("Prod. Order Line"; "Prod. Order Line")
+                field("Prod. Order Line"; Rec."Prod. Order Line")
                 {
                     Editable = false;
                     Importance = Promoted;
                     ApplicationArea = all;
                     tooltip = 'prod.order line to mention the items,quantity ,uom is the single lne';
                 }
-                field("Routing No."; "Routing No.")
+                field("Routing No."; Rec."Routing No.")
                 {
                     Editable = false;
                     Importance = Promoted;
                     ApplicationArea = all;
                     tooltip = 'This includes both numbers and letters.';
                 }
-                field("Routing Reference No."; "Routing Reference No.")
+                field("Routing Reference No."; Rec."Routing Reference No.")
                 {
                     Editable = false;
                     ApplicationArea = all;
                     tooltip = 'routing reference no. any operation the maintain the document is the number';
                 }
-                field("Operation No."; "Operation No.")
+                field("Operation No."; Rec."Operation No.")
                 {
                     Editable = false;
                     ApplicationArea = all;
                     tooltip = 'Every line of the routing has an operation number, which the program uses for various ';
                 }
-                field("Operation Description"; "Operation Description")
+                field("Operation Description"; Rec."Operation Description")
                 {
                     Editable = false;
                     ApplicationArea = all;
                     tooltip = 'enter the name operation description ';
                 }
-                field("Prod. Description"; "Prod. Description")
+                field("Prod. Description"; Rec."Prod. Description")
                 {
                     Editable = false;
                     ApplicationArea = all;
                     tooltip = 'enter the prod. description';
                 }
-                field("Production Batch No."; "Production Batch No.")
+                field("Production Batch No."; Rec."Production Batch No.")
                 {
                     Editable = false;
                     ApplicationArea = all;
                     tooltip = 'enter the production batch no';
                 }
-                field("Sub Assembly Code"; "Sub Assembly Code")
+                field("Sub Assembly Code"; Rec."Sub Assembly Code")
                 {
                     Editable = false;
                     ApplicationArea = all;
                     tooltip = 'enter the subassembly code';
                 }
-                field("Sub Assembly Description"; "Sub Assembly Description")
+                field("Sub Assembly Description"; Rec."Sub Assembly Description")
                 {
                     Editable = false;
                     ApplicationArea = all;
                     tooltip = 'enter the name subassembly ';
 
                 }
-                field("In Process"; "In Process")
+                field("In Process"; Rec."In Process")
                 {
                     Editable = false;
                     ApplicationArea = all;
@@ -297,14 +297,14 @@ page 33000268 "Posted Inspection Receipt B2B"
             group(Inspection)
             {
                 Caption = 'Inspection';
-                field("<Quantity2>"; Quantity)
+                field("<Quantity2>"; Rec.Quantity)
                 {
                     Editable = false;
                     Importance = Promoted;
                     ApplicationArea = all;
                     tooltip = 'This is the total number of items being ordered';
                 }
-                field("Qty. Accepted"; "Qty. Accepted")
+                field("Qty. Accepted"; Rec."Qty. Accepted")
                 {
                     Editable = false;
                     Importance = Promoted;
@@ -312,10 +312,10 @@ page 33000268 "Posted Inspection Receipt B2B"
                     tooltip = 'the inspection data sheet is quantity characteristic  approval is the accepted quantity';
                     trigger OnAssistEdit();
                     begin
-                        QualityAcceptanceLevels(QualityType::Accepted);
+                        Rec.QualityAcceptanceLevels(QualityType::Accepted);
                     end;
                 }
-                field("Qty. Accepted Under Deviation"; "Qty. Accepted Under Deviation")
+                field("Qty. Accepted Under Deviation"; Rec."Qty. Accepted Under Deviation")
                 {
                     Editable = false;
                     Importance = Promoted;
@@ -323,60 +323,60 @@ page 33000268 "Posted Inspection Receipt B2B"
                     tooltip = 'this fields the accepted quantity under deviation';
                     trigger OnAssistEdit();
                     begin
-                        QualityAcceptanceLevels(QualityType::"Accepted Under Deviation");
+                        Rec.QualityAcceptanceLevels(QualityType::"Accepted Under Deviation");
                     end;
                 }
-                field("Qty. Rework"; "Qty. Rework")
+                field("Qty. Rework"; Rec."Qty. Rework")
                 {
                     Editable = false;
                     ApplicationArea = all;
                     tooltip = 'Now the rework items must be sent for rework to the vendor';
                     trigger OnAssistEdit();
                     begin
-                        QualityAcceptanceLevels(QualityType::Rework);
+                        Rec.QualityAcceptanceLevels(QualityType::Rework);
                     end;
                 }
-                field("Qty. Rejected"; "Qty. Rejected")
+                field("Qty. Rejected"; Rec."Qty. Rejected")
                 {
                     Editable = false;
                     ApplicationArea = all;
                     tooltip = 'the inspection data sheet is quantity characteristic is not approval the rejected quantity';
                     trigger OnAssistEdit();
                     begin
-                        QualityAcceptanceLevels(QualityType::Rejected);
+                        Rec.QualityAcceptanceLevels(QualityType::Rejected);
                     end;
                 }
-                field("Qty. Accepted UD Reason"; "Qty. Accepted UD Reason")
+                field("Qty. Accepted UD Reason"; Rec."Qty. Accepted UD Reason")
                 {
                     Editable = false;
                     ApplicationArea = all;
                     tooltip = 'this field accept under deviation reason the quantity';
                 }
-                field("Reason Description"; "Reason Description")
+                field("Reason Description"; Rec."Reason Description")
                 {
                     Editable = false;
                     ApplicationArea = all;
                     tooltip = 'enter the name of damage,rework,accept reason description';
                 }
-                field("Nature Of Rejection"; "Nature Of Rejection")
+                field("Nature Of Rejection"; Rec."Nature Of Rejection")
                 {
                     Editable = false;
                     ApplicationArea = all;
                     tooltip = 'this field qyuantity rejected to nature like odour';
                 }
-                field("Location Code"; "Location Code")
+                field("Location Code"; Rec."Location Code")
                 {
                     Editable = false;
                     ApplicationArea = all;
                     tooltip = ': Mention the location code from which the inventory is to be dispatched';
                 }
-                field("New Location Code"; "New Location Code")
+                field("New Location Code"; Rec."New Location Code")
                 {
                     Editable = false;
                     ApplicationArea = all;
                     tooltip = ': create the new location code from which the inventory is to be stored';
                 }
-                field("Rework Completed"; "Rework Completed")
+                field("Rework Completed"; Rec."Rework Completed")
                 {
                     Editable = false;
                     ApplicationArea = all;
@@ -386,7 +386,7 @@ page 33000268 "Posted Inspection Receipt B2B"
             group(Returns)
             {
                 Caption = 'Returns';
-                field("<Qty. Rework2>"; "Qty. Rework")
+                field("<Qty. Rework2>"; Rec."Qty. Rework")
                 {
                     Editable = false;
                     Importance = Promoted;
@@ -394,69 +394,69 @@ page 33000268 "Posted Inspection Receipt B2B"
                     tooltip = 'how much rework quantity';
                     trigger OnAssistEdit();
                     begin
-                        QualityAcceptanceLevels(QualityType::Rework);
+                        Rec.QualityAcceptanceLevels(QualityType::Rework);
                     end;
                 }
-                field("Qty. to Vendor(Rework)"; "Qty. to Vendor(Rework)")
+                field("Qty. to Vendor(Rework)"; Rec."Qty. to Vendor(Rework)")
                 {
                     Editable = QtyToVendorReworkEditable;
                     Importance = Promoted;
                     ApplicationArea = all;
                     tooltip = 'the rework items must be sent for rework to the vendor';
                 }
-                field("Qty. sent to Vendor(Rework)"; "Qty. sent to Vendor(Rework)")
+                field("Qty. sent to Vendor(Rework)"; Rec."Qty. sent to Vendor(Rework)")
                 {
                     Editable = false;
                     Importance = Promoted;
                     ApplicationArea = all;
                     tooltip = 'which quantity sent to vendor (rework)';
                 }
-                field("<Qty. Rejected2>"; "Qty. Rejected")
+                field("<Qty. Rejected2>"; Rec."Qty. Rejected")
                 {
                     Editable = false;
                     ApplicationArea = all;
                     tooltip = 'the inspection data sheet is quantity characteristic is not approval the rejected quantity';
                     trigger OnAssistEdit();
                     begin
-                        QualityAcceptanceLevels(QualityType::Rejected);
+                        Rec.QualityAcceptanceLevels(QualityType::Rejected);
                     end;
                 }
-                field("Qty. to Vendor(Rejected)"; "Qty. to Vendor(Rejected)")
+                field("Qty. to Vendor(Rejected)"; Rec."Qty. to Vendor(Rejected)")
                 {
                     ApplicationArea = all;
                     tooltip = ' the rejected items must be sent for rejected to the vendor';
                 }
-                field("Qty. sent to Vendor(Rejected)"; "Qty. sent to Vendor(Rejected)")
+                field("Qty. sent to Vendor(Rejected)"; Rec."Qty. sent to Vendor(Rejected)")
                 {
                     Editable = false;
                     ApplicationArea = all;
                     tooltip = 'which quantity sent to vendor (rejected)';
                 }
-                field("Rework Reference Document No."; "Rework Reference Document No.")
+                field("Rework Reference Document No."; Rec."Rework Reference Document No.")
                 {
                     MultiLine = true;
                     ApplicationArea = all;
                     tooltip = 'At the time of receipt of the material back from the vendor, open the same document rework reference document number';
                     trigger OnValidate();
                     begin
-                        if DeliveryReceiptEntry.GET("Rework Reference Document No.") then
-                            "Qty. to Receive(Rework)" := DeliveryReceiptEntry."Remaining Quantity";
+                        if DeliveryReceiptEntry.GET(Rec."Rework Reference Document No.") then
+                            Rec."Qty. to Receive(Rework)" := DeliveryReceiptEntry."Remaining Quantity";
                     end;
                 }
-                field("Qty. to Receive(Rework)"; "Qty. to Receive(Rework)")
+                field("Qty. to Receive(Rework)"; Rec."Qty. to Receive(Rework)")
                 {
                     ApplicationArea = all;
                     tooltip = 'Enter the quantity to items to be received in the Qty. To Receive (Re work) field';
                     trigger OnValidate();
                     begin
-                        TESTFIELD("Rework Reference Document No.");
-                        if "Rework Reference Document No." <> 0 then
-                            if DeliveryReceiptEntry.GET("Rework Reference Document No.") then
-                                if "Qty. to Receive(Rework)" > DeliveryReceiptEntry."Remaining Quantity" then
+                        Rec.TESTFIELD("Rework Reference Document No.");
+                        if Rec."Rework Reference Document No." <> 0 then
+                            if DeliveryReceiptEntry.GET(Rec."Rework Reference Document No.") then
+                                if Rec."Qty. to Receive(Rework)" > DeliveryReceiptEntry."Remaining Quantity" then
                                     ERROR(Text000Err);
                     end;
                 }
-                field("Qty. Received(Rework)"; "Qty. Received(Rework)")
+                field("Qty. Received(Rework)"; Rec."Qty. Received(Rework)")
                 {
                     Editable = false;
                     ApplicationArea = all;
@@ -527,16 +527,16 @@ page 33000268 "Posted Inspection Receipt B2B"
                     tooltip = 'Routing, the sequence of manufacturing can be define';
                     trigger OnAction();
                     begin
-                        TESTFIELD("Qty. Rework");
-                        TESTFIELD("Prod. Order No.");
-                        TESTFIELD("Routing Reference No.");
-                        TESTFIELD("Routing No.");
+                        Rec.TESTFIELD("Qty. Rework");
+                        Rec.TESTFIELD("Prod. Order No.");
+                        Rec.TESTFIELD("Routing Reference No.");
+                        Rec.TESTFIELD("Routing No.");
 
                         ProdOrderInspectRtng.SETRANGE(Status, ProdOrderInspectRtng.Status::Released);
-                        ProdOrderInspectRtng.SETRANGE("Prod. Order No.", "Prod. Order No.");
-                        ProdOrderInspectRtng.SETRANGE("Routing Reference No.", "Routing Reference No.");
-                        ProdOrderInspectRtng.SETRANGE("Routing No.", "Routing No.");
-                        ProdOrderInspectRtng.SETRANGE("Inspection Receipt No.", "No.");
+                        ProdOrderInspectRtng.SETRANGE("Prod. Order No.", Rec."Prod. Order No.");
+                        ProdOrderInspectRtng.SETRANGE("Routing Reference No.", Rec."Routing Reference No.");
+                        ProdOrderInspectRtng.SETRANGE("Routing No.", Rec."Routing No.");
+                        ProdOrderInspectRtng.SETRANGE("Inspection Receipt No.", Rec."No.");
 
                         PAGE.RUN(PAGE::"Ins Prod. Order Routing B2B", ProdOrderInspectRtng);
                     end;
@@ -549,15 +549,15 @@ page 33000268 "Posted Inspection Receipt B2B"
                     tooltip = 'component means one part of whole thing';
                     trigger OnAction();
                     begin
-                        TESTFIELD("Qty. Rework");
-                        TESTFIELD("Prod. Order No.");
-                        TESTFIELD("Routing Reference No.");
-                        TESTFIELD("Routing No.");
+                        Rec.TESTFIELD("Qty. Rework");
+                        Rec.TESTFIELD("Prod. Order No.");
+                        Rec.TESTFIELD("Routing Reference No.");
+                        Rec.TESTFIELD("Routing No.");
 
                         ProdOrderComp.SETRANGE(Status, ProdOrderComp.Status::Released);
-                        ProdOrderComp.SETRANGE("Prod. Order No.", "Prod. Order No.");
-                        ProdOrderComp.SETRANGE("Prod. Order Line No.", "Prod. Order Line");
-                        ProdOrderComp.SETRANGE("Inspection Receipt No.", "No.");
+                        ProdOrderComp.SETRANGE("Prod. Order No.", Rec."Prod. Order No.");
+                        ProdOrderComp.SETRANGE("Prod. Order Line No.", Rec."Prod. Order Line");
+                        ProdOrderComp.SETRANGE("Inspection Receipt No.", Rec."No.");
 
                         PAGE.RUN(PAGE::"Prod. Order Ins Components B2B", ProdOrderComp);
                     end;
@@ -593,7 +593,7 @@ page 33000268 "Posted Inspection Receipt B2B"
                     tooltip = 'dimensions and dimension values to business documents before posting them and moving the resulting entries to G/L';
                     trigger OnAction();
                     begin
-                        ShowDocDim();
+                        Rec.ShowDocDim();
                     end;
                 }
                 action("Item &Tracking Lines")
@@ -604,8 +604,8 @@ page 33000268 "Posted Inspection Receipt B2B"
                     ToolTip = 'Defines lines of Item Tracking ';
                     trigger OnAction();
                     begin
-                        if not "Quality Before Receipt" then
-                            ShowItemTrackingLines();
+                        if not Rec."Quality Before Receipt" then
+                            Rec.ShowItemTrackingLines();
                     end;
                 }
             }
@@ -626,7 +626,7 @@ page 33000268 "Posted Inspection Receipt B2B"
                     tooltip = 'vendor rework items send to workshops';
                     trigger OnAction();
                     begin
-                        if "Item Tracking Exists" then
+                        if Rec."Item Tracking Exists" then
                             InspectJnlPostLine.UpdateSentBackToVendor(Rec)
                         else
                             InspectJnlPostLine.FillReworkItemJnlLineAndPost(Rec);
@@ -644,8 +644,8 @@ page 33000268 "Posted Inspection Receipt B2B"
                     tooltip = 'quantity to receive the order';
                     trigger OnAction();
                     begin
-                        TESTFIELD("Qty. to Receive(Rework)");
-                        if "Item Tracking Exists" then
+                        Rec.TESTFIELD("Qty. to Receive(Rework)");
+                        if Rec."Item Tracking Exists" then
                             InspectJnlPostLine.UpdateReceiveRework(Rec)
                         else
                             InspectJnlPostLine.ReceiveReworkAndPost(Rec);
@@ -665,7 +665,7 @@ page 33000268 "Posted Inspection Receipt B2B"
                 tooltip = 'print generating a hardcopy to the electronic data being print';
                 trigger OnAction();
                 begin
-                    InspectRcpt.SETRANGE(InspectRcpt."No.", "No.");
+                    InspectRcpt.SETRANGE(InspectRcpt."No.", Rec."No.");
                     REPORT.RUN(33000254, true, false, InspectRcpt);
                     InspectRcpt.SETRANGE(InspectRcpt."No.");
                 end;
@@ -675,8 +675,8 @@ page 33000268 "Posted Inspection Receipt B2B"
 
     trigger OnAfterGetRecord();
     begin
-        SETRANGE("No.");
-        SETRANGE("Rework Reference No.");
+        Rec.SETRANGE("No.");
+        Rec.SETRANGE("Rework Reference No.");
     end;
 
     trigger OnInit();
@@ -696,7 +696,7 @@ page 33000268 "Posted Inspection Receipt B2B"
 
     local procedure QtyToVendorReworkOnBeforeInput();
     begin
-        if "Item Tracking Exists" then
+        if Rec."Item Tracking Exists" then
             QtyToVendorReworkEditable := false;
         CurrPage.UPDATE();
     end;

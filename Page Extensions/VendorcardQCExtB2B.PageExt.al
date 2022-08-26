@@ -7,7 +7,7 @@ pageextension 33000317 "VendorcardQCExt B2B" extends "Vendor card"
             group("Quality B2B")
             {
                 Caption = 'Quality';
-                field("Rework Location B2B"; "Rework Location B2B")
+                field("Rework Location B2B"; Rec."Rework Location B2B")
                 {
                     ApplicationArea = All;
                     Caption = 'Rework Location';

@@ -26,77 +26,77 @@ page 33000267 "Posted Ins Receipt List B2B"
             repeater(Control1000000000)
             {
                 Editable = false;
-                field("No."; "No.")
+                field("No."; Rec."No.")
                 {
                     ApplicationArea = all;
                     tooltip = 'enter the number selected no.series from set up numbering tabs';
                 }
-                field("Receipt No."; "Receipt No.")
+                field("Receipt No."; Rec."Receipt No.")
                 {
                     ApplicationArea = all;
                     tooltip = ' Receipt no. on which the sample as received';
                 }
-                field("Vendor No."; "Vendor No.")
+                field("Vendor No."; Rec."Vendor No.")
                 {
                     ApplicationArea = all;
                     tooltip = 'enter the vendor number ';
                 }
-                field("Vendor Name"; "Vendor Name")
+                field("Vendor Name"; Rec."Vendor Name")
                 {
                     ApplicationArea = all;
                     tooltip = 'enter the name the vendor';
                 }
-                field("Rework Reference No."; "Rework Reference No.")
+                field("Rework Reference No."; Rec."Rework Reference No.")
                 {
                     ApplicationArea = all;
-                    tooltip ='At the time of receipt of the material back from the vendor, open the same document rework reference number';
+                    tooltip = 'At the time of receipt of the material back from the vendor, open the same document rework reference number';
                 }
-                field("Rework Inspect DS Created"; "Rework Inspect DS Created")
+                field("Rework Inspect DS Created"; Rec."Rework Inspect DS Created")
                 {
                     ApplicationArea = all;
                     tooltip = 'material back from the the vendor again testing the material to created IDS & IR';
                 }
-                field("Last Rework Level"; "Last Rework Level")
+                field("Last Rework Level"; Rec."Last Rework Level")
                 {
                     ApplicationArea = all;
                     tooltip = 'number of  last times sending for vendor';
                 }
-                field("Item Ledger Entry No."; "Item Ledger Entry No.")
+                field("Item Ledger Entry No."; Rec."Item Ledger Entry No.")
                 {
                     ApplicationArea = all;
                     tooltip = 'any item transaction maintain the document is automatically generated the number  item ledger entry number ';
                 }
-                field("Rework Level"; "Rework Level")
+                field("Rework Level"; Rec."Rework Level")
                 {
                     ApplicationArea = all;
                     tooltip = 'no of times sending for vendor';
                 }
-                field("Item No."; "Item No.")
+                field("Item No."; Rec."Item No.")
                 {
                     ApplicationArea = all;
                     tooltip = 'enter the items number';
                 }
-                field("Purch Line No"; "Purch Line No")
+                field("Purch Line No"; Rec."Purch Line No")
                 {
                     ApplicationArea = all;
                     ToolTip = 'purchase order the lines mention the items ,uom ,quantity is the single line number ';
                 }
-                field(Quantity; Quantity)
+                field(Quantity; Rec.Quantity)
                 {
                     ApplicationArea = all;
                     tooltip = 'This is the total number of items being ordered';
                 }
-                field("Qty. Accepted"; "Qty. Accepted")
+                field("Qty. Accepted"; Rec."Qty. Accepted")
                 {
                     ApplicationArea = all;
                     tooltip = 'the inspection data sheet is quantity characteristic  approval is the accepted quantity';
                 }
-                field("Qty. Rejected"; "Qty. Rejected")
+                field("Qty. Rejected"; Rec."Qty. Rejected")
                 {
                     ApplicationArea = all;
                     tooltip = 'the inspection data sheet is quantity characteristic is not approval the rejected quantity';
                 }
-                field(Status; Status)
+                field(Status; Rec.Status)
                 {
                     ApplicationArea = all;
                     tooltip = 'Default is new. After entry of the relevant data, the status must be changed to “Certified”';
@@ -123,7 +123,7 @@ page 33000267 "Posted Ins Receipt List B2B"
                     RunObject = Page "Posted Purchase Receipts";
                     RunPageLink = "No." = FIELD("Receipt No.");
                     ApplicationArea = all;
-                    tooltip ='purchase Receipts used for reporting and vendor analysis';
+                    tooltip = 'purchase Receipts used for reporting and vendor analysis';
                 }
             }
         }

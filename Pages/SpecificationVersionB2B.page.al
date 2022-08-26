@@ -23,35 +23,35 @@ page 33000291 "Specification Version B2B"
             group(General)
             {
                 Caption = 'General';
-                field("Version Code"; "Version Code")
+                field("Version Code"; Rec."Version Code")
                 {
                     Importance = Promoted;
                     ApplicationArea = all;
                     tooltip = 'this field the code of version';
                     trigger OnAssistEdit();
                     begin
-                        if AssistEdit(xRec) then
+                        if Rec.AssistEdit(xRec) then
                             CurrPage.UPDATE();
                     end;
                 }
-                field(Description; Description)
+                field(Description; Rec.Description)
                 {
                     Importance = Promoted;
                     ApplicationArea = all;
                     tooltip = 'Description for Identification purpose for  the user';
                 }
-                field(Status; Status)
+                field(Status; Rec.Status)
                 {
                     Importance = Promoted;
                     ApplicationArea = all;
                     tooltip = 'Default is new. After entry of the relevant data, the status must be changed to Certified';
                 }
-                field("Starting Date"; "Starting Date")
+                field("Starting Date"; Rec."Starting Date")
                 {
                     ApplicationArea = all;
                     tooltip = 'which data planning the manufacturing process start is the starting date';
                 }
-                field("Last Date Modified"; "Last Date Modified")
+                field("Last Date Modified"; Rec."Last Date Modified")
                 {
                     ApplicationArea = all;
                     tooltip = 'which date modified order is the last data modified';
@@ -87,8 +87,8 @@ page 33000291 "Specification Version B2B"
                         if not CONFIRM(Text000Qst, false) then
                             exit;
 
-                        SpecHeader.GET("Specification No.");
-                        SpecCopy.CopySpec("Specification No.", '', SpecHeader, "Version Code");
+                        SpecHeader.GET(Rec."Specification No.");
+                        SpecCopy.CopySpec(Rec."Specification No.", '', SpecHeader, Rec."Version Code");
                     end;
                 }
                 action("Copy Specification Version")

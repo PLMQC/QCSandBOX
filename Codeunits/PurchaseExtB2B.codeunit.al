@@ -46,10 +46,10 @@ codeunit 33000262 "PurchaseExt B2B"
     END;
 
     var
-        
+
         PurchHeader: Record 38;
         PurchRcpHdr: record 120;
         InspectDataSheets: Codeunit 33000251;
-        Text33000250Err: Label 'You cannot receive more than Quality Accepted in Purchase Order No. %1 and Line No. %2.',comment = ' %1 Doccument No.= ; %2 = Line No.';
+        Text33000250Err: Label 'You cannot receive more than Quality Accepted in Purchase Order No. %1 and Line No. %2.', comment = ' %1 Doccument No.= ; %2 = Line No.';
 
 }

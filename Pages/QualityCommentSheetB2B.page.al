@@ -26,20 +26,20 @@ page 33000290 "Quality Comment Sheet B2B"
         {
             repeater(Control1)
             {
-                field(Date; Date)
+                field(Date; Rec.Date)
                 {
                     ApplicationArea = all;
                     tooltip = 'mention the date';
                 }
-                field(Comment; Comment)
+                field(Comment; Rec.Comment)
                 {
                     ApplicationArea = all;
                     tooltip = 'The user can add comments to a Material Receipt';
                 }
-                field("Code"; Code)
+                field("Code"; Rec.Code)
                 {
                     Visible = false;
-                    ApplicationArea = all; 
+                    ApplicationArea = all;
                     tooltip = 'enter the word,letter,numbers';
                 }
             }
@@ -50,7 +50,7 @@ page 33000290 "Quality Comment Sheet B2B"
     {
         area(navigation)
         {
-           // Caption = '<Action1102154000>';
+            // Caption = '<Action1102154000>';
             group("<Action1102154001>")
             {
                 Caption = '&Comment';
@@ -72,7 +72,7 @@ page 33000290 "Quality Comment Sheet B2B"
 
     trigger OnNewRecord(BelowxRec: Boolean);
     begin
-        SetUpNewLine();
+        Rec.SetUpNewLine();
     end;
 }
 

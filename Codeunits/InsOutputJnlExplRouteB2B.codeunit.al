@@ -17,52 +17,52 @@ codeunit 33000256 "Ins Output Jnl.Expl.Route B2B"
 
     trigger OnRun();
     var
-        
+
         NextLineNo: Integer;
         LineSpacing: Integer;
         BaseQtyToPost: Decimal;
     begin
-        if "Order No." = '' then
+        if Rec."Order No." = '' then
             exit;
 
         ProdOrderLine.RESET();
         ProdOrderLine.SETRANGE(Status, ProdOrderLine.Status::Released);
-        ProdOrderLine.SETRANGE("Prod. Order No.", "Order No.");
-        if "Order Line No." <> 0 then
-            ProdOrderLine.SETRANGE("Line No.", "Order Line No.");
-        if "Item No." <> '' then
-            ProdOrderLine.SETRANGE("Item No.", "Item No.");
-        if "Routing Reference No." <> 0 then
-            ProdOrderLine.SETRANGE("Routing Reference No.", "Routing Reference No.");
-        if "Routing No." <> '' then
-            ProdOrderLine.SETRANGE("Routing No.", "Routing No.");
+        ProdOrderLine.SETRANGE("Prod. Order No.", Rec."Order No.");
+        if Rec."Order Line No." <> 0 then
+            ProdOrderLine.SETRANGE("Line No.", Rec."Order Line No.");
+        if Rec."Item No." <> '' then
+            ProdOrderLine.SETRANGE("Item No.", Rec."Item No.");
+        if Rec."Routing Reference No." <> 0 then
+            ProdOrderLine.SETRANGE("Routing Reference No.", Rec."Routing Reference No.");
+        if Rec."Routing No." <> '' then
+            ProdOrderLine.SETRANGE("Routing No.", Rec."Routing No.");
 
         ProdOrderRtngLine.reset();
         ProdOrderRtngLine.SETRANGE(Status, ProdOrderRtngLine.Status::Released);
-        ProdOrderRtngLine.SETRANGE("Prod. Order No.", "Order No.");
-        if "Operation No." <> '' then
-            ProdOrderRtngLine.SETRANGE("Operation No.", "Operation No.");
+        ProdOrderRtngLine.SETRANGE("Prod. Order No.", Rec."Order No.");
+        if Rec."Operation No." <> '' then
+            ProdOrderRtngLine.SETRANGE("Operation No.", Rec."Operation No.");
         ProdOrderRtngLine.SETFILTER("Routing Status", '<> %1', ProdOrderRtngLine."Routing Status"::Finished);
 
-        "Order Line No." := 0;
-        "Item No." := '';
-        "Routing Reference No." := 0;
-        "Routing No." := '';
+        Rec."Order Line No." := 0;
+        Rec."Item No." := '';
+        Rec."Routing Reference No." := 0;
+        Rec."Routing No." := '';
 
         ItemJnlLine := Rec;
 
-        ItemJnlLine.SETRANGE("Journal Template Name", "Journal Template Name");
-        ItemJnlLine.SETRANGE("Journal Batch Name", "Journal Batch Name");
+        ItemJnlLine.SETRANGE("Journal Template Name", Rec."Journal Template Name");
+        ItemJnlLine.SETRANGE("Journal Batch Name", Rec."Journal Batch Name");
         if ItemJnlLine.FIND('>') then begin
             LineSpacing :=
-              (ItemJnlLine."Line No." - "Line No.") div
+              (ItemJnlLine."Line No." - Rec."Line No.") div
               (1 + ProdOrderLine.COUNT() * ProdOrderRtngLine.COUNT());
             if LineSpacing = 0 then
                 ERROR(Text000Err);
         end else
             LineSpacing := 10000;
 
-        NextLineNo := "Line No.";
+        NextLineNo := Rec."Line No.";
 
         if not ProdOrderLine.FIND('-') then
             ERROR(Text001Err);
@@ -96,7 +96,7 @@ codeunit 33000256 "Ins Output Jnl.Expl.Route B2B"
                       ProdOrderLine."Unit of Measure Code",
                       ProdOrderLine."Remaining Quantity", ProdOrderRtngLine."Inspection Receipt No.");
         until ProdOrderLine.NEXT() = 0;
-        DELETE();
+        Rec.DELETE();
     end;
 
     var
@@ -129,7 +129,8 @@ codeunit 33000256 "Ins Output Jnl.Expl.Route B2B"
         LastItemJnlLine := ItemJnlLine;
     end;
 
-    var ProdOrderLine: Record "Prod. Order Line";
+    var
+        ProdOrderLine: Record "Prod. Order Line";
         ProdOrderRtngLine: Record "Rework Routing Line B2B";
         ItemJnlLine: Record "Item Journal Line";
 }

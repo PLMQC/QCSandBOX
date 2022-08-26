@@ -248,9 +248,9 @@ table 33000254 "Specification Line B2B"
     var
         Characterstic: Record "Characteristic B2B";
         SpecHeader: Record "Specification Header B2B";
-        Text002Err: Label '%1 should not be less than %2.',Comment = '%1 = Normal Value; %2 =Min. Value ';
-        Text003Err: Label '%1 should be within %2 and %3.',Comment = '%1 = Normal Value ; %2 = Min. Value ; %3 = Max. Value ';
-        Text004Err: Label '%1 should not be greater than %2 specification line %3.',Comment = '%1 = Min. Value ; %2 = Max. Value ; %3 = Line No ';
+        Text002Err: Label '%1 should not be less than %2.', Comment = '%1 = Normal Value; %2 =Min. Value ';
+        Text003Err: Label '%1 should be within %2 and %3.', Comment = '%1 = Normal Value ; %2 = Min. Value ; %3 = Max. Value ';
+        Text004Err: Label '%1 should not be greater than %2 specification line %3.', Comment = '%1 = Min. Value ; %2 = Max. Value ; %3 = Line No ';
 
     procedure TestStatus();
     var

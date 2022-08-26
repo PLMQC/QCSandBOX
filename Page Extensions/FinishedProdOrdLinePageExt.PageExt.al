@@ -5,7 +5,7 @@ pageextension 33000301 FinishedProdOrdLinePageExtB2B extends "Finished Prod. Ord
     {
         addlast("Control1")
         {
-            field("WIP QC Enabled B2B"; "WIP QC Enabled B2B")
+            field("WIP QC Enabled B2B"; Rec."WIP QC Enabled B2B")
 
             {
                 ApplicationArea = All;
@@ -13,32 +13,32 @@ pageextension 33000301 FinishedProdOrdLinePageExtB2B extends "Finished Prod. Ord
                 ToolTip = '  Inspection Data Sheets are created only if the item is MFG process tested items Wip QC';
             }
 
-            field("Quantity Sent to Quality B2B"; "Quantity Sent to Quality B2B")
+            field("Quantity Sent to Quality B2B"; Rec."Quantity Sent to Quality B2B")
             {
                 ApplicationArea = All;
                 Caption = 'Quantity Sent to Quality';
                 ToolTip = 'how much Quantity sent to Quality ';
             }
-            field("Quantity Sending to Quality B2B"; "Qty Sending to Quality B2B")
+            field("Quantity Sending to Quality B2B"; Rec."Qty Sending to Quality B2B")
             {
                 ApplicationArea = All;
                 Caption = 'Quantity Sending to Quality ';
                 ToolTip = 'which Quantity sending to Quality';
                 Editable = true;
             }
-            field("Quantity Accepted B2B"; "Quantity Accepted B2B")
+            field("Quantity Accepted B2B"; Rec."Quantity Accepted B2B")
             {
                 ApplicationArea = All;
                 Caption = 'Quantity Accepted';
                 ToolTip = 'satisfied inspection items quantity Accepted';
             }
-            field("Quantity Rejected B2B"; "Quantity Rejected B2B")
+            field("Quantity Rejected B2B"; Rec."Quantity Rejected B2B")
             {
                 ApplicationArea = All;
                 Caption = 'Quantity Rejected';
                 tooltip = 'disatisfied inspection items quantity Rejected';
             }
-            field("Quantity Rework B2B"; "Quantity Rework B2B")
+            field("Quantity Rework B2B"; Rec."Quantity Rework B2B")
             {
                 ApplicationArea = All;
                 Caption = 'Quantity Rework';

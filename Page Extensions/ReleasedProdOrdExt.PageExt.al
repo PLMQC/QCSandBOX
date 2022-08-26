@@ -9,7 +9,7 @@ pageextension 33000310 ReleasedProdOrdExtB2B extends "Released Production Order"
             action("Create Inspection Data Sheets B2B")
             {
                 Caption = 'Create Inspection Data &Sheets';
-                ToolTip ='we can create inspected data sheet is any item testing using for new ids created';
+                ToolTip = 'we can create inspected data sheet is any item testing using for new ids created';
                 Image = MakeOrder;
                 ApplicationArea = All;
 

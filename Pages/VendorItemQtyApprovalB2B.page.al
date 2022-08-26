@@ -23,47 +23,47 @@ page 33000273 "Vendor Item Qty Approval B2B"
         {
             repeater(Control1000000000)
             {
-                field("Item No."; "Item No.")
+                field("Item No."; Rec."Item No.")
                 {
                     ApplicationArea = all;
                     tooltip = 'enter the item number';
                 }
-                field("Starting Date"; "Starting Date")
+                field("Starting Date"; Rec."Starting Date")
                 {
                     ApplicationArea = all;
                     tooltip = 'which data planning and manufacturing that is starting data';
                 }
-                field("Spec ID"; "Spec ID")
+                field("Spec ID"; Rec."Spec ID")
                 {
                     ApplicationArea = all;
                     tooltip = 'Specification is a group of characteristics to be inspected of an item';
                 }
-                field("Ending Date"; "Ending Date")
+                field("Ending Date"; Rec."Ending Date")
                 {
                     ApplicationArea = all;
                     tooltip = 'which data complete production that is ending data to delivery data ';
                 }
-                field("Certified Agency"; "Certified Agency")
-                    
+                field("Certified Agency"; Rec."Certified Agency")
+
 
                 {
                     ApplicationArea = all;
-                    ToolTip = 'This Field Defines certified Vendors' ;
+                    ToolTip = 'This Field Defines certified Vendors';
                 }
-                field("Attachment.HASVALUE"; Attachment.HASVALUE())
+                field("Attachment.HASVALUE"; Rec.Attachment.HASVALUE())
                 {
                     AssistEdit = true;
                     Caption = 'Attachment';
                     ApplicationArea = all;
-                     ToolTip = 'It allows to attach Related Documents' ;    
+                    ToolTip = 'It allows to attach Related Documents';
                     trigger OnAssistEdit();
                     begin
-                       /*
-                        if Attachment.HASVALUE() then begin
-                           QualityAttachmentMgt.SetVendorItemApproval(Rec);
-                            QualityAttachmentMgt.OpenAttachment();
-                        end;
-                        */
+                        /*
+                         if Attachment.HASVALUE() then begin
+                            QualityAttachmentMgt.SetVendorItemApproval(Rec);
+                             QualityAttachmentMgt.OpenAttachment();
+                         end;
+                         */
                     end;
                 }
             }
@@ -76,11 +76,11 @@ page 33000273 "Vendor Item Qty Approval B2B"
 
     trigger OnAfterGetRecord();
     begin
-        if "Item No." <> '' then
-            CALCFIELDS(Attachment);
+        if Rec."Item No." <> '' then
+            Rec.CALCFIELDS(Attachment);
     end;
 
     var
-        //QualityAttachmentMgt: Codeunit QualityAttachmentManagement;
+    //QualityAttachmentMgt: Codeunit QualityAttachmentManagement;
 }
 

@@ -12,7 +12,7 @@ tableextension 33000258 "PurchaseLineExt B2B" extends "Purchase Line"
         }
         field(33000251; "Quantity Accepted B2B"; Decimal)
         {
-            CalcFormula = Sum ("Quality Ledger Entry B2B".Quantity WHERE("Order No." = FIELD("Document No."),
+            CalcFormula = Sum("Quality Ledger Entry B2B".Quantity WHERE("Order No." = FIELD("Document No."),
                                                                      "Order Line No." = FIELD("Line No."),
                                                                      "Entry Type" = FILTER(Accepted)));
             Caption = 'Quantity Accepted';
@@ -21,7 +21,7 @@ tableextension 33000258 "PurchaseLineExt B2B" extends "Purchase Line"
         }
         field(33000252; "Quantity Rework B2B"; Decimal)
         {
-            CalcFormula = Sum ("Quality Ledger Entry B2B"."Remaining Quantity" WHERE("Order No." = FIELD("Document No."),
+            CalcFormula = Sum("Quality Ledger Entry B2B"."Remaining Quantity" WHERE("Order No." = FIELD("Document No."),
                                                                                  "Order Line No." = FIELD("Line No."),
                                                                                  "Entry Type" = FILTER(Rework),
                                                                                  Open = CONST(true)));
@@ -51,7 +51,7 @@ tableextension 33000258 "PurchaseLineExt B2B" extends "Purchase Line"
         }
         field(33000254; "Quantity Rejected B2B"; Decimal)
         {
-            CalcFormula = Sum ("Quality Ledger Entry B2B".Quantity WHERE("Order No." = FIELD("Document No."),
+            CalcFormula = Sum("Quality Ledger Entry B2B".Quantity WHERE("Order No." = FIELD("Document No."),
                                                                      "Order Line No." = FIELD("Line No."),
                                                                      "Entry Type" = FILTER(Reject)));
             Caption = 'Quantity Rejected';
@@ -121,7 +121,7 @@ tableextension 33000258 "PurchaseLineExt B2B" extends "Purchase Line"
 
     procedure VendorQualityApprovalSpecId(): Code[20];
     var
-        
+
         PurchHeader: Record "Purchase Header";
         PostingDate: Date;
     // Text33000250Err: Label 'Should be 0.';
@@ -269,7 +269,7 @@ tableextension 33000258 "PurchaseLineExt B2B" extends "Purchase Line"
         Text33000250Err: Label 'Should be 0.';
         Text33000251Err: Label 'You can not create Inspection Data Sheets when Warehouse Receipt line exists.';
         QCSetupRead: Boolean;
-        
+
 
 }
 

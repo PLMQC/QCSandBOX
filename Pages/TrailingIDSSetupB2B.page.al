@@ -23,7 +23,7 @@ page 33000301 "Trailing IDS Setup B2B"
             group(General)
             {
                 Caption = 'General';
-                field("Use Work Date as Base"; "Use Work Date as Base")
+                field("Use Work Date as Base"; Rec."Use Work Date as Base")
                 {
                     ApplicationArea = all;
                     tooltip = 'enter the mention for using the date that work date';
@@ -38,14 +38,14 @@ page 33000301 "Trailing IDS Setup B2B"
 
     trigger OnOpenPage();
     begin
-        if not GET(USERID()) then begin
-            Evaluate("User ID", USERID());
-            "Use Work Date as Base" := true;
-            INSERT();
+        if not Rec.GET(USERID()) then begin
+            Evaluate(Rec."User ID", USERID());
+            Rec."Use Work Date as Base" := true;
+            Rec.INSERT();
         end;
-        FILTERGROUP(2);
-        SETRANGE("User ID", USERID());
-        FILTERGROUP(0);
+        Rec.FILTERGROUP(2);
+        Rec.SETRANGE("User ID", USERID());
+        Rec.FILTERGROUP(0);
     end;
 }
 

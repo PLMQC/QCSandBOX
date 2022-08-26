@@ -625,32 +625,32 @@ table 33000278 "Rework Routing Line B2B"
         GLSetup: Record "General Ledger Setup";
 
         SubAssembly: Record "Sub Assembly B2B";
-        Text001Err: Label 'You cannot rename a %1.',Comment = '%1 = Table Caption';
-        Text006Err: Label 'A %1 %2 can not be inserted, modified, or deleted.',Comment = '%1 = Status; %2 = Table Caption';
+        Text001Err: Label 'You cannot rename a %1.', Comment = '%1 = Table Caption';
+        Text006Err: Label 'A %1 %2 can not be inserted, modified, or deleted.', Comment = '%1 = Status; %2 = Table Caption';
         Text007Err: Label 'Qty.To be  Produced should not be negative.';
         Text008Msg: Label 'Quantity To Produce and Quantity Produced is more than Quantity.';
 
-    
+
     procedure Caption(): Text[250];
     var
         ProdOrder: Record "Production Order";
-       
+
     begin
         if GETFILTERS() = '' then
             exit('');
 
         if not ProdOrder.GET(Status, "Prod. Order No.") then
             exit('');
-     
-       EXIT(
-          STRSUBSTNO('%1 %2 %3',
-            "Prod. Order No.", ProdOrder.Description, "Routing No."));
-        
-      
 
-        
+        EXIT(
+           STRSUBSTNO('%1 %2 %3',
+             "Prod. Order No.", ProdOrder.Description, "Routing No."));
+
+
+
+
     end;
-    
+
 
     procedure GetLine();
     begin
@@ -670,7 +670,7 @@ table 33000278 "Rework Routing Line B2B"
         "Wait Time Unit of Meas. Code" := WorkCenter."Unit of Measure Code";
         "Move Time Unit of Meas. Code" := WorkCenter."Unit of Measure Code";
         Description := WorkCenter.Name;
-        "Flushing Method" := WorkCenter."Flushing Method";
+        "Flushing Method" := WorkCenter."Flushing Method".AsInteger();
         "Unit Cost per" := WorkCenter."Unit Cost";
         "Direct Unit Cost" := WorkCenter."Direct Unit Cost";
         "Indirect Cost %" := WorkCenter."Indirect Cost %";
@@ -696,7 +696,7 @@ table 33000278 "Rework Routing Line B2B"
         "Setup Time Unit of Meas. Code" := MachineCenter."Setup Time Unit of Meas. Code";
         "Wait Time Unit of Meas. Code" := MachineCenter."Wait Time Unit of Meas. Code";
         "Move Time Unit of Meas. Code" := MachineCenter."Move Time Unit of Meas. Code";
-        "Flushing Method" := MachineCenter."Flushing Method";
+        "Flushing Method" := MachineCenter."Flushing Method".AsInteger();
         "Unit Cost per" := MachineCenter."Unit Cost";
         "Direct Unit Cost" := MachineCenter."Direct Unit Cost";
         "Indirect Cost %" := MachineCenter."Indirect Cost %";
@@ -705,9 +705,9 @@ table 33000278 "Rework Routing Line B2B"
 
     procedure SetNextOperations(var RtngLine: Record "Rework Routing Line B2B");
     var
-    
+
     begin
-        
+
         RtngLine2.reset();
         RtngLine2.SETRANGE(Status, RtngLine.Status);
         RtngLine2.SETRANGE("Prod. Order No.", RtngLine."Prod. Order No.");
@@ -749,7 +749,7 @@ table 33000278 "Rework Routing Line B2B"
         exit(000000T + (Datetime mod 86.4) * 1000000);
     end;
 
-    var 
-    RtngLine2: Record "Rework Routing Line B2B";
+    var
+        RtngLine2: Record "Rework Routing Line B2B";
 }
 

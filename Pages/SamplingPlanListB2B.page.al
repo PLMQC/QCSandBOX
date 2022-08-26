@@ -24,13 +24,13 @@ page 33000252 "Sampling Plan List B2B"
         {
             repeater(Control1000000000)
             {
-                field("Code"; Code)
+                field("Code"; Rec.Code)
                 {
                     ApplicationArea = all;
 
                     ToolTip = 'system of words,letter,or signs used to represent code';
                 }
-                field(Description; Description)
+                field(Description; Rec.Description)
                 {
                     ApplicationArea = all;
                     tooltip = 'Description for Identification purpose for  the user.';
